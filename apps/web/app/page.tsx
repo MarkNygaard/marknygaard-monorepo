@@ -1,12 +1,37 @@
-import { Button } from "@workspace/ui/button"
+// import type { Metadata } from "next"
+import { notFound } from "next/navigation"
+import { PageBuilder } from "@/features/page-builder/components/PageBuilder"
+import { sanityFetch } from "@/lib/sanity/live"
+import { HOMEPAGE_QUERY } from "@/lib/sanity/queries"
+// import { formatMetaDataFromSanity } from "@/lib/seo/seo"
 
-export default function Page() {
+// export async function generateMetadata(): Promise<Metadata> {
+//   const { data: page } = await sanityFetch({
+//     query: HOMEPAGE_QUERY,
+//   })
+
+//   if (!page) return notFound()
+//   return await formatMetaDataFromSanity({
+//     data: page.seo,
+//     slug: "/",
+//     title: page.title,
+//   })
+// }
+
+export default async function Page() {
+  const { data: page } = await sanityFetch({
+    query: HOMEPAGE_QUERY,
+  })
+
+  console.log("Homepage data:", page)
+
+  if (!page) notFound()
+
   return (
-    <div className="flex min-h-svh items-center justify-center">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h1 className="font-bold text-2xl">Hello World</h1>
-        <Button size="sm">Button</Button>
-      </div>
-    </div>
+    <PageBuilder
+      blocks={Array.isArray(page.pageBuilder) ? page.pageBuilder : []}
+      documentId={page._id}
+      documentType={page._type}
+    />
   )
 }

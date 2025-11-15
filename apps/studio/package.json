@@ -7,19 +7,24 @@
   "scripts": {
     "dev": "sanity dev",
     "start": "sanity start",
+    "prebuild": "pnpm run typegen --enforce-required-fields",
     "build": "sanity build",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check --write .",
-    "check:unsafe": "biome check --write --unsafe ."
+    "check:unsafe": "biome check --write --unsafe .",
+    "typegen": "sanity schema extract --enforce-required-fields && sanity typegen generate --enforce-required-fields"
   },
   "keywords": [
     "sanity"
   ],
   "dependencies": {
+    "@sanity/icons": "^3.7.4",
     "@sanity/vision": "^4.15.0",
+    "@workspace/common": "workspace:*",
+    "lucide-react": "^0.541.0",
     "react": "^19.1",
     "react-dom": "^19.1",
     "sanity": "^4.15.0",

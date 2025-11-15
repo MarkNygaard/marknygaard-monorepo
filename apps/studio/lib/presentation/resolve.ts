@@ -20,10 +20,32 @@ export const locations = {
       }
     },
   }),
+  page: defineLocations({
+    select: {
+      title: "title",
+      slug: "slug.current",
+    },
+    resolve: (doc) => {
+      if (!doc?.slug) return { locations: [] }
+
+      return {
+        locations: [
+          {
+            title: doc.title || "Untitled Page",
+            href: `/${doc.slug}`,
+          },
+        ],
+      }
+    },
+  }),
 }
 
 // Configures documents presentation tool should open by default when navigating to an URL
 export const mainDocuments = defineDocuments([
+  {
+    route: "/:slug",
+    filter: "_type == 'page' && slug.current == $slug",
+  },
   {
     route: "/",
     filter: '_type == "homePage"',

@@ -78,14 +78,27 @@ const pageBuilderFragment = /* groq */ `
 `
 
 export const HOMEPAGE_QUERY = defineQuery(`
-*[_type == "homePage"][0] {
-  _id,
-  _type,
-  title,
-  ${pageBuilderFragment},
-  ${seoFragment},
-  ${ogFragment},
-  _createdAt,
-  _updatedAt
-}
+  *[_type == "homePage"][0] {
+    _id,
+    _type,
+    title,
+    ${pageBuilderFragment},
+    ${seoFragment},
+    ${ogFragment},
+    _createdAt,
+    _updatedAt
+  }
+`)
+
+export const PAGE_QUERY = defineQuery(`
+  *[_type == "page"][0] {
+    _id,
+    _type,
+    title,
+    ${pageBuilderFragment},
+    ${seoFragment},
+    ${ogFragment},
+    _createdAt,
+    _updatedAt
+  }
 `)

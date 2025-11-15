@@ -93,6 +93,19 @@ export type HomePage = {
   og?: Og;
 };
 
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  pageBuilder?: PageBuilder;
+  seo?: Seo;
+  og?: Og;
+};
+
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
   top: number;
@@ -107,6 +120,12 @@ export type SanityImageHotspot = {
   y: number;
   height: number;
   width: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -205,20 +224,95 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
-export type AllSanitySchemaTypes = RichTextBlock | PageBuilder | RichText | Seo | Og | HomePage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint | Slug;
+export type AllSanitySchemaTypes = RichTextBlock | PageBuilder | RichText | Seo | Og | HomePage | Page | SanityImageCrop | SanityImageHotspot | Slug | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/lib/sanity/queries.ts
 // Variable: HOMEPAGE_QUERY
-// Query: *[_type == "homePage"][0] {  _id,  _type,  title,    pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    }  },    seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },    og {    ogTitle,    ogDescription  },  _createdAt,  _updatedAt}
+// Query: *[_type == "homePage"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type HOMEPAGE_QUERYResult = {
   _id: string;
   _type: "homePage";
+  title: string;
+  pageBuilder: Array<{
+    _type: "richTextBlock";
+    _key: string;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }> | null;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset: {
+        _id: string;
+        url: string | null;
+        altText: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      media?: unknown;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      caption?: string;
+      _type: "image";
+      _key: string;
+      alt: "";
+      markDefs: null;
+    }>;
+    blockTitle: string | null;
+  }> | null;
+  seo: {
+    _type: "seo";
+    seoTitle: string;
+    seoDescription: string;
+    seoImage: {
+      asset: {
+        _id: string;
+        url: string | null;
+        altText: string | null;
+        metadata: {
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      alt: null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+    seoIndexing: "index" | "noindex";
+    seoListVisibility: "hide" | "show";
+  } | null;
+  og: {
+    ogTitle: string | null;
+    ogDescription: string | null;
+  } | null;
+  _createdAt: string;
+  _updatedAt: string;
+} | null;
+// Variable: PAGE_QUERY
+// Query: *[_type == "page"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
+export type PAGE_QUERYResult = {
+  _id: string;
+  _type: "page";
   title: string;
   pageBuilder: Array<{
     _type: "richTextBlock";
@@ -300,6 +394,7 @@ export type HOMEPAGE_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n*[_type == \"homePage\"][0] {\n  _id,\n  _type,\n  title,\n  \n  pageBuilder[]{\n    _type == \"richTextBlock\" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == \"image\" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n  \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n  \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n  _createdAt,\n  _updatedAt\n}\n": HOMEPAGE_QUERYResult;
+    "\n  *[_type == \"homePage\"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == \"richTextBlock\" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == \"image\" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n": HOMEPAGE_QUERYResult;
+    "\n  *[_type == \"page\"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == \"richTextBlock\" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == \"image\" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n": PAGE_QUERYResult;
   }
 }

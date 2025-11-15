@@ -1,36 +1,29 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Loader2, Mail } from 'lucide-react';
-import { Button } from './button.js';
+import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import { Loader2, Mail } from "lucide-react"
+import { Button } from "./button.js"
 
 /**
  * Displays a button or a component that looks like a button.
  */
 const meta: Meta<typeof Button> = {
-  title: 'ui/Button',
+  title: "ui/Button",
   component: Button,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: [
-        'default',
-        'destructive',
-        'outline',
-        'secondary',
-        'ghost',
-        'link',
-      ],
+      control: "select",
+      options: ["default", "destructive", "outline", "secondary", "ghost", "link"],
     },
     size: {
-      control: 'select',
-      options: ['default', 'sm', 'lg', 'icon'],
-      if: { arg: 'variant', neq: 'link' },
+      control: "select",
+      options: ["default", "sm", "lg", "icon"],
+      if: { arg: "variant", neq: "link" },
     },
     children: {
-      control: 'text',
+      control: "text",
     },
     disabled: {
-      control: 'boolean',
+      control: "boolean",
     },
     asChild: {
       table: {
@@ -39,24 +32,24 @@ const meta: Meta<typeof Button> = {
     },
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
   args: {
-    variant: 'default',
-    size: 'default',
-    children: 'Button',
+    variant: "default",
+    size: "default",
+    children: "Button",
     disabled: false,
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Button>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 /**
  * The default form of the button, used for primary actions and commands.
  */
-export const Default: Story = {};
+export const Default: Story = {}
 
 /**
  * Use the `outline` button to reduce emphasis on secondary actions, such as
@@ -64,9 +57,9 @@ export const Default: Story = {};
  */
 export const Outline: Story = {
   args: {
-    variant: 'outline',
+    variant: "outline",
   },
-};
+}
 
 /**
  * Use the `ghost` button is minimalistic and subtle, for less intrusive
@@ -74,9 +67,9 @@ export const Outline: Story = {
  */
 export const Ghost: Story = {
   args: {
-    variant: 'ghost',
+    variant: "ghost",
   },
-};
+}
 
 /**
  * Use the `secondary` button to call for less emphasized actions, styled to
@@ -84,9 +77,9 @@ export const Ghost: Story = {
  */
 export const Secondary: Story = {
   args: {
-    variant: 'secondary',
+    variant: "secondary",
   },
-};
+}
 
 /**
  * Use the `destructive` button to indicate errors, alerts, or the need for
@@ -94,9 +87,9 @@ export const Secondary: Story = {
  */
 export const Destructive: Story = {
   args: {
-    variant: 'destructive',
+    variant: "destructive",
   },
-};
+}
 
 /**
  * Use the `link` button to reduce emphasis on tertiary actions, such as
@@ -104,9 +97,9 @@ export const Destructive: Story = {
  */
 export const Link: Story = {
   args: {
-    variant: 'link',
+    variant: "link",
   },
-};
+}
 
 /**
  * Add the `disabled` prop to a button to prevent interactions and add a
@@ -123,7 +116,7 @@ export const Loading: Story = {
     ...Outline.args,
     disabled: true,
   },
-};
+}
 
 /**
  * Add an icon element to a button to enhance visual communication and
@@ -138,7 +131,7 @@ export const WithIcon: Story = {
   args: {
     ...Secondary.args,
   },
-};
+}
 
 /**
  * Use the `sm` size for a smaller button, suitable for interfaces needing
@@ -146,9 +139,9 @@ export const WithIcon: Story = {
  */
 export const Small: Story = {
   args: {
-    size: 'sm',
+    size: "sm",
   },
-};
+}
 
 /**
  * Use the `lg` size for a larger button, offering better visibility and
@@ -156,9 +149,9 @@ export const Small: Story = {
  */
 export const Large: Story = {
   args: {
-    size: 'lg',
+    size: "lg",
   },
-};
+}
 
 /**
  * Use the "icon" size for a button with only an icon.
@@ -166,35 +159,35 @@ export const Large: Story = {
 export const Icon: Story = {
   args: {
     ...Secondary.args,
-    size: 'icon',
-    title: 'Mail',
+    size: "icon",
+    title: "Mail",
     children: <Mail />,
   },
-};
+}
 
 /**
  * Use the `icon-sm` size for a smaller icon-only button.
  */
 export const IconSmall: Story = {
   args: {
-    variant: 'secondary',
-    size: 'icon-sm',
-    title: 'Mail',
+    variant: "secondary",
+    size: "icon-sm",
+    title: "Mail",
     children: <Mail />,
   },
-};
+}
 
 /**
  * Use the `icon-lg` size for a larger icon-only button.
  */
 export const IconLarge: Story = {
   args: {
-    variant: 'secondary',
-    size: 'icon-lg',
-    title: 'Mail',
+    variant: "secondary",
+    size: "icon-lg",
+    title: "Mail",
     children: <Mail />,
   },
-};
+}
 
 /**
  * Add the `disabled` prop to prevent interactions with the button.
@@ -203,4 +196,4 @@ export const Disabled: Story = {
   args: {
     disabled: true,
   },
-};
+}

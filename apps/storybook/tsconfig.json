@@ -5,7 +5,8 @@
     "paths": {
       "@/*": ["./*"],
       "@workspace/ui/*": ["../../packages/ui/src/*"]
-    }
+    },
+    "strictNullChecks": true
   },
   "include": ["./.storybook/**/*"],
   "exclude": ["node_modules"]

@@ -4,7 +4,10 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "lint": "eslint . --max-warnings 0"
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "biome check --write .",
+    "check:unsafe": "biome check --write --unsafe ."
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
@@ -25,9 +28,8 @@
     "@types/node": "^20.19.9",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
-    "@workspace/eslint-config": "workspace:*",
+    "@workspace/biome-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "eslint": "^9.32.0",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.9.2"
   },

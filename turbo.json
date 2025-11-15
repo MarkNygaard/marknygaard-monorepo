@@ -10,6 +10,15 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
+    "format": {
+      "dependsOn": ["^format"]
+    },
+    "check": {
+      "dependsOn": ["^check"]
+    },
+    "check:unsafe": {
+      "dependsOn": ["^check:unsafe"]
+    },
     "check-types": {
       "dependsOn": ["^check-types"]
     },

@@ -4,9 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "biome check --write .",
+    "check:unsafe": "biome check --write --unsafe .",
     "dev": "storybook dev -p 6006",
-    "build:storybook": "storybook build",
+    "build": "storybook build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -15,16 +18,13 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@workspace/eslint-config": "workspace:^",
+    "@workspace/biome-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "@storybook/addon-docs": "^10.0.5",
     "@storybook/react-vite": "^10.0.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9.32.0",
-    "eslint-plugin-storybook": "^10.0.5",
     "globals": "^16.0.0",
-    "storybook": "^10.0.5",
-    "typescript-eslint": "^8.41.0"
+    "storybook": "^10.0.5"
   }
 }

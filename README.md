@@ -38,6 +38,10 @@ A modern monorepo setup using Turborepo, Next.js, Sanity CMS, and Storybook with
 # Install dependencies
 pnpm install
 
+# Set up environment variables
+cp apps/studio/.env.example apps/studio/.env
+# Edit apps/studio/.env with your Sanity project credentials
+
 # Start development servers
 pnpm dev
 ```
@@ -74,6 +78,12 @@ Next.js application with:
 
 Sanity CMS studio for content management.
 
+**Environment Variables:**
+- `SANITY_STUDIO_PROJECT_ID`: Your Sanity project ID
+- `SANITY_STUDIO_DATASET`: Your Sanity dataset (e.g., `production`)
+
+Copy [apps/studio/.env.example](apps/studio/.env.example) to `apps/studio/.env` and configure with your credentials.
+
 ### Storybook (`apps/storybook`)
 
 Component documentation and development environment.
@@ -108,7 +118,7 @@ This command:
 Import components from the shared UI package:
 
 ```tsx
-import { Button } from "@workspace/ui/components/button"
+import { Button } from "@workspace/ui/button"
 ```
 
 ## Code Quality & Formatting

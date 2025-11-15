@@ -207,6 +207,8 @@ importers:
 
   tools/biome-config: {}
 
+  tools/scripts: {}
+
   tools/typescript-config: {}
 
 packages:

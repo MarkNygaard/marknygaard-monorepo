@@ -9,6 +9,7 @@
     "format": "turbo format",
     "check": "turbo check",
     "check:unsafe": "turbo check:unsafe",
+    "ui:add": "node tools/scripts/ui-add.js",
     "prepare": "husky"
   },
   "devDependencies": {

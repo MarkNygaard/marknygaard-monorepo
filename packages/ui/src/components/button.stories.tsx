@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { Loader2, Mail } from "lucide-react"
-import { Button } from "./button.js"
+
+import { Button } from "./button"
 
 /**
  * Displays a button or a component that looks like a button.

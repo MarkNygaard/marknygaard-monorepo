@@ -23,8 +23,6 @@ export default async function Page() {
     query: HOMEPAGE_QUERY,
   })
 
-  console.log("Homepage data:", page)
-
   if (!page) notFound()
 
   return (

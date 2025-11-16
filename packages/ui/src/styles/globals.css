@@ -15,11 +15,11 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.8697 0.01 145.49);
-  --primary-foreground: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.1645 0.0086 274.34);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: oklch(0.4648 0.0054 134.88);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -79,8 +79,8 @@
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --muted: oklch(0.2119 0.0025 145.49);
+  --muted-foreground: oklch(0.5949 0.0088 139.44);
   --accent: oklch(0.371 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
@@ -186,5 +186,49 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.underlined {
+  position: relative;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.underlined:focus {
+  outline: none;
+  text-decoration: none !important;
+}
+
+.underlined:after {
+  content: '';
+  height: 1.3px;
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+  transform-origin: left;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  display: block;
+  position: absolute;
+}
+
+.underlined:hover:after,
+.underlined:focus:after,
+.active.underlined:after {
+  background-color: currentColor;
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion) {
+  .underlined:after {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .underlined:hover:after,
+  .underlined:focus:after,
+  .active.underlined:after {
+    opacity: 1;
   }
 }

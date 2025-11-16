@@ -1,11 +1,11 @@
 "use client"
 
-import { ThemeProvider as NextThemesProvider } from "next-themes"
+import { ThemeProvider } from "next-themes"
 import type * as React from "react"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <NextThemesProvider
+    <ThemeProvider
       attribute="class"
       defaultTheme="system"
       disableTransitionOnChange
@@ -13,6 +13,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
     >
       {children}
-    </NextThemesProvider>
+    </ThemeProvider>
   )
 }

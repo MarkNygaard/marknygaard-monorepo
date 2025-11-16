@@ -1,10 +1,10 @@
 import { Inter } from "next/font/google"
 import "@workspace/ui/globals.css"
-import { cn } from "@workspace/ui/lib/utils"
+
+import { cn } from "@workspace/common/cn"
 import { draftMode } from "next/headers"
 import { VisualEditing } from "next-sanity/visual-editing"
 import { DisableDraftMode } from "@/components/DisableDraftMode"
-
 import { Providers } from "@/components/providers"
 import { Footer } from "@/features/footer/components/Footer"
 import { Header } from "@/features/header/components/Header"
@@ -24,10 +24,12 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("font-sans antialiased", inter.className)}>
+      <body className={cn("flex min-h-screen flex-col font-sans antialiased", inter.className)}>
         <Providers>
           <Header {...layoutData.header} />
-          {children}
+          <main className="container mx-auto flex-1 px-4 standalone:pt-safe-top pb-6 sm:pb-16 standalone:md:mt-0 md:py-10 standalone:md:pt-6">
+            <div className="mx-auto max-w-5xl">{children}</div>
+          </main>
           <Footer {...layoutData.footer} />
           {(await draftMode()).isEnabled && (
             <>

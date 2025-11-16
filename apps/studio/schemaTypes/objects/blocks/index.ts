@@ -1,3 +1,3 @@
-import { richTextBlock } from "./richTextBlock";
+import { richTextBlock } from "./richTextBlock"
 
-export const pageBuilderBlocks = [richTextBlock];
+export const pageBuilderBlocks = [richTextBlock]

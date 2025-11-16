@@ -14,522 +14,559 @@
 
 // Source: schema.json
 export type RichTextBlock = {
-  _type: "richTextBlock";
-  content: RichText;
-  blockTitle?: string;
-};
+  _type: "richTextBlock"
+  content: RichText
+  blockTitle?: string
+}
 
-export type PageBuilder = Array<{
-  _key: string;
-} & RichTextBlock>;
+export type PageBuilder = Array<
+  {
+    _key: string
+  } & RichTextBlock
+>
 
-export type RichText = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "inline";
-  listItem?: "number" | "bullet";
-  markDefs?: Array<{
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  caption?: string;
-  _type: "image";
-  _key: string;
-}>;
+export type RichText = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>
+        text?: string
+        _type: "span"
+        _key: string
+      }>
+      style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "inline"
+      listItem?: "number" | "bullet"
+      markDefs?: Array<{
+        href?: string
+        _type: "link"
+        _key: string
+      }>
+      level?: number
+      _type: "block"
+      _key: string
+    }
+  | {
+      asset?: {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      caption?: string
+      _type: "image"
+      _key: string
+    }
+>
 
 export type Seo = {
-  _type: "seo";
-  seoTitle: string;
-  seoDescription: string;
+  _type: "seo"
+  seoTitle: string
+  seoDescription: string
   seoImage?: {
     asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  seoIndexing: "index" | "noindex";
-  seoListVisibility: "show" | "hide";
-};
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  seoIndexing: "index" | "noindex"
+  seoListVisibility: "show" | "hide"
+}
 
 export type Og = {
-  _type: "og";
-  ogTitle?: string;
-  ogDescription?: string;
-};
+  _type: "og"
+  ogTitle?: string
+  ogDescription?: string
+}
 
 export type SocialLink = {
-  _type: "socialLink";
+  _type: "socialLink"
   logo?: {
     asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  externalLink: string;
-};
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  externalLink: string
+}
 
 export type Link = {
-  _type: "link";
-  name: string;
-  linkType: "internal" | "external";
+  _type: "link"
+  name: string
+  linkType: "internal" | "external"
   internalLink?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  };
-  externalLink?: string;
-  openInNewTab?: boolean;
-};
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: "page"
+  }
+  externalLink?: string
+  openInNewTab?: boolean
+}
 
 export type Footer = {
-  _id: string;
-  _type: "footer";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  links: Array<{
-    _key: string;
-  } & SocialLink>;
-  copyrightText: string;
-};
+  _id: string
+  _type: "footer"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  links: Array<
+    {
+      _key: string
+    } & SocialLink
+  >
+  copyrightText: string
+}
 
 export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
+  _type: "sanity.imageCrop"
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
 
 export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
+  _type: "sanity.imageHotspot"
+  x: number
+  y: number
+  height: number
+  width: number
+}
 
 export type Header = {
-  _id: string;
-  _type: "header";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
+  _id: string
+  _type: "header"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
   logo?: {
     asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  links: Array<{
-    _key: string;
-  } & Link>;
-};
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  links: Array<
+    {
+      _key: string
+    } & Link
+  >
+}
 
 export type HomePage = {
-  _id: string;
-  _type: "homePage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  pageBuilder?: PageBuilder;
-  seo?: Seo;
-  og?: Og;
-};
+  _id: string
+  _type: "homePage"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  pageBuilder?: PageBuilder
+  seo?: Seo
+  og?: Og
+}
 
 export type Page = {
-  _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  slug: Slug;
-  pageBuilder?: PageBuilder;
-  seo?: Seo;
-  og?: Og;
-};
+  _id: string
+  _type: "page"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  pageBuilder?: PageBuilder
+  seo?: Seo
+  og?: Og
+}
 
 export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
+  _type: "slug"
+  current: string
+  source?: string
+}
 
 export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
-  background?: string;
-  foreground?: string;
-  population?: number;
-  title?: string;
-};
+  _type: "sanity.imagePaletteSwatch"
+  background?: string
+  foreground?: string
+  population?: number
+  title?: string
+}
 
 export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
-  darkMuted?: SanityImagePaletteSwatch;
-  lightVibrant?: SanityImagePaletteSwatch;
-  darkVibrant?: SanityImagePaletteSwatch;
-  vibrant?: SanityImagePaletteSwatch;
-  dominant?: SanityImagePaletteSwatch;
-  lightMuted?: SanityImagePaletteSwatch;
-  muted?: SanityImagePaletteSwatch;
-};
+  _type: "sanity.imagePalette"
+  darkMuted?: SanityImagePaletteSwatch
+  lightVibrant?: SanityImagePaletteSwatch
+  darkVibrant?: SanityImagePaletteSwatch
+  vibrant?: SanityImagePaletteSwatch
+  dominant?: SanityImagePaletteSwatch
+  lightMuted?: SanityImagePaletteSwatch
+  muted?: SanityImagePaletteSwatch
+}
 
 export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
-  height: number;
-  width: number;
-  aspectRatio: number;
-};
+  _type: "sanity.imageDimensions"
+  height: number
+  width: number
+  aspectRatio: number
+}
 
 export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
+  _type: "sanity.imageMetadata"
+  location?: Geopoint
+  dimensions?: SanityImageDimensions
+  palette?: SanityImagePalette
+  lqip?: string
+  blurHash?: string
+  hasAlpha?: boolean
+  isOpaque?: boolean
+}
 
 export type SanityFileAsset = {
-  _id: string;
-  _type: "sanity.fileAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
+  _id: string
+  _type: "sanity.fileAsset"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  originalFilename?: string
+  label?: string
+  title?: string
+  description?: string
+  altText?: string
+  sha1hash?: string
+  extension?: string
+  mimeType?: string
+  size?: number
+  assetId?: string
+  uploadId?: string
+  path?: string
+  url?: string
+  source?: SanityAssetSourceData
+}
 
 export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
+  _type: "sanity.assetSourceData"
+  name?: string
+  id?: string
+  url?: string
+}
 
 export type SanityImageAsset = {
-  _id: string;
-  _type: "sanity.imageAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  metadata?: SanityImageMetadata;
-  source?: SanityAssetSourceData;
-};
+  _id: string
+  _type: "sanity.imageAsset"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  originalFilename?: string
+  label?: string
+  title?: string
+  description?: string
+  altText?: string
+  sha1hash?: string
+  extension?: string
+  mimeType?: string
+  size?: number
+  assetId?: string
+  uploadId?: string
+  path?: string
+  url?: string
+  metadata?: SanityImageMetadata
+  source?: SanityAssetSourceData
+}
 
 export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
+  _type: "geopoint"
+  lat?: number
+  lng?: number
+  alt?: number
+}
 
-export type AllSanitySchemaTypes = RichTextBlock | PageBuilder | RichText | Seo | Og | SocialLink | Link | Footer | SanityImageCrop | SanityImageHotspot | Header | HomePage | Page | Slug | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
-export declare const internalGroqTypeReferenceTo: unique symbol;
+export type AllSanitySchemaTypes =
+  | RichTextBlock
+  | PageBuilder
+  | RichText
+  | Seo
+  | Og
+  | SocialLink
+  | Link
+  | Footer
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Header
+  | HomePage
+  | Page
+  | Slug
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint
+export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ../web/lib/sanity/queries.ts
 // Variable: HOMEPAGE_QUERY
 // Query: *[_type == "homePage"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type HOMEPAGE_QUERYResult = {
-  _id: string;
-  _type: "homePage";
-  title: string;
+  _id: string
+  _type: "homePage"
+  title: string
   pageBuilder: Array<{
-    _type: "richTextBlock";
-    _key: string;
-    content: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }> | null;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset: {
-        _id: string;
-        url: string | null;
-        altText: string | null;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
-        } | null;
-      } | null;
-      media?: unknown;
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      caption?: string;
-      _type: "image";
-      _key: string;
-      alt: "";
-      markDefs: null;
-    }>;
-    blockTitle: string | null;
-  }> | null;
+    _type: "richTextBlock"
+    _key: string
+    content: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: "span"
+            _key: string
+          }>
+          style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
+          listItem?: "bullet" | "number"
+          markDefs: Array<{
+            href?: string
+            _type: "link"
+            _key: string
+          }> | null
+          level?: number
+          _type: "block"
+          _key: string
+        }
+      | {
+          asset: {
+            _id: string
+            url: string | null
+            altText: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number
+                height: number
+                aspectRatio: number
+              } | null
+            } | null
+          } | null
+          media?: unknown
+          hotspot: SanityImageHotspot | null
+          crop: SanityImageCrop | null
+          caption?: string
+          _type: "image"
+          _key: string
+          alt: ""
+          markDefs: null
+        }
+    >
+    blockTitle: string | null
+  }> | null
   seo: {
-    _type: "seo";
-    seoTitle: string;
-    seoDescription: string;
+    _type: "seo"
+    seoTitle: string
+    seoDescription: string
     seoImage: {
       asset: {
-        _id: string;
-        url: string | null;
-        altText: string | null;
+        _id: string
+        url: string | null
+        altText: string | null
         metadata: {
           dimensions: {
-            width: number;
-            height: number;
-          } | null;
-        } | null;
-      } | null;
-      alt: null;
-      crop: SanityImageCrop | null;
-      hotspot: SanityImageHotspot | null;
-    } | null;
-    seoIndexing: "index" | "noindex";
-    seoListVisibility: "hide" | "show";
-  } | null;
+            width: number
+            height: number
+          } | null
+        } | null
+      } | null
+      alt: null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    } | null
+    seoIndexing: "index" | "noindex"
+    seoListVisibility: "hide" | "show"
+  } | null
   og: {
-    ogTitle: string | null;
-    ogDescription: string | null;
-  } | null;
-  _createdAt: string;
-  _updatedAt: string;
-} | null;
+    ogTitle: string | null
+    ogDescription: string | null
+  } | null
+  _createdAt: string
+  _updatedAt: string
+} | null
 // Variable: PAGE_QUERY
 // Query: *[_type == "page"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type PAGE_QUERYResult = {
-  _id: string;
-  _type: "page";
-  title: string;
+  _id: string
+  _type: "page"
+  title: string
   pageBuilder: Array<{
-    _type: "richTextBlock";
-    _key: string;
-    content: Array<{
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }> | null;
-      level?: number;
-      _type: "block";
-      _key: string;
-    } | {
-      asset: {
-        _id: string;
-        url: string | null;
-        altText: string | null;
-        metadata: {
-          lqip: string | null;
-          dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
-        } | null;
-      } | null;
-      media?: unknown;
-      hotspot: SanityImageHotspot | null;
-      crop: SanityImageCrop | null;
-      caption?: string;
-      _type: "image";
-      _key: string;
-      alt: "";
-      markDefs: null;
-    }>;
-    blockTitle: string | null;
-  }> | null;
+    _type: "richTextBlock"
+    _key: string
+    content: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: "span"
+            _key: string
+          }>
+          style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
+          listItem?: "bullet" | "number"
+          markDefs: Array<{
+            href?: string
+            _type: "link"
+            _key: string
+          }> | null
+          level?: number
+          _type: "block"
+          _key: string
+        }
+      | {
+          asset: {
+            _id: string
+            url: string | null
+            altText: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number
+                height: number
+                aspectRatio: number
+              } | null
+            } | null
+          } | null
+          media?: unknown
+          hotspot: SanityImageHotspot | null
+          crop: SanityImageCrop | null
+          caption?: string
+          _type: "image"
+          _key: string
+          alt: ""
+          markDefs: null
+        }
+    >
+    blockTitle: string | null
+  }> | null
   seo: {
-    _type: "seo";
-    seoTitle: string;
-    seoDescription: string;
+    _type: "seo"
+    seoTitle: string
+    seoDescription: string
     seoImage: {
       asset: {
-        _id: string;
-        url: string | null;
-        altText: string | null;
+        _id: string
+        url: string | null
+        altText: string | null
         metadata: {
           dimensions: {
-            width: number;
-            height: number;
-          } | null;
-        } | null;
-      } | null;
-      alt: null;
-      crop: SanityImageCrop | null;
-      hotspot: SanityImageHotspot | null;
-    } | null;
-    seoIndexing: "index" | "noindex";
-    seoListVisibility: "hide" | "show";
-  } | null;
+            width: number
+            height: number
+          } | null
+        } | null
+      } | null
+      alt: null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    } | null
+    seoIndexing: "index" | "noindex"
+    seoListVisibility: "hide" | "show"
+  } | null
   og: {
-    ogTitle: string | null;
-    ogDescription: string | null;
-  } | null;
-  _createdAt: string;
-  _updatedAt: string;
-} | null;
+    ogTitle: string | null
+    ogDescription: string | null
+  } | null
+  _createdAt: string
+  _updatedAt: string
+} | null
 // Variable: LAYOUT_QUERY
 // Query: {    "header": *[_type == "header"][0] {      _id,      logo {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      },      links[] {          _type,  _key,  name,  linkType,  "openInNewTab": coalesce(openInNewTab, false),  internalLink-> {    _id,    _type,    title,    slug {      _type,      current    }  },  "externalLink": coalesce(externalLink, "")      }    },    "footer": *[_type == "footer"][0] {      _id,      links[] {          _key,  logo {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  externalLink      },      copyrightText    }  }
 export type LAYOUT_QUERYResult = {
   header: {
-    _id: string;
+    _id: string
     logo: {
       asset: {
-        _id: string;
-        url: string | null;
-        altText: string | null;
+        _id: string
+        url: string | null
+        altText: string | null
         metadata: {
-          lqip: string | null;
+          lqip: string | null
           dimensions: {
-            width: number;
-            height: number;
-            aspectRatio: number;
-          } | null;
-        } | null;
-      } | null;
-      alt: "";
-      crop: SanityImageCrop | null;
-      hotspot: SanityImageHotspot | null;
-    } | null;
+            width: number
+            height: number
+            aspectRatio: number
+          } | null
+        } | null
+      } | null
+      alt: ""
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    } | null
     links: Array<{
-      _type: "link";
-      _key: string;
-      name: string;
-      linkType: "external" | "internal";
-      openInNewTab: boolean | false;
+      _type: "link"
+      _key: string
+      name: string
+      linkType: "external" | "internal"
+      openInNewTab: boolean | false
       internalLink: {
-        _id: string;
-        _type: "page";
-        title: string;
+        _id: string
+        _type: "page"
+        title: string
         slug: {
-          _type: "slug";
-          current: string;
-        };
-      } | null;
-      externalLink: string | "";
-    }>;
-  } | null;
+          _type: "slug"
+          current: string
+        }
+      } | null
+      externalLink: string | ""
+    }>
+  } | null
   footer: {
-    _id: string;
+    _id: string
     links: Array<{
-      _key: string;
+      _key: string
       logo: {
         asset: {
-          _id: string;
-          url: string | null;
-          altText: string | null;
+          _id: string
+          url: string | null
+          altText: string | null
           metadata: {
-            lqip: string | null;
+            lqip: string | null
             dimensions: {
-              width: number;
-              height: number;
-              aspectRatio: number;
-            } | null;
-          } | null;
-        } | null;
-        alt: "";
-        crop: SanityImageCrop | null;
-        hotspot: SanityImageHotspot | null;
-      } | null;
-      externalLink: string;
-    }>;
-    copyrightText: string;
-  } | null;
-};
+              width: number
+              height: number
+              aspectRatio: number
+            } | null
+          } | null
+        } | null
+        alt: ""
+        crop: SanityImageCrop | null
+        hotspot: SanityImageHotspot | null
+      } | null
+      externalLink: string
+    }>
+    copyrightText: string
+  } | null
+}
 
 // Query TypeMap
-import "@sanity/client";
+import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"homePage\"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == \"richTextBlock\" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == \"image\" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n": HOMEPAGE_QUERYResult;
-    "\n  *[_type == \"page\"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == \"richTextBlock\" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == \"image\" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n": PAGE_QUERYResult;
-    "\n  {\n    \"header\": *[_type == \"header\"][0] {\n      _id,\n      logo {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n      },\n      links[] {\n        \n  _type,\n  _key,\n  name,\n  linkType,\n  \"openInNewTab\": coalesce(openInNewTab, false),\n  internalLink-> {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    }\n  },\n  \"externalLink\": coalesce(externalLink, \"\")\n\n      }\n    },\n    \"footer\": *[_type == \"footer\"][0] {\n      _id,\n      links[] {\n        \n  _key,\n  logo {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  externalLink\n\n      },\n      copyrightText\n    }\n  }\n": LAYOUT_QUERYResult;
+    '\n  *[_type == "homePage"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': HOMEPAGE_QUERYResult
+    '\n  *[_type == "page"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': PAGE_QUERYResult
+    '\n  {\n    "header": *[_type == "header"][0] {\n      _id,\n      logo {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      },\n      links[] {\n        \n  _type,\n  _key,\n  name,\n  linkType,\n  "openInNewTab": coalesce(openInNewTab, false),\n  internalLink-> {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    }\n  },\n  "externalLink": coalesce(externalLink, "")\n\n      }\n    },\n    "footer": *[_type == "footer"][0] {\n      _id,\n      links[] {\n        \n  _key,\n  logo {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  externalLink\n\n      },\n      copyrightText\n    }\n  }\n': LAYOUT_QUERYResult
   }
 }

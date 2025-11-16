@@ -1,5 +1,5 @@
 {
-	"path": "../web/lib/**/*.{ts,tsx,js,jsx}",
-	"schema": "./schema.json",
-	"generates": "../web/types/sanity.ts"
+  "path": "../web/lib/**/*.{ts,tsx,js,jsx}",
+  "schema": "./schema.json",
+  "generates": "../web/types/sanity.ts"
 }

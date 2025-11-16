@@ -1,4 +1,3 @@
-import { Grid, GridItem } from "@workspace/ui/grid"
 import { RichText } from "@/components/Elements/RichText"
 import type { PagebuilderType } from "@/features/page-builder/types/pagebuilder"
 
@@ -9,11 +8,5 @@ export function RichTextBlock({ content }: RichTextBlockProps) {
     return null
   }
 
-  return (
-    <Grid className="px-4 py-8 lg:px-0">
-      <GridItem colSpan="8" asChild>
-        <RichText value={content} />
-      </GridItem>
-    </Grid>
-  )
+  return <RichText value={content} />
 }

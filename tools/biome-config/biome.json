@@ -8,18 +8,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": [
-      "src/**/*.{ts,tsx,js,jsx}",
-      "app/**/*.{ts,tsx,js,jsx}",
-      "pages/**/*.{ts,tsx,js,jsx}",
-      "components/**/*.{ts,tsx,js,jsx}",
-      "lib/**/*.{ts,tsx,js,jsx}",
-      ".storybook/**/*.{ts,tsx,js,jsx}",
-      "*.ts",
-      "*.tsx",
-      "*.js",
-      "*.jsx"
-    ]
+    "includes": ["**/*.{ts,tsx,js,jsx,json}"]
   },
   "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
   "formatter": {

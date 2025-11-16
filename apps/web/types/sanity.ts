@@ -107,12 +107,19 @@ export type Link = {
   _type: "link"
   name: string
   linkType: "internal" | "external"
-  internalLink?: {
-    _ref: string
-    _type: "reference"
-    _weak?: boolean
-    [internalGroqTypeReferenceTo]?: "page"
-  }
+  internalLink?:
+    | {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "homePage"
+      }
+    | {
+        _ref: string
+        _type: "reference"
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: "page"
+      }
   externalLink?: string
   openInNewTab?: boolean
 }
@@ -179,9 +186,16 @@ export type HomePage = {
   _updatedAt: string
   _rev: string
   title: string
+  slug?: Slug
   pageBuilder?: PageBuilder
   seo?: Seo
   og?: Og
+}
+
+export type Slug = {
+  _type: "slug"
+  current: string
+  source?: string
 }
 
 export type Page = {
@@ -195,12 +209,6 @@ export type Page = {
   pageBuilder?: PageBuilder
   seo?: Seo
   og?: Og
-}
-
-export type Slug = {
-  _type: "slug"
-  current: string
-  source?: string
 }
 
 export type SanityImagePaletteSwatch = {
@@ -312,8 +320,8 @@ export type AllSanitySchemaTypes =
   | SanityImageHotspot
   | Header
   | HomePage
-  | Page
   | Slug
+  | Page
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -521,15 +529,26 @@ export type LAYOUT_QUERYResult = {
       name: string
       linkType: "external" | "internal"
       openInNewTab: boolean | false
-      internalLink: {
-        _id: string
-        _type: "page"
-        title: string
-        slug: {
-          _type: "slug"
-          current: string
-        }
-      } | null
+      internalLink:
+        | {
+            _id: string
+            _type: "homePage"
+            title: string
+            slug: {
+              _type: "slug"
+              current: string
+            } | null
+          }
+        | {
+            _id: string
+            _type: "page"
+            title: string
+            slug: {
+              _type: "slug"
+              current: string
+            }
+          }
+        | null
       externalLink: string | ""
     }>
   } | null

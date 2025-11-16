@@ -81,6 +81,88 @@ export type Og = {
   ogDescription?: string;
 };
 
+export type SocialLink = {
+  _type: "socialLink";
+  logo?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  externalLink: string;
+};
+
+export type Link = {
+  _type: "link";
+  name: string;
+  linkType: "internal" | "external";
+  internalLink?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+  externalLink?: string;
+  openInNewTab?: boolean;
+};
+
+export type Footer = {
+  _id: string;
+  _type: "footer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  links: Array<{
+    _key: string;
+  } & SocialLink>;
+  copyrightText: string;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type Header = {
+  _id: string;
+  _type: "header";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  logo?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  links: Array<{
+    _key: string;
+  } & Link>;
+};
+
 export type HomePage = {
   _id: string;
   _type: "homePage";
@@ -104,22 +186,6 @@ export type Page = {
   pageBuilder?: PageBuilder;
   seo?: Seo;
   og?: Og;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
 };
 
 export type Slug = {
@@ -224,7 +290,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = RichTextBlock | PageBuilder | RichText | Seo | Og | HomePage | Page | SanityImageCrop | SanityImageHotspot | Slug | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = RichTextBlock | PageBuilder | RichText | Seo | Og | SocialLink | Link | Footer | SanityImageCrop | SanityImageHotspot | Header | HomePage | Page | Slug | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/lib/sanity/queries.ts
 // Variable: HOMEPAGE_QUERY
@@ -389,6 +455,74 @@ export type PAGE_QUERYResult = {
   _createdAt: string;
   _updatedAt: string;
 } | null;
+// Variable: LAYOUT_QUERY
+// Query: {    "header": *[_type == "header"][0] {      _id,      logo {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      },      links[] {          _type,  _key,  name,  linkType,  "openInNewTab": coalesce(openInNewTab, false),  internalLink-> {    _id,    _type,    title,    slug {      _type,      current    }  },  "externalLink": coalesce(externalLink, "")      }    },    "footer": *[_type == "footer"][0] {      _id,      links[] {          _key,  logo {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  externalLink      },      copyrightText    }  }
+export type LAYOUT_QUERYResult = {
+  header: {
+    _id: string;
+    logo: {
+      asset: {
+        _id: string;
+        url: string | null;
+        altText: string | null;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+            aspectRatio: number;
+          } | null;
+        } | null;
+      } | null;
+      alt: "";
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+    links: Array<{
+      _type: "link";
+      _key: string;
+      name: string;
+      linkType: "external" | "internal";
+      openInNewTab: boolean | false;
+      internalLink: {
+        _id: string;
+        _type: "page";
+        title: string;
+        slug: {
+          _type: "slug";
+          current: string;
+        };
+      } | null;
+      externalLink: string | "";
+    }>;
+  } | null;
+  footer: {
+    _id: string;
+    links: Array<{
+      _key: string;
+      logo: {
+        asset: {
+          _id: string;
+          url: string | null;
+          altText: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number;
+              height: number;
+              aspectRatio: number;
+            } | null;
+          } | null;
+        } | null;
+        alt: "";
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+      } | null;
+      externalLink: string;
+    }>;
+    copyrightText: string;
+  } | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
@@ -396,5 +530,6 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"homePage\"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == \"richTextBlock\" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == \"image\" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n": HOMEPAGE_QUERYResult;
     "\n  *[_type == \"page\"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == \"richTextBlock\" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == \"image\" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n": PAGE_QUERYResult;
+    "\n  {\n    \"header\": *[_type == \"header\"][0] {\n      _id,\n      logo {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n      },\n      links[] {\n        \n  _type,\n  _key,\n  name,\n  linkType,\n  \"openInNewTab\": coalesce(openInNewTab, false),\n  internalLink-> {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    }\n  },\n  \"externalLink\": coalesce(externalLink, \"\")\n\n      }\n    },\n    \"footer\": *[_type == \"footer\"][0] {\n      _id,\n      links[] {\n        \n  _key,\n  logo {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  \"alt\": coalesce(alt, \"\"),\n  crop,\n  hotspot\n\n  },\n  externalLink\n\n      },\n      copyrightText\n    }\n  }\n": LAYOUT_QUERYResult;
   }
 }

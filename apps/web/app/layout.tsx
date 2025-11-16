@@ -4,8 +4,12 @@ import { cn } from "@workspace/ui/lib/utils"
 import { draftMode } from "next/headers"
 import { VisualEditing } from "next-sanity/visual-editing"
 import { DisableDraftMode } from "@/components/DisableDraftMode"
+
 import { Providers } from "@/components/providers"
-import { SanityLive } from "@/lib/sanity/live"
+import { Footer } from "@/features/footer/components/Footer"
+import { Header } from "@/features/header/components/Header"
+import { SanityLive, sanityFetch } from "@/lib/sanity/live"
+import { LAYOUT_QUERY } from "@/lib/sanity/queries"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -14,11 +18,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { data: layoutData } = await sanityFetch({
+    query: LAYOUT_QUERY,
+  })
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("font-sans antialiased", inter.className)}>
         <Providers>
+          <Header {...layoutData.header} />
           {children}
+          <Footer {...layoutData.footer} />
           {(await draftMode()).isEnabled && (
             <>
               <VisualEditing />

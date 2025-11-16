@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from "next-themes"
 import type * as React from "react"
+import ActiveSectionContextProvider from "@/context/ActiveSectionContext"
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +13,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableColorScheme
       enableSystem
     >
-      {children}
+      <ActiveSectionContextProvider>{children}</ActiveSectionContextProvider>
     </ThemeProvider>
   )
 }

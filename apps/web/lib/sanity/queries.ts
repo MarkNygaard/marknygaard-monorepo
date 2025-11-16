@@ -69,10 +69,72 @@ const richTextBlock = /* groq */ `
   blockTitle,
 `
 
+const sectionBlock = /* groq */ `
+  _type,
+  _key,
+  name,
+  content[]{ ${richTextFragment} },
+  sections[]{
+    _type,
+    _key,
+    name,
+    content[]{ ${richTextFragment} },
+    sections[]{
+      _type,
+      _key,
+      name,
+      content[]{ ${richTextFragment} },
+      sections[]{
+        _type,
+        _key,
+        name,
+        content[]{ ${richTextFragment} }
+      }
+    }
+  }
+`
+
+const blogOverviewBlock = /* groq */ `
+  _type,
+  _key,
+  title
+`
+
+const postFragment = /* groq */ `
+  _id,
+  title,
+  slug {
+    current
+  },
+  coverImage {
+    ${imageFragment}
+  },
+  excerpt,
+  author-> {
+    _id,
+    name,
+    picture {
+      ${imageFragment}
+    }
+  },
+  publishedAt
+`
+
 const pageBuilderFragment = /* groq */ `
   pageBuilder[]{
     _type == "richTextBlock" => {
       ${richTextBlock}
+    },
+    _type == "blogOverviewBlock" => {
+      ${blogOverviewBlock}
+    }
+  }
+`
+
+const postPageBuilderFragment = /* groq */ `
+  pageBuilder[]{
+    _type == "sectionBlock" => {
+      ${sectionBlock}
     }
   }
 `
@@ -117,7 +179,7 @@ export const HOMEPAGE_QUERY = defineQuery(`
 `)
 
 export const PAGE_QUERY = defineQuery(`
-  *[_type == "page"][0] {
+  *[_type == "page" && slug.current == $slug][0] {
     _id,
     _type,
     title,
@@ -125,7 +187,12 @@ export const PAGE_QUERY = defineQuery(`
     ${seoFragment},
     ${ogFragment},
     _createdAt,
-    _updatedAt
+    _updatedAt,
+    "posts": select(
+      count(pageBuilder[_type == "blogOverviewBlock"]) > 0 => *[_type == "post"] | order(publishedAt desc) {
+        ${postFragment}
+      }
+    )
   }
 `)
 
@@ -147,5 +214,56 @@ export const LAYOUT_QUERY = defineQuery(`
       },
       copyrightText
     }
+  }
+`)
+
+export const POST_QUERY = defineQuery(`
+  *[_type == "post" && slug.current == $slug][0] {
+    _id,
+    _type,
+    title,
+    slug {
+      _type,
+      current
+    },
+    coverImage {
+      ${imageFragment}
+    },
+    excerpt,
+    author-> {
+      _id,
+      name,
+      picture {
+        ${imageFragment}
+      }
+    },
+    publishedAt,
+    ${postPageBuilderFragment},
+    ${seoFragment},
+    ${ogFragment},
+    _createdAt,
+    _updatedAt
+  }
+`)
+
+export const ALL_POSTS_QUERY = defineQuery(`
+  *[_type == "post"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug {
+      current
+    },
+    coverImage {
+      ${imageFragment}
+    },
+    excerpt,
+    author-> {
+      _id,
+      name,
+      picture {
+        ${imageFragment}
+      }
+    },
+    publishedAt
   }
 `)

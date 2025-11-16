@@ -11,6 +11,7 @@ type AspectRatio =
   | "portrait" // 3:4
   | "wide" // 3:2
   | "cinema" // 2.35:1
+  | "cover" // 2:1
 
 export interface SanityImageProps
   extends Omit<
@@ -62,6 +63,8 @@ const getAspectRatioValue = (ratio: AspectRatio): string => {
       return "3/2"
     case "cinema":
       return "2.35/1"
+    case "cover":
+      return "2/1"
   }
 }
 

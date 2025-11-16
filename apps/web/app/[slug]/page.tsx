@@ -39,6 +39,7 @@ export default async function Page({ params }: PageProps<"/[slug]">) {
       blocks={Array.isArray(page.pageBuilder) ? page.pageBuilder : []}
       documentId={page._id}
       documentType={page._type}
+      posts={page.posts}
     />
   )
 }

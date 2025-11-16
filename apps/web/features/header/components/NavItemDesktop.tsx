@@ -17,7 +17,9 @@ export function NavItemDesktop({ data, children, className }: BaseLinkProps) {
   const { name, linkType, internalLink, externalLink } = data
   const href =
     linkType === "internal" && internalLink?.slug?.current
-      ? internalLink.slug.current
+      ? internalLink.slug.current.startsWith("/")
+        ? internalLink.slug.current
+        : `/${internalLink.slug.current}`
       : externalLink || "/"
   const path = usePathname()
   const isActive = path === (href.startsWith("/") ? href : `/${href}`)
@@ -45,8 +47,8 @@ export function NavItemDesktop({ data, children, className }: BaseLinkProps) {
       rel={externalLink ? "noopener noreferrer" : undefined}
       className={cn(
         isActive
-          ? "active text-primary-foreground transition dark:text-gray-200"
-          : "text-muted-foreground transition-all duration-300 ease-out hover:text-primary-foreground hover:ease-in dark:text-gray-500 dark:hover:text-gray-100",
+          ? "active text-primary-foreground transition dark:text-secondary-foreground"
+          : "text-muted-foreground transition-all duration-300 ease-out hover:text-primary-foreground hover:ease-in dark:text-secondary-foreground/50 dark:hover:text-secondary-foreground",
         "underlined h-fit font-light text-base",
         className,
       )}

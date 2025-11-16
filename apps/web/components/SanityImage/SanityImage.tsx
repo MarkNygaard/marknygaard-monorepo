@@ -94,9 +94,8 @@ export function SanityImage({
     ratio: AspectRatio,
   ) => {
     const ratioValue = getAspectRatioValue(ratio)
-    const [w, h] = ratioValue.split("/").map(Number)
-    // biome-ignore lint: no-non-null-assertion
-    const targetRatio = w! / h!
+    const [widthPart = 1, heightPart = 1] = ratioValue.split("/").map(Number)
+    const targetRatio = widthPart / heightPart
 
     // Calculate dimensions that fit within both width and height constraints
     const widthBasedHeight = maxWidth / targetRatio
@@ -120,9 +119,8 @@ export function SanityImage({
   // Helper to calculate height from width and aspect ratio
   const calculateHeightFromWidth = (targetWidth: number, ratio: AspectRatio) => {
     const ratioValue = getAspectRatioValue(ratio)
-    const [w, h] = ratioValue.split("/").map(Number)
-    // biome-ignore lint: no-non-null-assertion
-    return Math.round(targetWidth * (h! / w!))
+    const [widthPart = 1, heightPart = 1] = ratioValue.split("/").map(Number)
+    return Math.round(targetWidth * (heightPart / widthPart))
   }
 
   // Use provided dimensions or fall back to original or calculate from aspect ratio

@@ -44,8 +44,8 @@ function renderBlock(block: PageBuilderBlock, index: number) {
     )
   }
 
-  // biome-ignore lint: using 'any' for dynamic block props
-  const blockElement = <Component {...(block as any)} index={index} />
+  const componentProps = { ...block, index }
+  const blockElement = <Component {...componentProps} />
 
   return <div key={`${block._type}-${block._key}`}>{blockElement}</div>
 }

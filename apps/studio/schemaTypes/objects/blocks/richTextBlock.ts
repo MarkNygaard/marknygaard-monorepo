@@ -1,6 +1,16 @@
 import { FileText } from "lucide-react"
 import { defineField, defineType } from "sanity"
 
+interface PortableTextChild {
+  _type?: string
+  text?: string
+}
+
+interface PortableTextBlock {
+  _type: string
+  children?: PortableTextChild[]
+}
+
 export const richTextBlock = defineType({
   name: "richTextBlock",
   title: "Rich Text",
@@ -29,24 +39,23 @@ export const richTextBlock = defineType({
       blockTitle: "blockTitle",
     },
     prepare({ content, blockTitle }) {
+      const blocks = content as PortableTextBlock[] | undefined
+
       const textContent =
-        content && content.length > 0
-          ? // biome-ignore lint: false positive - allow find for block or paragraph type
-            content.find((block: any) => block._type === "block" || block._type === "paragraph")
+        blocks && blocks.length > 0
+          ? blocks.find((block) => block._type === "block" || block._type === "paragraph")
           : null
 
       const previewText = textContent?.children
         ? textContent.children
-            // biome-ignore lint: false positive - filtering children to extract text nodes
-            .filter((child: any) => child.text)
-            // biome-ignore lint: false positive - mapping children to extract text nodes
-            .map((child: any) => child.text)
+            .filter(
+              (child): child is PortableTextChild & { text: string } =>
+                typeof child.text === "string",
+            )
+            .map((child) => child.text)
             .join(" ")
             .slice(0, 100) +
-          // biome-ignore lint: false positive - allow ellipsis for long text nodes
-          (textContent.children.some((child: any) => child.text && child.text.length > 100)
-            ? "..."
-            : "")
+          (textContent.children.some((child) => child.text && child.text.length > 100) ? "..." : "")
         : "Empty rich text block"
 
       return {

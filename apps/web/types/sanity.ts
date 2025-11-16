@@ -13,16 +13,41 @@
  */
 
 // Source: schema.json
+export type BlogOverviewBlock = {
+  _type: "blogOverviewBlock"
+  title?: string
+}
+
+export type SectionBlock = {
+  _type: "sectionBlock"
+  name: string
+  content?: RichText
+  sections?: Array<
+    {
+      _key: string
+    } & SectionBlock
+  >
+}
+
 export type RichTextBlock = {
   _type: "richTextBlock"
   content: RichText
   blockTitle?: string
 }
 
-export type PageBuilder = Array<
+export type PostPageBuilder = Array<
   {
     _key: string
-  } & RichTextBlock
+  } & SectionBlock
+>
+
+export type PageBuilder = Array<
+  | ({
+      _key: string
+    } & RichTextBlock)
+  | ({
+      _key: string
+    } & BlogOverviewBlock)
 >
 
 export type RichText = Array<
@@ -198,6 +223,60 @@ export type Slug = {
   source?: string
 }
 
+export type Post = {
+  _id: string
+  _type: "post"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  coverImage: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+  excerpt: string
+  author: {
+    _ref: string
+    _type: "reference"
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: "author"
+  }
+  publishedAt: string
+  pageBuilder?: PostPageBuilder
+  seo?: Seo
+  og?: Og
+}
+
+export type Author = {
+  _id: string
+  _type: "author"
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  picture: {
+    asset?: {
+      _ref: string
+      _type: "reference"
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: "image"
+  }
+}
+
 export type Page = {
   _id: string
   _type: "page"
@@ -308,7 +387,10 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | BlogOverviewBlock
+  | SectionBlock
   | RichTextBlock
+  | PostPageBuilder
   | PageBuilder
   | RichText
   | Seo
@@ -321,6 +403,8 @@ export type AllSanitySchemaTypes =
   | Header
   | HomePage
   | Slug
+  | Post
+  | Author
   | Page
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -333,59 +417,66 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ../web/lib/sanity/queries.ts
 // Variable: HOMEPAGE_QUERY
-// Query: *[_type == "homePage"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
+// Query: *[_type == "homePage"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    },    _type == "blogOverviewBlock" => {        _type,  _key,  title    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type HOMEPAGE_QUERYResult = {
   _id: string
   _type: "homePage"
   title: string
-  pageBuilder: Array<{
-    _type: "richTextBlock"
-    _key: string
-    content: Array<
-      | {
-          children?: Array<{
-            marks?: Array<string>
-            text?: string
-            _type: "span"
-            _key: string
-          }>
-          style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
-          listItem?: "bullet" | "number"
-          markDefs: Array<{
-            href?: string
-            _type: "link"
-            _key: string
-          }> | null
-          level?: number
-          _type: "block"
-          _key: string
-        }
-      | {
-          asset: {
-            _id: string
-            url: string | null
-            altText: string | null
-            metadata: {
-              lqip: string | null
-              dimensions: {
-                width: number
-                height: number
-                aspectRatio: number
+  pageBuilder: Array<
+    | {
+        _type: "blogOverviewBlock"
+        _key: string
+        title: string | null
+      }
+    | {
+        _type: "richTextBlock"
+        _key: string
+        content: Array<
+          | {
+              children?: Array<{
+                marks?: Array<string>
+                text?: string
+                _type: "span"
+                _key: string
+              }>
+              style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
+              listItem?: "bullet" | "number"
+              markDefs: Array<{
+                href?: string
+                _type: "link"
+                _key: string
+              }> | null
+              level?: number
+              _type: "block"
+              _key: string
+            }
+          | {
+              asset: {
+                _id: string
+                url: string | null
+                altText: string | null
+                metadata: {
+                  lqip: string | null
+                  dimensions: {
+                    width: number
+                    height: number
+                    aspectRatio: number
+                  } | null
+                } | null
               } | null
-            } | null
-          } | null
-          media?: unknown
-          hotspot: SanityImageHotspot | null
-          crop: SanityImageCrop | null
-          caption?: string
-          _type: "image"
-          _key: string
-          alt: ""
-          markDefs: null
-        }
-    >
-    blockTitle: string | null
-  }> | null
+              media?: unknown
+              hotspot: SanityImageHotspot | null
+              crop: SanityImageCrop | null
+              caption?: string
+              _type: "image"
+              _key: string
+              alt: ""
+              markDefs: null
+            }
+        >
+        blockTitle: string | null
+      }
+  > | null
   seo: {
     _type: "seo"
     seoTitle: string
@@ -417,59 +508,66 @@ export type HOMEPAGE_QUERYResult = {
   _updatedAt: string
 } | null
 // Variable: PAGE_QUERY
-// Query: *[_type == "page"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
+// Query: *[_type == "page"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  blockTitle,    },    _type == "blogOverviewBlock" => {        _type,  _key,  title    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type PAGE_QUERYResult = {
   _id: string
   _type: "page"
   title: string
-  pageBuilder: Array<{
-    _type: "richTextBlock"
-    _key: string
-    content: Array<
-      | {
-          children?: Array<{
-            marks?: Array<string>
-            text?: string
-            _type: "span"
-            _key: string
-          }>
-          style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
-          listItem?: "bullet" | "number"
-          markDefs: Array<{
-            href?: string
-            _type: "link"
-            _key: string
-          }> | null
-          level?: number
-          _type: "block"
-          _key: string
-        }
-      | {
-          asset: {
-            _id: string
-            url: string | null
-            altText: string | null
-            metadata: {
-              lqip: string | null
-              dimensions: {
-                width: number
-                height: number
-                aspectRatio: number
+  pageBuilder: Array<
+    | {
+        _type: "blogOverviewBlock"
+        _key: string
+        title: string | null
+      }
+    | {
+        _type: "richTextBlock"
+        _key: string
+        content: Array<
+          | {
+              children?: Array<{
+                marks?: Array<string>
+                text?: string
+                _type: "span"
+                _key: string
+              }>
+              style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
+              listItem?: "bullet" | "number"
+              markDefs: Array<{
+                href?: string
+                _type: "link"
+                _key: string
+              }> | null
+              level?: number
+              _type: "block"
+              _key: string
+            }
+          | {
+              asset: {
+                _id: string
+                url: string | null
+                altText: string | null
+                metadata: {
+                  lqip: string | null
+                  dimensions: {
+                    width: number
+                    height: number
+                    aspectRatio: number
+                  } | null
+                } | null
               } | null
-            } | null
-          } | null
-          media?: unknown
-          hotspot: SanityImageHotspot | null
-          crop: SanityImageCrop | null
-          caption?: string
-          _type: "image"
-          _key: string
-          alt: ""
-          markDefs: null
-        }
-    >
-    blockTitle: string | null
-  }> | null
+              media?: unknown
+              hotspot: SanityImageHotspot | null
+              crop: SanityImageCrop | null
+              caption?: string
+              _type: "image"
+              _key: string
+              alt: ""
+              markDefs: null
+            }
+        >
+        blockTitle: string | null
+      }
+  > | null
   seo: {
     _type: "seo"
     seoTitle: string
@@ -579,13 +677,340 @@ export type LAYOUT_QUERYResult = {
     copyrightText: string
   } | null
 }
+// Variable: POST_QUERY
+// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    _type,    title,    slug {      _type,      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt,      pageBuilder[]{    _type == "sectionBlock" => {        _type,  _key,  name,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },  sections[]{    _type,    _key,    name,    content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },    sections[]{      _type,      _key,      name,      content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } },      sections[]{        _type,        _key,        name,        content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  markDefs[] {    ...,  } }      }    }  }    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
+export type POST_QUERYResult = {
+  _id: string
+  _type: "post"
+  title: string
+  slug: {
+    _type: "slug"
+    current: string
+  }
+  coverImage: {
+    asset: {
+      _id: string
+      url: string | null
+      altText: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number
+          height: number
+          aspectRatio: number
+        } | null
+      } | null
+    } | null
+    alt: ""
+    crop: SanityImageCrop | null
+    hotspot: SanityImageHotspot | null
+  }
+  excerpt: string
+  author: {
+    _id: string
+    name: string
+    picture: {
+      asset: {
+        _id: string
+        url: string | null
+        altText: string | null
+        metadata: {
+          lqip: string | null
+          dimensions: {
+            width: number
+            height: number
+            aspectRatio: number
+          } | null
+        } | null
+      } | null
+      alt: ""
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    }
+  }
+  publishedAt: string
+  pageBuilder: Array<{
+    _type: "sectionBlock"
+    _key: string
+    name: string
+    content: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: "span"
+            _key: string
+          }>
+          style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
+          listItem?: "bullet" | "number"
+          markDefs: Array<{
+            href?: string
+            _type: "link"
+            _key: string
+          }> | null
+          level?: number
+          _type: "block"
+          _key: string
+        }
+      | {
+          asset: {
+            _id: string
+            url: string | null
+            altText: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number
+                height: number
+                aspectRatio: number
+              } | null
+            } | null
+          } | null
+          media?: unknown
+          hotspot: SanityImageHotspot | null
+          crop: SanityImageCrop | null
+          caption?: string
+          _type: "image"
+          _key: string
+          alt: ""
+          markDefs: null
+        }
+    > | null
+    sections: Array<{
+      _type: "sectionBlock"
+      _key: string
+      name: string
+      content: Array<
+        | {
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: "span"
+              _key: string
+            }>
+            style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
+            listItem?: "bullet" | "number"
+            markDefs: Array<{
+              href?: string
+              _type: "link"
+              _key: string
+            }> | null
+            level?: number
+            _type: "block"
+            _key: string
+          }
+        | {
+            asset: {
+              _id: string
+              url: string | null
+              altText: string | null
+              metadata: {
+                lqip: string | null
+                dimensions: {
+                  width: number
+                  height: number
+                  aspectRatio: number
+                } | null
+              } | null
+            } | null
+            media?: unknown
+            hotspot: SanityImageHotspot | null
+            crop: SanityImageCrop | null
+            caption?: string
+            _type: "image"
+            _key: string
+            alt: ""
+            markDefs: null
+          }
+      > | null
+      sections: Array<{
+        _type: "sectionBlock"
+        _key: string
+        name: string
+        content: Array<
+          | {
+              children?: Array<{
+                marks?: Array<string>
+                text?: string
+                _type: "span"
+                _key: string
+              }>
+              style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
+              listItem?: "bullet" | "number"
+              markDefs: Array<{
+                href?: string
+                _type: "link"
+                _key: string
+              }> | null
+              level?: number
+              _type: "block"
+              _key: string
+            }
+          | {
+              asset: {
+                _id: string
+                url: string | null
+                altText: string | null
+                metadata: {
+                  lqip: string | null
+                  dimensions: {
+                    width: number
+                    height: number
+                    aspectRatio: number
+                  } | null
+                } | null
+              } | null
+              media?: unknown
+              hotspot: SanityImageHotspot | null
+              crop: SanityImageCrop | null
+              caption?: string
+              _type: "image"
+              _key: string
+              alt: ""
+              markDefs: null
+            }
+        > | null
+        sections: Array<{
+          _type: "sectionBlock"
+          _key: string
+          name: string
+          content: Array<
+            | {
+                children?: Array<{
+                  marks?: Array<string>
+                  text?: string
+                  _type: "span"
+                  _key: string
+                }>
+                style?: "h2" | "h3" | "h4" | "h5" | "h6" | "inline" | "normal"
+                listItem?: "bullet" | "number"
+                markDefs: Array<{
+                  href?: string
+                  _type: "link"
+                  _key: string
+                }> | null
+                level?: number
+                _type: "block"
+                _key: string
+              }
+            | {
+                asset: {
+                  _id: string
+                  url: string | null
+                  altText: string | null
+                  metadata: {
+                    lqip: string | null
+                    dimensions: {
+                      width: number
+                      height: number
+                      aspectRatio: number
+                    } | null
+                  } | null
+                } | null
+                media?: unknown
+                hotspot: SanityImageHotspot | null
+                crop: SanityImageCrop | null
+                caption?: string
+                _type: "image"
+                _key: string
+                alt: ""
+                markDefs: null
+              }
+          > | null
+        }> | null
+      }> | null
+    }> | null
+  }> | null
+  seo: {
+    _type: "seo"
+    seoTitle: string
+    seoDescription: string
+    seoImage: {
+      asset: {
+        _id: string
+        url: string | null
+        altText: string | null
+        metadata: {
+          dimensions: {
+            width: number
+            height: number
+          } | null
+        } | null
+      } | null
+      alt: null
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    } | null
+    seoIndexing: "index" | "noindex"
+    seoListVisibility: "hide" | "show"
+  } | null
+  og: {
+    ogTitle: string | null
+    ogDescription: string | null
+  } | null
+  _createdAt: string
+  _updatedAt: string
+} | null
+// Variable: ALL_POSTS_QUERY
+// Query: *[_type == "post"] | order(publishedAt desc) {    _id,    title,    slug {      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt  }
+export type ALL_POSTS_QUERYResult = Array<{
+  _id: string
+  title: string
+  slug: {
+    current: string
+  }
+  coverImage: {
+    asset: {
+      _id: string
+      url: string | null
+      altText: string | null
+      metadata: {
+        lqip: string | null
+        dimensions: {
+          width: number
+          height: number
+          aspectRatio: number
+        } | null
+      } | null
+    } | null
+    alt: ""
+    crop: SanityImageCrop | null
+    hotspot: SanityImageHotspot | null
+  }
+  excerpt: string
+  author: {
+    _id: string
+    name: string
+    picture: {
+      asset: {
+        _id: string
+        url: string | null
+        altText: string | null
+        metadata: {
+          lqip: string | null
+          dimensions: {
+            width: number
+            height: number
+            aspectRatio: number
+          } | null
+        } | null
+      } | null
+      alt: ""
+      crop: SanityImageCrop | null
+      hotspot: SanityImageHotspot | null
+    }
+  }
+  publishedAt: string
+}>
 
 // Query TypeMap
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "homePage"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': HOMEPAGE_QUERYResult
-    '\n  *[_type == "page"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': PAGE_QUERYResult
+    '\n  *[_type == "homePage"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    },\n    _type == "blogOverviewBlock" => {\n      \n  _type,\n  _key,\n  title\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': HOMEPAGE_QUERYResult
+    '\n  *[_type == "page"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  blockTitle,\n\n    },\n    _type == "blogOverviewBlock" => {\n      \n  _type,\n  _key,\n  title\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': PAGE_QUERYResult
     '\n  {\n    "header": *[_type == "header"][0] {\n      _id,\n      logo {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      },\n      links[] {\n        \n  _type,\n  _key,\n  name,\n  linkType,\n  "openInNewTab": coalesce(openInNewTab, false),\n  internalLink-> {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    }\n  },\n  "externalLink": coalesce(externalLink, "")\n\n      }\n    },\n    "footer": *[_type == "footer"][0] {\n      _id,\n      links[] {\n        \n  _key,\n  logo {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  externalLink\n\n      },\n      copyrightText\n    }\n  }\n': LAYOUT_QUERYResult
+    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt,\n    \n  pageBuilder[]{\n    _type == "sectionBlock" => {\n      \n  _type,\n  _key,\n  name,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  sections[]{\n    _type,\n    _key,\n    name,\n    content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n    sections[]{\n      _type,\n      _key,\n      name,\n      content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n      sections[]{\n        _type,\n        _key,\n        name,\n        content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n }\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': POST_QUERYResult
+    '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  }\n': ALL_POSTS_QUERYResult
   }
 }

@@ -15,7 +15,8 @@
       "!**/.next",
       "!**/.turbo",
       "!**/coverage",
-      "!**/.cache"
+      "!**/.cache",
+      "!**/storybook-static"
     ]
   },
   "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],

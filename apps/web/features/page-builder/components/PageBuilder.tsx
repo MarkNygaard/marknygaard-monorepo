@@ -1,12 +1,15 @@
 import { draftMode } from "next/headers"
 import { BLOCK_COMPONENTS } from "@/components/Blocks"
+import BlogOverviewBlock from "@/components/Blocks/BlogOverviewBlock"
 import type { PageBuilderBlock } from "@/features/page-builder/types/pagebuilder"
+import type { ALL_POSTS_QUERYResult } from "@/types/sanity"
 import { PageBuilderDraftMode } from "./PageBuilderDraftMode"
 
 interface PageBuilderProps {
   blocks: PageBuilderBlock[]
   documentId: string
   documentType: string
+  posts?: ALL_POSTS_QUERYResult
 }
 
 /**
@@ -31,7 +34,16 @@ function UnknownBlockError({ blockType, blockKey }: { blockType: string; blockKe
 /**
  * Render a single block component for server-side rendering
  */
-function renderBlock(block: PageBuilderBlock, index: number) {
+function renderBlock(block: PageBuilderBlock, index: number, posts?: ALL_POSTS_QUERYResult) {
+  // Handle BlogOverviewBlock separately to avoid client bundle issues
+  if (block._type === "blogOverviewBlock") {
+    return (
+      <div key={`${block._type}-${block._key}`}>
+        <BlogOverviewBlock {...block} posts={posts} index={index} />
+      </div>
+    )
+  }
+
   const Component = BLOCK_COMPONENTS[block._type as keyof typeof BLOCK_COMPONENTS]
 
   if (!Component) {
@@ -54,7 +66,7 @@ function renderBlock(block: PageBuilderBlock, index: number) {
  * PageBuilder component for rendering dynamic content blocks from Sanity CMS
  * Uses client-side features only when draft mode is enabled
  */
-export async function PageBuilder({ blocks, documentId, documentType }: PageBuilderProps) {
+export async function PageBuilder({ blocks, documentId, documentType, posts }: PageBuilderProps) {
   const { isEnabled: isDraftMode } = await draftMode()
 
   // Handle empty state
@@ -74,5 +86,7 @@ export async function PageBuilder({ blocks, documentId, documentType }: PageBuil
   }
 
   // Server-side rendering for production
-  return <div className="w-full">{blocks.map((block, index) => renderBlock(block, index))}</div>
+  return (
+    <div className="w-full">{blocks.map((block, index) => renderBlock(block, index, posts))}</div>
+  )
 }

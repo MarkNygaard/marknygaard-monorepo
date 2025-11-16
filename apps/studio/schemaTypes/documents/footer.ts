@@ -1,5 +1,5 @@
 import { PanelTop } from "lucide-react"
-import { defineArrayMember, defineField, defineType } from "sanity"
+import { defineField, defineType } from "sanity"
 
 export const footer = defineType({
   name: "footer",

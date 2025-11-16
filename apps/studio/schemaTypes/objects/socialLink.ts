@@ -1,5 +1,5 @@
 import { Link } from "lucide-react"
-import { defineArrayMember, defineField, defineType } from "sanity"
+import { defineField, defineType } from "sanity"
 
 export const socialLink = defineType({
   name: "socialLink",

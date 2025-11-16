@@ -36,6 +36,7 @@ export const link = defineType({
       hidden: ({ parent }) => parent?.linkType !== "internal",
       validation: (rule) =>
         rule.custom((value, context) => {
+          // biome-ignore lint: using 'any' for dynamic parent type
           const linkType = (context.parent as any)?.linkType
           if (linkType === "internal" && !value) {
             return "Internal page is required when link type is internal"
@@ -50,6 +51,7 @@ export const link = defineType({
       hidden: ({ parent }) => parent?.linkType !== "external",
       validation: (rule) =>
         rule.custom((value, context) => {
+          // biome-ignore lint: using 'any' for dynamic parent type
           const linkType = (context.parent as any)?.linkType
           if (linkType === "external" && !value) {
             return "External URL is required when link type is external"

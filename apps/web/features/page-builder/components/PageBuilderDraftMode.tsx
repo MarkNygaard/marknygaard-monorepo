@@ -41,6 +41,7 @@ export function PageBuilderDraftMode({
   documentType,
 }: PageBuilderProps) {
   // Enable optimistic updates for real-time editing in Sanity Presentation
+  // biome-ignore lint: using 'any' for Sanity optimistic updates
   const blocks = useOptimistic<PageBuilderBlock[], any>(initialBlocks, (currentBlocks, action) => {
     if (action.id === documentId && action.document?.pageBuilder) {
       return action.document.pageBuilder
@@ -69,6 +70,7 @@ export function PageBuilderDraftMode({
       )
 
       const componentProps = {
+        // biome-ignore lint: using 'any' for dynamic block props
         ...(block as any),
         index,
       }
@@ -97,7 +99,7 @@ export function PageBuilderDraftMode({
   }
 
   return (
-    <div className="w-full" data-sanity={containerDataAttribute} aria-label="Page content">
+    <div className="w-full" data-sanity={containerDataAttribute}>
       {blocks.map((block, index) => renderBlock(block, index))}
     </div>
   )

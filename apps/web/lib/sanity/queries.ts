@@ -100,6 +100,18 @@ const blogOverviewBlock = /* groq */ `
   title
 `
 
+const textImageBlock = /* groq */ `
+  _type,
+  _key,
+  title,
+  content[]{ ${richTextFragment} },
+  image {
+    ${imageFragment}
+  },
+  imagePosition,
+  blockTitle,
+`
+
 const postFragment = /* groq */ `
   _id,
   title,
@@ -127,6 +139,9 @@ const pageBuilderFragment = /* groq */ `
     },
     _type == "blogOverviewBlock" => {
       ${blogOverviewBlock}
+    },
+    _type == "textImageBlock" => {
+      ${textImageBlock}
     }
   }
 `

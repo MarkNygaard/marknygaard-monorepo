@@ -31,32 +31,32 @@ export function RichText({ value, className }: PortableRichTextProps) {
           block: {
             normal: ({ children }) => <p className="mb-4 font-light last:mb-0">{children}</p>,
             h1: ({ children }) => (
-              <Typography font="serif" variant="heading-large" asChild>
+              <Typography variant="heading-large" asChild>
                 <h1 className="py-1.5 text-4xl text-shadow-md leading-9 lg:text-5xl">{children}</h1>
               </Typography>
             ),
             h2: ({ children }) => (
-              <Typography font="serif" variant="heading-large" asChild>
+              <Typography variant="heading-large" asChild>
                 <h2>{children}</h2>
               </Typography>
             ),
             h3: ({ children }) => (
-              <Typography font="serif" variant="heading" asChild>
+              <Typography variant="heading" asChild>
                 <h3>{children}</h3>
               </Typography>
             ),
             h4: ({ children }) => (
-              <Typography font="serif" variant="heading" asChild>
+              <Typography variant="heading" asChild>
                 <h4>{children}</h4>
               </Typography>
             ),
             h5: ({ children }) => (
-              <Typography font="serif" variant="heading" asChild>
+              <Typography variant="heading" asChild>
                 <h5>{children}</h5>
               </Typography>
             ),
             h6: ({ children }) => (
-              <Typography font="serif" variant="heading" asChild>
+              <Typography variant="heading" asChild>
                 <h6>{children}</h6>
               </Typography>
             ),

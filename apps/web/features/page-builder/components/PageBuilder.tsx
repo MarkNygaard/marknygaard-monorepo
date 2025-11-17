@@ -1,6 +1,6 @@
 import { draftMode } from "next/headers"
 import { BLOCK_COMPONENTS } from "@/components/Blocks"
-import BlogOverviewBlock from "@/components/Blocks/BlogOverviewBlock"
+import { BlogOverviewBlock } from "@/components/Blocks/BlogOverviewBlock"
 import type { PageBuilderBlock } from "@/features/page-builder/types/pagebuilder"
 import type { ALL_POSTS_QUERYResult } from "@/types/sanity"
 import { PageBuilderDraftMode } from "./PageBuilderDraftMode"
@@ -57,7 +57,7 @@ function renderBlock(block: PageBuilderBlock, index: number, posts?: ALL_POSTS_Q
   }
 
   const componentProps = { ...block, index }
-  const blockElement = <Component {...componentProps} />
+  const blockElement = <Component {...(componentProps as any)} />
 
   return <div key={`${block._type}-${block._key}`}>{blockElement}</div>
 }

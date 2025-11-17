@@ -26,6 +26,36 @@ export const richTextBlock = defineType({
       validation: (Rule) => Rule.required().error("Content is required"),
     }),
     defineField({
+      name: "width",
+      type: "string",
+      title: "Content Width",
+      description: "Choose the maximum width for the content",
+      options: {
+        list: [
+          { title: "Full Width", value: "full" },
+          { title: "2/3 Width", value: "two-thirds" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "full",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "fadeIn",
+      type: "boolean",
+      title: "Fade In Animation",
+      description: "Enable fade-in animation for this block",
+      initialValue: false,
+    }),
+    defineField({
+      name: "fadeInDelay",
+      type: "number",
+      title: "Fade In Delay (seconds)",
+      description: "Delay before the fade-in animation starts (in seconds)",
+      hidden: ({ parent }) => !parent?.fadeIn,
+      validation: (Rule) => Rule.min(0).max(10),
+    }),
+    defineField({
       name: "blockTitle",
       type: "string",
       title: "Block Title (Internal)",

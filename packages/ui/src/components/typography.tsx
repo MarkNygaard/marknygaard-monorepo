@@ -6,6 +6,7 @@ import type React from "react"
 const typeVariants = cva("", {
   variants: {
     variant: {
+      "heading-xlarge": "text-3xl font-medium leading-7 tracking-tight lg:text-4xl lg:leading-9",
       "heading-large": "text-2xl font-light leading-7 tracking-tight lg:text-3xl lg:leading-9",
       heading: "text-lg font-light leading-normal lg:text-xl lg:leading-tight",
       "heading-small": "text-base font-light leading-snug tracking-[-0.48px]",

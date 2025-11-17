@@ -82,7 +82,7 @@ export function PageBuilderDraftMode({
 
       return (
         <div key={`${block._type}-${block._key}`} data-sanity={dataAttribute}>
-          <Component {...componentProps} />
+          <Component {...(componentProps as any)} />
         </div>
       )
     },

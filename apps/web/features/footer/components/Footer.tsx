@@ -7,7 +7,6 @@ type FooterProps = Partial<
 >
 
 export function Footer({ links, copyrightText }: FooterProps) {
-  console.log(copyrightText)
   return (
     <footer className="container mx-auto md:mb-10">
       <div className="container mx-auto flex flex-col items-center space-y-4 bg-primary/80 pt-12 pb-10 font-extralight md:max-w-6xl md:rounded-sm dark:border dark:border-border/50 dark:bg-muted/80">

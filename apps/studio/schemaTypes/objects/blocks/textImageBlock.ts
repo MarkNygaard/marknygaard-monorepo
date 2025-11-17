@@ -47,12 +47,6 @@ export const textImageBlock = defineType({
       initialValue: "left",
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: "blockTitle",
-      type: "string",
-      title: "Block Title (Internal)",
-      description: "Optional title for identifying this block in the editor",
-    }),
   ],
   preview: {
     select: {

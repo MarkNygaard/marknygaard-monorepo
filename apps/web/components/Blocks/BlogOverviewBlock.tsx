@@ -9,7 +9,7 @@ interface BlogOverviewBlockProps {
   index?: number
 }
 
-export default function BlogOverviewBlock({ posts }: BlogOverviewBlockProps) {
+export function BlogOverviewBlock({ posts }: BlogOverviewBlockProps) {
   if (!posts || posts.length === 0) {
     return (
       <div className="mx-auto max-w-5xl py-8 text-center text-muted-foreground">

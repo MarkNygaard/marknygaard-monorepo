@@ -66,7 +66,9 @@ const richTextBlock = /* groq */ `
   _type,
   _key,
   content[]{ ${richTextFragment} },
-  blockTitle,
+  width,
+  fadeIn,
+  fadeInDelay,
 `
 
 const sectionBlock = /* groq */ `
@@ -112,6 +114,33 @@ const textImageBlock = /* groq */ `
   blockTitle,
 `
 
+const featuredPostsBlock = /* groq */ `
+  _type,
+  _key,
+  title,
+  posts[]-> {
+    _id,
+    title,
+    slug {
+      current
+    },
+    coverImage {
+      ${imageFragment}
+    },
+    excerpt,
+    author-> {
+      _id,
+      name,
+      picture {
+        ${imageFragment}
+      }
+    },
+    publishedAt
+  },
+  fadeIn,
+  fadeInDelay,
+`
+
 const postFragment = /* groq */ `
   _id,
   title,
@@ -142,6 +171,9 @@ const pageBuilderFragment = /* groq */ `
     },
     _type == "textImageBlock" => {
       ${textImageBlock}
+    },
+    _type == "featuredPostsBlock" => {
+      ${featuredPostsBlock}
     }
   }
 `

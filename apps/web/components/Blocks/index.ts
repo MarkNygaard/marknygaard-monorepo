@@ -1,17 +1,18 @@
-import type {
-  BlockComponentProps,
-  PageBuilderBlockTypes,
-} from "../../features/page-builder/types/pagebuilder"
+import type { PageBuilderBlockTypes } from "../../features/page-builder/types/pagebuilder"
+import { BlogOverviewBlock } from "./BlogOverviewBlock"
+import { FeaturedPostsBlock } from "./FeaturedPostsBlock"
 import { RichTextBlock } from "./RichTextBlock"
 import { TextImageBlock } from "./TextImageBlock"
-
-type BlockComponent = React.ComponentType<BlockComponentProps<PageBuilderBlockTypes>>
 
 export const BLOCK_COMPONENTS = {
   richTextBlock: RichTextBlock,
   textImageBlock: TextImageBlock,
-} as const satisfies Record<PageBuilderBlockTypes, BlockComponent>
+  featuredPostsBlock: FeaturedPostsBlock,
+  blogOverviewBlock: BlogOverviewBlock,
+} as const satisfies Record<PageBuilderBlockTypes, React.ComponentType<any>>
 
 export const BLOCK_COMPONENTS_CLIENT = {
   ...BLOCK_COMPONENTS,
-} as const satisfies Record<PageBuilderBlockTypes, BlockComponent>
+} as const satisfies Record<PageBuilderBlockTypes, React.ComponentType<any>>
+
+export { BlogOverviewBlock } from "./BlogOverviewBlock"

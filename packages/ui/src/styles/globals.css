@@ -178,6 +178,8 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
 }
 
 @layer base {
@@ -230,5 +232,16 @@
   .underlined:focus:after,
   .active.underlined:after {
     opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

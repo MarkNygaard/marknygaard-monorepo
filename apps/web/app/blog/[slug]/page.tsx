@@ -1,7 +1,7 @@
 import { format } from "date-fns"
 import { Section } from "@/components/Blocks/Section/Section"
 import SectionMenu from "@/components/Blocks/Section/SectionMenu"
-import { Comment } from "@/components/Comment"
+import { Comment } from "@/components/Elements/Comment"
 import { SanityImage } from "@/components/SanityImage"
 import { sanityFetch } from "@/lib/sanity/live"
 import { POST_QUERY } from "@/lib/sanity/queries"

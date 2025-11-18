@@ -1,4 +1,4 @@
-import { ImageIcon } from "@sanity/icons"
+import { CodeBlockIcon, ImageIcon } from "@sanity/icons"
 import { defineArrayMember, defineField, defineType } from "sanity"
 
 const richTextMembers = [
@@ -23,7 +23,6 @@ const richTextMembers = [
       decorators: [
         { title: "Strong", value: "strong" },
         { title: "Emphasis", value: "em" },
-        { title: "Code", value: "code" },
       ],
       annotations: [
         {
@@ -79,6 +78,76 @@ const richTextMembers = [
         title: "Caption Text",
       }),
     ],
+  }),
+  defineArrayMember({
+    name: "code",
+    type: "object",
+    title: "Code Block",
+    icon: CodeBlockIcon,
+    fields: [
+      defineField({
+        name: "code",
+        type: "text",
+        title: "Code",
+        rows: 10,
+      }),
+      defineField({
+        name: "language",
+        type: "string",
+        title: "Language",
+        options: {
+          list: [
+            { title: "JavaScript", value: "javascript" },
+            { title: "TypeScript", value: "typescript" },
+            { title: "JSX", value: "jsx" },
+            { title: "TSX", value: "tsx" },
+            { title: "HTML", value: "html" },
+            { title: "CSS", value: "css" },
+            { title: "Python", value: "python" },
+            { title: "Bash", value: "bash" },
+            { title: "JSON", value: "json" },
+            { title: "Markdown", value: "markdown" },
+            { title: "SQL", value: "sql" },
+            { title: "GraphQL", value: "graphql" },
+            { title: "YAML", value: "yaml" },
+            { title: "Go", value: "go" },
+            { title: "Rust", value: "rust" },
+            { title: "Java", value: "java" },
+            { title: "C#", value: "csharp" },
+            { title: "PHP", value: "php" },
+            { title: "Ruby", value: "ruby" },
+          ],
+        },
+        initialValue: "javascript",
+      }),
+      defineField({
+        name: "filename",
+        type: "string",
+        title: "Filename",
+        description: "Optional filename to display",
+      }),
+      defineField({
+        name: "highlightedLines",
+        type: "array",
+        title: "Highlighted Lines",
+        description: "Line numbers to highlight (optional)",
+        of: [{ type: "number" }],
+      }),
+    ],
+    preview: {
+      select: {
+        code: "code",
+        language: "language",
+        filename: "filename",
+      },
+      prepare({ code, language, filename }) {
+        const codePreview = code ? code.split("\n")[0].substring(0, 50) : "Empty code block"
+        return {
+          title: filename || `${language || "code"} block`,
+          subtitle: codePreview,
+        }
+      },
+    },
   }),
 ]
 

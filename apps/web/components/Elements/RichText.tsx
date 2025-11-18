@@ -3,10 +3,19 @@ import { cn } from "@workspace/common/cn"
 import { Typography } from "@workspace/ui/typography"
 import type { PortableTextComponentProps, PortableTextProps } from "next-sanity"
 import { PortableText } from "next-sanity"
+import type { Language } from "prism-react-renderer"
 import { SanityImage } from "@/components/SanityImage/SanityImage"
+import SyntaxHighlight from "./SyntaxHighlight"
 
 interface SanityImageValue extends SanityAsset {
   alt?: string
+}
+
+interface SanityCodeValue {
+  code: string
+  language: string
+  filename?: string
+  highlightedLines?: number[]
 }
 
 interface PortableRichTextProps {
@@ -24,9 +33,6 @@ export function RichText({ value, className }: PortableRichTextProps) {
           marks: {
             strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
             em: ({ children }) => <em className="italic">{children}</em>,
-            code: ({ children }) => (
-              <code className="rounded bg-gray-100 px-1 py-0.5 font-mono text-sm">{children}</code>
-            ),
           },
           block: {
             normal: ({ children }) => <p className="mb-4 font-light last:mb-0">{children}</p>,
@@ -89,6 +95,20 @@ export function RichText({ value, className }: PortableRichTextProps) {
                     image={value}
                     alt={value.alt || ""}
                     className="h-auto w-full rounded-lg"
+                  />
+                </div>
+              )
+            },
+            code: ({ value }: PortableTextComponentProps<SanityCodeValue>) => {
+              if (!value?.code) return null
+
+              return (
+                <div className="my-6">
+                  <SyntaxHighlight
+                    code={value.code}
+                    language={value.language as Language}
+                    highlightLines={value.highlightedLines}
+                    showLineNumbers={value.code.split(/\r\n|\r|\n/).length > 10}
                   />
                 </div>
               )

@@ -16,7 +16,7 @@ export function TextImageBlock({ title, content, image, imagePosition }: TextIma
       <div className="grid grid-cols-4 gap-4 md:grid-cols-8 lg:grid-cols-12">
         {/* Text Content */}
         <div
-          className={cn("col-span-4 md:col-span-5 lg:col-span-8", {
+          className={cn("col-span-4 animate-fade-in-up opacity-0 md:col-span-5 lg:col-span-8", {
             "lg:col-start-1": imagePosition === "right",
             "lg:col-start-5": imagePosition === "left",
           })}
@@ -31,10 +31,14 @@ export function TextImageBlock({ title, content, image, imagePosition }: TextIma
 
         {/* Image */}
         <div
-          className={cn("col-span-4 row-start-1 md:col-span-3 lg:col-span-4", {
-            "lg:col-start-9": imagePosition === "right",
-            "lg:col-start-1": imagePosition === "left",
-          })}
+          className={cn(
+            "col-span-4 row-start-1 animate-fade-in-up opacity-0 md:col-span-3 lg:col-span-4",
+            {
+              "lg:col-start-9": imagePosition === "right",
+              "lg:col-start-1": imagePosition === "left",
+            },
+          )}
+          style={{ animationDelay: "0.2s" }}
         >
           <SanityImage
             image={image}

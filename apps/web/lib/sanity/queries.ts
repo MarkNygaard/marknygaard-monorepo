@@ -57,6 +57,14 @@ const richTextFragment = /* groq */ `
   _type == "image" => {
     ${imageFragment}
   },
+  _type == "code" => {
+    _key,
+    _type,
+    code,
+    language,
+    filename,
+    highlightedLines
+  },
   markDefs[] {
     ...,
   }

@@ -1,4 +1,4 @@
-import { CogIcon, FileText, HomeIcon, Layers, PanelTop, User } from "lucide-react"
+import { CogIcon, FileText, GlobeIcon, HomeIcon, Layers, PanelTop, User } from "lucide-react"
 import type { StructureBuilder } from "sanity/structure"
 import { apiVersion } from "../lib/api"
 import { createSingleTon } from "./createSingleton"
@@ -50,6 +50,7 @@ export const structure = (S: StructureBuilder) =>
             .items([
               createSingleTon({ S, type: "header", icon: PanelTop }),
               createSingleTon({ S, type: "footer", icon: PanelTop }),
+              createSingleTon({ S, type: "globalSeo", icon: GlobeIcon }),
             ]),
         ),
     ])

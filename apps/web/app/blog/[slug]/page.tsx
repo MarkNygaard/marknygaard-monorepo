@@ -1,10 +1,30 @@
 import { format } from "date-fns"
+import type { Metadata } from "next"
+import { notFound } from "next/navigation"
 import { Section } from "@/components/Blocks/Section/Section"
 import SectionMenu from "@/components/Blocks/Section/SectionMenu"
 import { Comment } from "@/components/Elements/Comment"
 import { SanityImage } from "@/components/SanityImage"
 import { sanityFetch } from "@/lib/sanity/live"
 import { POST_QUERY } from "@/lib/sanity/queries"
+import { formatMetaDataFromSanity } from "@/lib/seo/seo"
+
+export async function generateMetadata({ params }: PageProps<"/blog/[slug]">): Promise<Metadata> {
+  const { slug } = await params
+
+  const { data: post } = await sanityFetch({
+    query: POST_QUERY,
+    params: { slug: `blog/${slug}` },
+  })
+
+  if (!post) return notFound()
+
+  return await formatMetaDataFromSanity({
+    data: post.seo,
+    slug: post.slug.current,
+    title: post.title,
+  })
+}
 
 export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">) {
   const { slug } = await params

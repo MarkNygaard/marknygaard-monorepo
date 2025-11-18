@@ -11,6 +11,7 @@ import { Footer } from "@/features/footer/components/Footer"
 import { Header } from "@/features/header/components/Header"
 import { SanityLive, sanityFetch } from "@/lib/sanity/live"
 import { LAYOUT_QUERY } from "@/lib/sanity/queries"
+import Head from "./head"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,6 +26,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      <Head />
       <body
         style={{ WebkitTapHighlightColor: "transparent" }}
         className={cn("flex min-h-screen flex-col font-sans antialiased", inter.className)}

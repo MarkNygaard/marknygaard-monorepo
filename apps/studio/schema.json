@@ -691,6 +691,138 @@
                 }
               }
             }
+          },
+          {
+            "type": "object",
+            "attributes": {
+              "code": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
+              "language": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "union",
+                  "of": [
+                    {
+                      "type": "string",
+                      "value": "javascript"
+                    },
+                    {
+                      "type": "string",
+                      "value": "typescript"
+                    },
+                    {
+                      "type": "string",
+                      "value": "jsx"
+                    },
+                    {
+                      "type": "string",
+                      "value": "tsx"
+                    },
+                    {
+                      "type": "string",
+                      "value": "html"
+                    },
+                    {
+                      "type": "string",
+                      "value": "css"
+                    },
+                    {
+                      "type": "string",
+                      "value": "python"
+                    },
+                    {
+                      "type": "string",
+                      "value": "bash"
+                    },
+                    {
+                      "type": "string",
+                      "value": "json"
+                    },
+                    {
+                      "type": "string",
+                      "value": "markdown"
+                    },
+                    {
+                      "type": "string",
+                      "value": "sql"
+                    },
+                    {
+                      "type": "string",
+                      "value": "graphql"
+                    },
+                    {
+                      "type": "string",
+                      "value": "yaml"
+                    },
+                    {
+                      "type": "string",
+                      "value": "go"
+                    },
+                    {
+                      "type": "string",
+                      "value": "rust"
+                    },
+                    {
+                      "type": "string",
+                      "value": "java"
+                    },
+                    {
+                      "type": "string",
+                      "value": "csharp"
+                    },
+                    {
+                      "type": "string",
+                      "value": "php"
+                    },
+                    {
+                      "type": "string",
+                      "value": "ruby"
+                    }
+                  ]
+                },
+                "optional": true
+              },
+              "filename": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
+              "highlightedLines": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "array",
+                  "of": {
+                    "type": "number"
+                  }
+                },
+                "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "code"
+                }
+              }
+            },
+            "rest": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
         ]
       }
@@ -1002,6 +1134,60 @@
           },
           "optional": true
         }
+      }
+    }
+  },
+  {
+    "name": "globalSeo",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "globalSeo"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "seoIndexing": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "index"
+            },
+            {
+              "type": "string",
+              "value": "noindex"
+            }
+          ]
+        },
+        "optional": true
       }
     }
   },

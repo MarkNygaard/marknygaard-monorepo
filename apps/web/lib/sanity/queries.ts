@@ -236,6 +236,10 @@ export const PAGE_QUERY = defineQuery(`
     _id,
     _type,
     title,
+    slug {
+      _type,
+      current
+    },
     ${pageBuilderFragment},
     ${seoFragment},
     ${ogFragment},
@@ -318,3 +322,14 @@ export const ALL_POSTS_QUERY = defineQuery(`
     publishedAt
   }
 `)
+
+export const GLOBAL_SEO_QUERY = defineQuery(`*[
+  _type == "globalSeo"
+][0] {
+  _id,
+  title,
+  domain,
+  code,
+  seoIndexing,
+  seoSuffix
+}`)

@@ -39,6 +39,7 @@
     "@types/react-dom": "^19.1.7",
     "@workspace/biome-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
+    "next-sitemap": "^4.2.3",
     "typescript": "^5.9.2"
   }
 }

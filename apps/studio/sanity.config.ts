@@ -1,3 +1,4 @@
+import { embeddingsIndexDashboard } from "@sanity/embeddings-index-ui"
 import { visionTool } from "@sanity/vision"
 import { defineConfig } from "sanity"
 import { presentationTool } from "sanity/presentation"
@@ -31,6 +32,7 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     visionTool(),
+    embeddingsIndexDashboard(),
     presentationTool({
       previewUrl: {
         origin: process.env.SANITY_STUDIO_PRESENTATION_URL ?? "http://localhost:3000",

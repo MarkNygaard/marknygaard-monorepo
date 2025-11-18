@@ -20,7 +20,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
         <div className="flex flex-col justify-between border border-border bg-primary p-5 font-light text-2xl md:text-3xl lg:text-4xl dark:bg-card">
           <div>{post?.title}</div>
           <div>
-            <div className="text-primary-foreground text-sm">
+            <div className="text-primary-foreground/60 text-sm dark:text-secondary-foreground/40">
               {post?.publishedAt ? format(new Date(post.publishedAt), "MMMM do, yyyy") : ""}
             </div>
           </div>

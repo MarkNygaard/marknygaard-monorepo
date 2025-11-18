@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
     globalNotFound: true,
     inlineCss: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        port: "",
+        pathname: "/images/xg0higby/production/**",
+      },
+    ],
+  },
 }
 
 export default nextConfig

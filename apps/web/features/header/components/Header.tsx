@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { ThemeToggle } from "@/components/ThemeToggle"
+import { Search } from "@/components/Elements/Search"
+import { ThemeToggle } from "@/components/Elements/ThemeToggle"
 import type { LAYOUT_QUERYResult } from "@/types/sanity"
 import { NavItemDesktop } from "./NavItemDesktop"
 
@@ -44,7 +45,8 @@ export function Header({ logo, links }: HeaderProps) {
                       <NavItemDesktop key={link._key} data={link} />
                     ))}
                   </div>
-                  <div className="pl-5">
+                  <div className="flex items-center gap-2 pl-5">
+                    <Search />
                     <ThemeToggle />
                   </div>
                 </div>

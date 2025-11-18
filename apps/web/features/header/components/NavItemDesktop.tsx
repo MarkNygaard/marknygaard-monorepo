@@ -4,11 +4,12 @@ import { cn } from "@workspace/common/cn"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { ReactNode } from "react"
-import type { ResolveReferences } from "@/lib/resolveReference"
-import type { Link as LinkType } from "@/types/sanity"
+import type { LAYOUT_QUERYResult } from "@/types/sanity"
+
+type LinkFromLayout = NonNullable<LAYOUT_QUERYResult["header"]>["links"][number]
 
 interface BaseLinkProps {
-  data: ResolveReferences<LinkType>
+  data: LinkFromLayout
   className?: string
   children?: ReactNode
 }

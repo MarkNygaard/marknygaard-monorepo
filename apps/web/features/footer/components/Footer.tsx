@@ -1,4 +1,3 @@
-import { SanityImage } from "@/components/SanityImage"
 import type { LAYOUT_QUERYResult } from "@/types/sanity"
 import FooterEmojiAnimation from "./FooterEmojiAnimation"
 
@@ -15,7 +14,7 @@ export function Footer({ links, copyrightText }: FooterProps) {
         </ul>
         <ul className="flex p-4">
           {links?.map((link) => {
-            if (!link.externalLink || !link.logo) return null
+            if (!link.externalLink || !link.svgIcon) return null
 
             return (
               <li key={link._key} className="mx-2">
@@ -24,9 +23,9 @@ export function Footer({ links, copyrightText }: FooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground transition-all duration-300 ease-out hover:text-primary-foreground hover:ease-in dark:text-secondary-foreground/50 dark:hover:text-secondary-foreground"
-                >
-                  <SanityImage image={link.logo} width={24} height={24} />
-                </a>
+                  /* biome-ignore lint/security/noDangerouslySetInnerHtml: SVG content is from trusted Sanity CMS */
+                  dangerouslySetInnerHTML={{ __html: link.svgIcon }}
+                />
               </li>
             )
           })}

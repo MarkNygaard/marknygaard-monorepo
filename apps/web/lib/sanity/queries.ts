@@ -206,9 +206,7 @@ const linkFragment = /* groq */ `
 
 const socialLinkFragment = /* groq */ `
   _key,
-  logo {
-    ${imageFragment}
-  },
+  svgIcon,
   externalLink
 `
 
@@ -247,9 +245,7 @@ export const LAYOUT_QUERY = defineQuery(`
   {
     "header": *[_type == "header"][0] {
       _id,
-      logo {
-        ${imageFragment}
-      },
+      logo,
       links[] {
         ${linkFragment}
       }

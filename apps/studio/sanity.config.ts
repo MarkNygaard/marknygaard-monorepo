@@ -1,3 +1,5 @@
+import { inlineSvgInput } from "@focus-reactive/sanity-plugin-inline-svg-input"
+import { embeddingsIndexDashboard } from "@sanity/embeddings-index-ui"
 import { visionTool } from "@sanity/vision"
 import { defineConfig } from "sanity"
 import { presentationTool } from "sanity/presentation"
@@ -31,6 +33,8 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     visionTool(),
+    embeddingsIndexDashboard(),
+    inlineSvgInput(),
     presentationTool({
       previewUrl: {
         origin: process.env.SANITY_STUDIO_PRESENTATION_URL ?? "http://localhost:3000",

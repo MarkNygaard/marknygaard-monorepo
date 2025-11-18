@@ -9,7 +9,7 @@ export const header = defineType({
   fields: [
     defineField({
       name: "logo",
-      type: "image",
+      type: "inlineSvg",
       description: "Site logo",
     }),
     defineField({

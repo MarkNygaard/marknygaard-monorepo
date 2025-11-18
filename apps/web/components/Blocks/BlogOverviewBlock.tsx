@@ -30,7 +30,7 @@ export function BlogOverviewBlock({ posts }: BlogOverviewBlockProps) {
               <div className="flex h-full flex-col space-y-2 p-4">
                 <div className="font-semibold text-xl">{post.title}</div>
                 <div className="grow font-normal text-sm">{post.excerpt}</div>
-                <div className="font-light text-pine-700 text-xs dark:text-gray-600">
+                <div className="font-light text-primary-foreground/50 text-xs dark:text-secondary-foreground/40">
                   {post.publishedAt && format(new Date(post.publishedAt), "MMMM do, yyyy")}
                 </div>
               </div>

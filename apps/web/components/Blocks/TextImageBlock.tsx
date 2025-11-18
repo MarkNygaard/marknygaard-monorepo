@@ -13,12 +13,7 @@ export function TextImageBlock({ title, content, image, imagePosition }: TextIma
 
   return (
     <div className="mx-auto max-w-6xl">
-      <div
-        className={cn(
-          "grid grid-cols-4 gap-4 md:grid-cols-8 lg:grid-cols-12",
-          // isImageRight ? "md:grid-flow-col-dense" : "",
-        )}
-      >
+      <div className="grid grid-cols-4 gap-4 md:grid-cols-8 lg:grid-cols-12">
         {/* Text Content */}
         <div
           className={cn("col-span-4 md:col-span-5 lg:col-span-8", {
@@ -44,8 +39,15 @@ export function TextImageBlock({ title, content, image, imagePosition }: TextIma
           <SanityImage
             image={image}
             alt={title || ""}
+            aspectRatio="square"
+            className="rounded-lg lg:hidden"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          <SanityImage
+            image={image}
+            alt={title || ""}
             aspectRatio="portrait"
-            className="rounded-lg"
+            className="hidden rounded-lg lg:block"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>

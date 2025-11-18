@@ -10,16 +10,6 @@ export const structure = (S: StructureBuilder) =>
       createSingleTon({ S, type: "homePage", icon: HomeIcon }),
       S.divider(),
       S.listItem()
-        .title("Posts")
-        .icon(FileText)
-        .child(
-          S.documentList()
-            .title("Posts")
-            .filter('_type == "post"')
-            .apiVersion(apiVersion)
-            .defaultOrdering([{ field: "publishedAt", direction: "desc" }]),
-        ),
-      S.listItem()
         .title("Landing Pages")
         .icon(Layers)
         .child(
@@ -28,6 +18,16 @@ export const structure = (S: StructureBuilder) =>
             .filter('_type == "page"')
             .apiVersion(apiVersion)
             .defaultOrdering([{ field: "title", direction: "asc" }]),
+        ),
+      S.listItem()
+        .title("Posts")
+        .icon(FileText)
+        .child(
+          S.documentList()
+            .title("Posts")
+            .filter('_type == "post"')
+            .apiVersion(apiVersion)
+            .defaultOrdering([{ field: "publishedAt", direction: "desc" }]),
         ),
       S.divider(),
       S.listItem()

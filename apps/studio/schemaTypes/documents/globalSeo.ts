@@ -23,12 +23,9 @@ export const globalSeo = defineType({
     }),
   ],
   preview: {
-    select: {
-      title: "title",
-    },
-    prepare({ title }) {
+    prepare() {
       return {
-        title: `Global SEO - ${title}`,
+        title: "Global SEO",
       }
     },
   },

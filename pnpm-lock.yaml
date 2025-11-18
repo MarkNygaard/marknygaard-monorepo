@@ -69,6 +69,9 @@ importers:
 
   apps/studio:
     dependencies:
+      '@focus-reactive/sanity-plugin-inline-svg-input':
+        specifier: ^1.2.0
+        version: 1.2.0(@sanity/ui@3.1.11(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.1(react@19.1.1))(react-is@19.2.0)(react@19.1.1)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1)))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sanity@4.16.0(@emotion/is-prop-valid@1.2.2)(@portabletext/sanity-bridge@1.2.2(@sanity/schema@4.16.0(@types/react@19.1.9)(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9)(debug@4.4.3)))(@types/node@24.10.1)(@types/react@19.1.9)(immer@10.2.0)(jiti@2.6.1)(lightningcss@1.30.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(terser@5.44.1)(typescript@5.9.2)(yaml@2.8.1))(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))
       '@sanity/embeddings-index-ui':
         specifier: ^3.0.0
         version: 3.0.0(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.1(react@19.1.1))(react-is@19.2.0)(react@19.1.1)(sanity@4.16.0(@emotion/is-prop-valid@1.2.2)(@portabletext/sanity-bridge@1.2.2(@sanity/schema@4.16.0(@types/react@19.1.9)(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9)(debug@4.4.3)))(@types/node@24.10.1)(@types/react@19.1.9)(immer@10.2.0)(jiti@2.6.1)(lightningcss@1.30.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(terser@5.44.1)(typescript@5.9.2)(yaml@2.8.1))(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))
@@ -81,6 +84,9 @@ importers:
       '@workspace/common':
         specifier: workspace:*
         version: link:../../packages/common
+      add:
+        specifier: ^2.0.6
+        version: 2.0.6
       lucide-react:
         specifier: ^0.541.0
         version: 0.541.0(react@19.1.1)
@@ -1476,6 +1482,15 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@focus-reactive/sanity-plugin-inline-svg-input@1.2.0':
+    resolution: {integrity: sha512-irltttIfWfriLMPXddI08kooSQu2KbZRLhnR6Us1b1TfvAaI8BrUp3VKUUEp3H2SN3lvveE5WOI2uDdLWjxCaw==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@sanity/ui': ^1 || ^2
+      react: ^18 || ^19
+      sanity: ^3 || ^4
+      styled-components: ^5 || ^6
 
   '@giscus/react@3.1.0':
     resolution: {integrity: sha512-0TCO2TvL43+oOdyVVGHDItwxD1UMKP2ZYpT6gXmhFOqfAJtZxTzJ9hkn34iAF/b6YzyJ4Um89QIt9z/ajmAEeg==}
@@ -3368,6 +3383,9 @@ packages:
     resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+
+  add@2.0.6:
+    resolution: {integrity: sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==}
 
   adm-zip@0.5.16:
     resolution: {integrity: sha512-TGw5yVi4saajsSEgz25grObGHEUaDrniwvA2qwSC060KfqGPdglhvPMA2lPIoxs3PQIItj2iag35fONcQqgUaQ==}
@@ -8511,6 +8529,17 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
+  '@focus-reactive/sanity-plugin-inline-svg-input@1.2.0(@sanity/ui@3.1.11(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.1(react@19.1.1))(react-is@19.2.0)(react@19.1.1)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1)))(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sanity@4.16.0(@emotion/is-prop-valid@1.2.2)(@portabletext/sanity-bridge@1.2.2(@sanity/schema@4.16.0(@types/react@19.1.9)(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9)(debug@4.4.3)))(@types/node@24.10.1)(@types/react@19.1.9)(immer@10.2.0)(jiti@2.6.1)(lightningcss@1.30.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(terser@5.44.1)(typescript@5.9.2)(yaml@2.8.1))(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))':
+    dependencies:
+      '@sanity/incompatible-plugin': 1.0.5(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      '@sanity/ui': 3.1.11(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.1(react@19.1.1))(react-is@19.2.0)(react@19.1.1)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))
+      dompurify: 3.3.0
+      react: 19.1.1
+      sanity: 4.16.0(@emotion/is-prop-valid@1.2.2)(@portabletext/sanity-bridge@1.2.2(@sanity/schema@4.16.0(@types/react@19.1.9)(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9)(debug@4.4.3)))(@types/node@24.10.1)(@types/react@19.1.9)(immer@10.2.0)(jiti@2.6.1)(lightningcss@1.30.1)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(styled-components@6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(terser@5.44.1)(typescript@5.9.2)(yaml@2.8.1)
+      styled-components: 6.1.19(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+    transitivePeerDependencies:
+      - react-dom
+
   '@giscus/react@3.1.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
       giscus: 1.6.0
@@ -10146,7 +10175,7 @@ snapshots:
   '@sanity/presentation-comlink@2.0.0(@sanity/client@7.13.0(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9))':
     dependencies:
       '@sanity/comlink': 4.0.0
-      '@sanity/visual-editing-types': 1.1.8(@sanity/client@7.13.0(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9))
+      '@sanity/visual-editing-types': 1.1.8(@sanity/client@7.13.0(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9)(debug@4.4.3))
     transitivePeerDependencies:
       - '@sanity/client'
       - '@sanity/types'
@@ -10469,12 +10498,6 @@ snapshots:
       '@sanity/types': 4.16.0(@types/react@19.1.9)(debug@4.4.3)
 
   '@sanity/visual-editing-types@1.1.8(@sanity/client@7.13.0(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9)(debug@4.4.3))':
-    dependencies:
-      '@sanity/client': 7.13.0(debug@4.4.3)
-    optionalDependencies:
-      '@sanity/types': 4.16.0(@types/react@19.1.9)(debug@4.4.3)
-
-  '@sanity/visual-editing-types@1.1.8(@sanity/client@7.13.0(debug@4.4.3))(@sanity/types@4.16.0(@types/react@19.1.9))':
     dependencies:
       '@sanity/client': 7.13.0(debug@4.4.3)
     optionalDependencies:
@@ -11267,6 +11290,8 @@ snapshots:
       acorn: 8.15.0
 
   acorn@8.15.0: {}
+
+  add@2.0.6: {}
 
   adm-zip@0.5.16: {}
 

@@ -8,9 +8,9 @@ export const socialLink = defineType({
   icon: Link,
   fields: [
     defineField({
-      name: "logo",
-      type: "image",
-      description: "Site logo",
+      name: "svgIcon",
+      type: "inlineSvg",
+      title: "SVG Icon",
     }),
     defineField({
       name: "externalLink",
@@ -44,12 +44,10 @@ export const socialLink = defineType({
   preview: {
     select: {
       externalLink: "externalLink",
-      logo: "logo",
     },
-    prepare({ externalLink, logo }) {
+    prepare({ externalLink }) {
       return {
         title: externalLink,
-        media: logo,
       }
     },
   },

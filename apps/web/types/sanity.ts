@@ -155,18 +155,7 @@ export type Og = {
 
 export type SocialLink = {
   _type: "socialLink"
-  logo?: {
-    asset?: {
-      _ref: string
-      _type: "reference"
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: "image"
-  }
+  svgIcon?: InlineSvg
   externalLink: string
 }
 
@@ -205,21 +194,7 @@ export type Footer = {
   copyrightText: string
 }
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop"
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot"
-  x: number
-  y: number
-  height: number
-  width: number
-}
+export type InlineSvg = string
 
 export type Header = {
   _id: string
@@ -227,18 +202,7 @@ export type Header = {
   _createdAt: string
   _updatedAt: string
   _rev: string
-  logo?: {
-    asset?: {
-      _ref: string
-      _type: "reference"
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
-    }
-    media?: unknown
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: "image"
-  }
+  logo?: InlineSvg
   links: Array<
     {
       _key: string
@@ -317,6 +281,22 @@ export type Author = {
     crop?: SanityImageCrop
     _type: "image"
   }
+}
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop"
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot"
+  x: number
+  y: number
+  height: number
+  width: number
 }
 
 export type Page = {
@@ -442,13 +422,14 @@ export type AllSanitySchemaTypes =
   | SocialLink
   | Link
   | Footer
-  | SanityImageCrop
-  | SanityImageHotspot
+  | InlineSvg
   | Header
   | HomePage
   | Slug
   | Post
   | Author
+  | SanityImageCrop
+  | SanityImageHotspot
   | Page
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -944,28 +925,11 @@ export type PAGE_QUERYResult = {
   }>
 } | null
 // Variable: LAYOUT_QUERY
-// Query: {    "header": *[_type == "header"][0] {      _id,      logo {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      },      links[] {          _type,  _key,  name,  linkType,  "openInNewTab": coalesce(openInNewTab, false),  internalLink-> {    _id,    _type,    title,    slug {      _type,      current    }  },  "externalLink": coalesce(externalLink, "")      }    },    "footer": *[_type == "footer"][0] {      _id,      links[] {          _key,  logo {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  externalLink      },      copyrightText    }  }
+// Query: {    "header": *[_type == "header"][0] {      _id,      logo,      links[] {          _type,  _key,  name,  linkType,  "openInNewTab": coalesce(openInNewTab, false),  internalLink-> {    _id,    _type,    title,    slug {      _type,      current    }  },  "externalLink": coalesce(externalLink, "")      }    },    "footer": *[_type == "footer"][0] {      _id,      links[] {          _key,  svgIcon,  externalLink      },      copyrightText    }  }
 export type LAYOUT_QUERYResult = {
   header: {
     _id: string
-    logo: {
-      asset: {
-        _id: string
-        url: string | null
-        altText: string | null
-        metadata: {
-          lqip: string | null
-          dimensions: {
-            width: number
-            height: number
-            aspectRatio: number
-          } | null
-        } | null
-      } | null
-      alt: ""
-      crop: SanityImageCrop | null
-      hotspot: SanityImageHotspot | null
-    } | null
+    logo: InlineSvg | null
     links: Array<{
       _type: "link"
       _key: string
@@ -999,24 +963,7 @@ export type LAYOUT_QUERYResult = {
     _id: string
     links: Array<{
       _key: string
-      logo: {
-        asset: {
-          _id: string
-          url: string | null
-          altText: string | null
-          metadata: {
-            lqip: string | null
-            dimensions: {
-              width: number
-              height: number
-              aspectRatio: number
-            } | null
-          } | null
-        } | null
-        alt: ""
-        crop: SanityImageCrop | null
-        hotspot: SanityImageHotspot | null
-      } | null
+      svgIcon: InlineSvg | null
       externalLink: string
     }>
     copyrightText: string
@@ -1354,7 +1301,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "homePage"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  width,\n  fadeIn,\n  fadeInDelay,\n\n    },\n    _type == "blogOverviewBlock" => {\n      \n  _type,\n  _key,\n  title\n\n    },\n    _type == "textImageBlock" => {\n      \n  _type,\n  _key,\n  title,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  image {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  imagePosition,\n  blockTitle,\n\n    },\n    _type == "featuredPostsBlock" => {\n      \n  _type,\n  _key,\n  title,\n  posts[]-> {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  },\n  fadeIn,\n  fadeInDelay,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': HOMEPAGE_QUERYResult
     '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  width,\n  fadeIn,\n  fadeInDelay,\n\n    },\n    _type == "blogOverviewBlock" => {\n      \n  _type,\n  _key,\n  title\n\n    },\n    _type == "textImageBlock" => {\n      \n  _type,\n  _key,\n  title,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  image {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  imagePosition,\n  blockTitle,\n\n    },\n    _type == "featuredPostsBlock" => {\n      \n  _type,\n  _key,\n  title,\n  posts[]-> {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  },\n  fadeIn,\n  fadeInDelay,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt,\n    "posts": select(\n      count(pageBuilder[_type == "blogOverviewBlock"]) > 0 => *[_type == "post"] | order(publishedAt desc) {\n        \n  _id,\n  title,\n  slug {\n    current\n  },\n  coverImage {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  excerpt,\n  author-> {\n    _id,\n    name,\n    picture {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    }\n  },\n  publishedAt\n\n      }\n    )\n  }\n': PAGE_QUERYResult
-    '\n  {\n    "header": *[_type == "header"][0] {\n      _id,\n      logo {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      },\n      links[] {\n        \n  _type,\n  _key,\n  name,\n  linkType,\n  "openInNewTab": coalesce(openInNewTab, false),\n  internalLink-> {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    }\n  },\n  "externalLink": coalesce(externalLink, "")\n\n      }\n    },\n    "footer": *[_type == "footer"][0] {\n      _id,\n      links[] {\n        \n  _key,\n  logo {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  externalLink\n\n      },\n      copyrightText\n    }\n  }\n': LAYOUT_QUERYResult
+    '\n  {\n    "header": *[_type == "header"][0] {\n      _id,\n      logo,\n      links[] {\n        \n  _type,\n  _key,\n  name,\n  linkType,\n  "openInNewTab": coalesce(openInNewTab, false),\n  internalLink-> {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    }\n  },\n  "externalLink": coalesce(externalLink, "")\n\n      }\n    },\n    "footer": *[_type == "footer"][0] {\n      _id,\n      links[] {\n        \n  _key,\n  svgIcon,\n  externalLink\n\n      },\n      copyrightText\n    }\n  }\n': LAYOUT_QUERYResult
     '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt,\n    \n  pageBuilder[]{\n    _type == "sectionBlock" => {\n      \n  _type,\n  _key,\n  name,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  sections[]{\n    _type,\n    _key,\n    name,\n    content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n    sections[]{\n      _type,\n      _key,\n      name,\n      content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n },\n      sections[]{\n        _type,\n        _key,\n        name,\n        content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  markDefs[] {\n    ...,\n  }\n }\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': POST_QUERYResult
     '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  }\n': ALL_POSTS_QUERYResult
   }

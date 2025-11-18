@@ -112,7 +112,10 @@ export function Search() {
           <SearchIcon className="size-5" />
         </Button>
       </DialogTrigger>
-      <DialogContent showCloseButton={false} className="rounded-lg bg-white p-0 dark:bg-muted">
+      <DialogContent
+        showCloseButton={false}
+        className="top-0 mt-4 translate-y-0 rounded-lg bg-white p-0 sm:max-w-2xl md:mt-20 dark:bg-muted"
+      >
         <DialogTitle className="hidden">Search</DialogTitle>
         <div className="relative flex h-full w-full flex-col justify-between shadow-md xl:rounded-lg">
           <div className="flex h-16 flex-none items-center dark:border-border">
@@ -167,7 +170,7 @@ export function Search() {
                         <SanityImage
                           image={result.image}
                           alt={result.title}
-                          className="mr-1 rounded-md border md:hidden dark:border-border"
+                          className="mr-2 rounded-md border md:hidden dark:border-border"
                           width={80}
                           height={60}
                         />

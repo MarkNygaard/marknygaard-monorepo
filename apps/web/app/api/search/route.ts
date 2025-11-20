@@ -1,16 +1,9 @@
 import { NextResponse } from "next/server"
-import { createClient } from "next-sanity"
 import { getEnvironment } from "@/lib/getEnvironment"
+import { client } from "@/lib/sanity/client"
+import { token } from "@/lib/sanity/token"
 
 const { sanity } = getEnvironment()
-
-const client = createClient({
-  projectId: sanity.projectId,
-  dataset: sanity.dataset,
-  apiVersion: sanity.apiVersion,
-  useCdn: false,
-  token: process.env.SANITY_API_READ_TOKEN,
-})
 
 export async function POST(request: Request) {
   try {
@@ -18,12 +11,6 @@ export async function POST(request: Request) {
 
     if (!query || typeof query !== "string") {
       return NextResponse.json({ error: "Query is required" }, { status: 400 })
-    }
-
-    const token = process.env.SANITY_API_READ_TOKEN
-
-    if (!token) {
-      return NextResponse.json({ error: "Sanity API token not configured" }, { status: 500 })
     }
 
     const indexName = "posts"

@@ -1,9 +1,9 @@
 // biome-ignore-all lint: ignore list role
 import { Slot } from "@radix-ui/react-slot"
 import { cn } from "@workspace/common/cn"
-import { Separator } from "@workspace/ui/components/separator"
 import { cva, type VariantProps } from "class-variance-authority"
 import type * as React from "react"
+import { Separator } from "./separator"
 
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (

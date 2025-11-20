@@ -2,11 +2,11 @@
 "use client"
 
 import { cn } from "@workspace/common/cn"
-import { Button } from "@workspace/ui/components/button"
-import { Input } from "@workspace/ui/components/input"
-import { Textarea } from "@workspace/ui/components/textarea"
 import { cva, type VariantProps } from "class-variance-authority"
 import type * as React from "react"
+import { Button } from "./button"
+import { Input } from "./input"
+import { Textarea } from "./textarea"
 
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (

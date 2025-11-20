@@ -47,7 +47,7 @@ export async function POST(request: Request) {
 
     // Fetch the actual post documents
     const documentIds = hits.map((hit) => hit.value.documentId)
-    const posts = await client.fetch(
+    const posts = await client.withConfig({ token }).fetch(
       `*[_id in $ids]{
         _id,
         title,

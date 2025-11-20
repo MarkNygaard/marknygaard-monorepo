@@ -25,7 +25,7 @@ export default function SectionClient({
       ref={ref}
       id={name ?? ""}
       className="scroll-mt-[9vh]"
-      style={indentationStyle as CSSProperties}
+      style={{ ...indentationStyle }}
     >
       {children}
     </div>

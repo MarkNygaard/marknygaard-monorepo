@@ -16,6 +16,11 @@ export function getEnvironment() {
     "Missing environment variable: NEXT_PUBLIC_SANITY_API_VERSION",
   )
 
+  const sanityApiReadToken = assertValue(
+    process.env.SANITY_API_READ_TOKEN,
+    "Missing environment variable: SANITY_API_READ_TOKEN",
+  )
+
   const sanityStudioUrl = assertValue(
     process.env.NEXT_PUBLIC_SANITY_STUDIO_URL || "http://localhost:3333",
     "Missing environment variable: NEXT_PUBLIC_SANITY_STUDIO_URL",
@@ -37,6 +42,7 @@ export function getEnvironment() {
       dataset: sanityDataset,
       apiVersion: sanityApiVersion,
       studioUrl: sanityStudioUrl,
+      apiReadToken: sanityApiReadToken,
     },
     site: {
       siteUrl: siteUrl,

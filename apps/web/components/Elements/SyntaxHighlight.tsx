@@ -57,7 +57,7 @@ export default function SyntaxHighlight({
           )}
           style={hydratedStyle ?? {}}
         >
-          <CopyButton value={code} />
+          <CopyButton value={code} className="cursor-pointer" />
           {tokens.map((line, i) => {
             const lineProps = getLineProps({ line, key: i })
             return (

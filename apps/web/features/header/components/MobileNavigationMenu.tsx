@@ -19,7 +19,7 @@ import type { LAYOUT_QUERYResult } from "@/types/sanity"
 function NavItem({ href, text, onClose }: { href: string; text: string; onClose: () => void }) {
   return (
     <NextLink
-      href={href}
+      href={`/${href}`}
       onClick={onClose}
       className="mx-2 block w-full rounded-lg bg-white py-10 text-center font-semibold text-2xl text-primary-foreground shadow-md dark:bg-muted dark:text-secondary-foreground"
     >
@@ -43,7 +43,7 @@ export default function MobileNavigationMenu({ links }: MobileNavigationMenuProp
             aria-label="Search"
             variant="ghost"
             size="icon"
-            className="h-12 cursor-pointer text-muted-foreground hover:text-primary-foreground dark:text-secondary-foreground/50 dark:hover:text-secondary-foreground"
+            className="h-12 w-12 cursor-pointer rounded-full text-muted-foreground hover:text-primary-foreground dark:text-secondary-foreground/50 dark:hover:text-secondary-foreground"
           >
             <MenuIcon className="size-6" />
           </Button>
@@ -52,7 +52,7 @@ export default function MobileNavigationMenu({ links }: MobileNavigationMenuProp
       <AnimatePresence>
         {menuIsOpen && (
           <DialogPortal forceMount>
-            <DialogOverlay asChild className="bg-secondary/30 backdrop-blur">
+            <DialogOverlay asChild className="bg-white/30 backdrop-blur-xs">
               <motion.div
                 key="dialogDialog"
                 initial={{ opacity: 0 }}

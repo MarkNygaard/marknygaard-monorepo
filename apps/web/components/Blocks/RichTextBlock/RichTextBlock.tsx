@@ -14,7 +14,7 @@ export function RichTextBlock({ _key, fadeIn, fadeInDelay, content, width }: Ric
     <div
       className={cn("mr-auto", {
         "w-full": width === "full",
-        "w-2/3": width === "two-thirds",
+        "lg:w-2/3": width === "two-thirds",
       })}
     >
       {fadeIn ? (
@@ -24,7 +24,7 @@ export function RichTextBlock({ _key, fadeIn, fadeInDelay, content, width }: Ric
           fadeInDelay={fadeInDelay || 0}
           className={cn("mr-auto", {
             "w-full": width === "full",
-            "w-2/3": width === "two-thirds",
+            "lg:w-2/3": width === "two-thirds",
           })}
         >
           <RichText value={content} />

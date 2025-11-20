@@ -1,3 +1,4 @@
+import { cn } from "@workspace/common/cn"
 import { Button } from "@workspace/ui/components/button"
 import { CheckIcon, CopyIcon } from "lucide-react"
 import type { ComponentProps } from "react"
@@ -7,7 +8,7 @@ interface CopyButtonProps extends Omit<ComponentProps<typeof Button>, "onClick">
   value: string
 }
 
-export function CopyButton({ value, ...buttonProps }: CopyButtonProps) {
+export function CopyButton({ value, className }: CopyButtonProps) {
   const { copy, copied } = useClipboard()
 
   const handleCopy = () => {
@@ -16,11 +17,13 @@ export function CopyButton({ value, ...buttonProps }: CopyButtonProps) {
 
   return (
     <Button
-      className="group absolute top-0 right-0 m-2 hover:border-2 group-hover:border-zinc-500 dark:border-zinc-500 dark:group-hover:border-zinc-400"
+      className={cn(
+        "group absolute top-0 right-0 m-2 rounded-sm hover:border-2 group-hover:border-zinc-500 dark:border-zinc-500 dark:group-hover:border-zinc-400",
+        className,
+      )}
       size="icon"
       variant="outline"
       onClick={handleCopy}
-      {...buttonProps}
     >
       <CheckIcon
         className="absolute scale-50 text-zinc-300 opacity-0 transition-transform-opacity data-[visible=true]:scale-100 data-[visible=true]:opacity-100 dark:text-zinc-500"

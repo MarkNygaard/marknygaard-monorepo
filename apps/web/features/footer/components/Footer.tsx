@@ -22,7 +22,7 @@ export function Footer({ links, copyrightText }: FooterProps) {
                   href={link.externalLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground transition-all duration-300 ease-out hover:text-primary-foreground hover:ease-in dark:text-secondary-foreground/50 dark:hover:text-secondary-foreground"
+                  className="text-primary-foreground transition-all duration-100 ease-out hover:text-muted-foreground/80 hover:ease-in dark:text-secondary-foreground dark:hover:text-secondary-foreground/50"
                   /* biome-ignore lint/security/noDangerouslySetInnerHtml: SVG content is from trusted Sanity CMS */
                   dangerouslySetInnerHTML={{ __html: link.svgIcon }}
                 />

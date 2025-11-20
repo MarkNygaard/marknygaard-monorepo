@@ -27,16 +27,16 @@
     "@sanity/vision": "^4.17.0",
     "@workspace/common": "workspace:*",
     "add": "^2.0.6",
-    "lucide-react": "^0.541.0",
-    "react": "^19.1",
-    "react-dom": "^19.1",
+    "lucide-react": "^0.554.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "sanity": "^4.17.0",
-    "styled-components": "^6.1.18"
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "@types/react": "^19.1",
+    "@types/react": "^19.2.6",
     "@workspace/biome-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "typescript": "^5.8"
+    "typescript": "^5.9.3"
   }
 }

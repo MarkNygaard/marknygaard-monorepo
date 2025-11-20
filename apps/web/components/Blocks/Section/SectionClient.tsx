@@ -1,13 +1,13 @@
 "use client"
 
 import useSectionInView from "hooks/useSectionInView"
-import type { CSSProperties, ReactNode } from "react"
+import type { ReactNode } from "react"
 
 interface SectionClientProps {
   id?: string
   name?: string | null
   level: number
-  indentationStyle: CSSProperties
+  indentationStyle: Record<string, string | number | undefined>
   children: ReactNode
 }
 

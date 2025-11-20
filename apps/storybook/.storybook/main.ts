@@ -1,6 +1,6 @@
 import { createRequire } from "node:module"
 import { dirname, join } from "node:path"
-import type { StorybookConfig } from "@storybook/react-vite"
+import type { StorybookConfig } from "@storybook/nextjs"
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -14,12 +14,12 @@ function getAbsolutePath(value: string): any {
 const require = createRequire(import.meta.url)
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../../../packages/ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  stories: ["../../../packages/ui/src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
 
   addons: [getAbsolutePath("@storybook/addon-docs")],
 
   framework: {
-    name: getAbsolutePath("@storybook/react-vite"),
+    name: getAbsolutePath("@storybook/nextjs"),
     options: {},
   },
 }

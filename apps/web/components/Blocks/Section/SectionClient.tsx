@@ -20,7 +20,13 @@ export default function SectionClient({
   const { ref } = useSectionInView({ sectionId: name as string })
 
   return (
-    <div key={id} ref={ref} id={name ?? ""} className="scroll-mt-[9vh]" style={indentationStyle}>
+    <div
+      key={id}
+      ref={ref}
+      id={name ?? ""}
+      className="scroll-mt-[9vh]"
+      style={indentationStyle as CSSProperties}
+    >
       {children}
     </div>
   )

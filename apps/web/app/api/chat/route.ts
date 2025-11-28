@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
     const response = await fetch(`${endpoint}?sessionId=${sessionId}`, {
       headers: {
         "x-api-key": apiKey,
+        "User-Agent": "MarkNygaard-Chatbot/1.0",
       },
     })
 
@@ -64,6 +65,7 @@ export async function POST(request: NextRequest) {
       headers: {
         "Content-Type": "application/json",
         "x-api-key": apiKey,
+        "User-Agent": "MarkNygaard-Chatbot/1.0",
       },
       body: JSON.stringify(body),
     })

@@ -1,10 +1,13 @@
 "use client"
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ThemeProvider } from "next-themes"
-import type * as React from "react"
+import { useState } from "react"
 import ActiveSectionContextProvider from "@/context/ActiveSectionContext"
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const [queryClient] = useState(() => new QueryClient())
+
   return (
     <ThemeProvider
       attribute="class"
@@ -13,7 +16,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableColorScheme
       enableSystem
     >
-      <ActiveSectionContextProvider>{children}</ActiveSectionContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <ActiveSectionContextProvider>{children}</ActiveSectionContextProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }

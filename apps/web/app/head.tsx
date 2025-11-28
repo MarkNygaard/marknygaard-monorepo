@@ -5,7 +5,7 @@ export default function Head() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
       {/* Web App Capabilities */}
-      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="mobile-web-app-capable" content="yes" />
       <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
       <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />

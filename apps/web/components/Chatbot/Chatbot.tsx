@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { Loader2, SendIcon } from "lucide-react"
+import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
 
 function generateSessionId(): string {
@@ -17,6 +18,47 @@ function getOrCreateSessionId(): string {
   const newId = generateSessionId()
   sessionStorage.setItem(storageKey, newId)
   return newId
+}
+
+function renderMessageWithLinks(text: string): React.ReactNode {
+  const urlRegex = /(https?:\/\/[^\s]+)/g
+  const parts: React.ReactNode[] = []
+  let lastIndex = 0
+  let match = urlRegex.exec(text)
+
+  while (match !== null) {
+    // Add text before the URL
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index))
+    }
+
+    // Add the URL as a clickable link
+    const url = match[0]
+    const baseUrl = "https://marknygaard.dk/"
+    const baseUrlWithWww = "https://www.marknygaard.dk/"
+    const href = url.startsWith(baseUrl)
+      ? url.slice(baseUrl.length - 1)
+      : url.startsWith(baseUrlWithWww)
+        ? url.slice(baseUrlWithWww.length - 1)
+        : url
+    console.log("Rendering link:", { url, href })
+
+    parts.push(
+      <Link key={`link-${match.index}`} href={href} className="underline hover:opacity-80">
+        {url}
+      </Link>,
+    )
+
+    lastIndex = match.index + url.length
+    match = urlRegex.exec(text)
+  }
+
+  // Add remaining text after the last URL
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex))
+  }
+
+  return parts.length > 0 ? parts : text
 }
 
 export function Chatbot() {
@@ -129,7 +171,7 @@ export function Chatbot() {
               <div
                 className={`max-w-[80%] whitespace-pre-wrap rounded-2xl px-4 py-2 text-sm shadow-sm ${isUser ? "rounded-br-md bg-primary text-primary-foreground" : "rounded-bl-md bg-muted dark:bg-zinc-800"}`}
               >
-                {item.content}
+                {renderMessageWithLinks(item.content)}
               </div>
             </div>
           )

@@ -32,24 +32,49 @@ function renderMessageWithLinks(text: string): React.ReactNode {
       parts.push(text.slice(lastIndex, match.index))
     }
 
+    // Remove trailing punctuation from URL
+    let url = match[0]
+    let trailingPunctuation = ""
+    const punctuationRegex = /[).,;:!?]+$/
+    const punctuationMatch = url.match(punctuationRegex)
+    if (punctuationMatch) {
+      trailingPunctuation = punctuationMatch[0]
+      url = url.slice(0, -trailingPunctuation.length)
+    }
+
     // Add the URL as a clickable link
-    const url = match[0]
-    const baseUrl = "https://marknygaard.dk/"
-    const baseUrlWithWww = "https://www.marknygaard.dk/"
-    const href = url.startsWith(baseUrl)
-      ? url.slice(baseUrl.length - 1)
-      : url.startsWith(baseUrlWithWww)
-        ? url.slice(baseUrlWithWww.length - 1)
-        : url
-    console.log("Rendering link:", { url, href })
+    const domainPattern = /^https?:\/\/(www\.)?marknygaard\.dk\//
+    const domainMatch = url.match(domainPattern)
 
-    parts.push(
-      <Link key={`link-${match.index}`} href={href} className="underline hover:opacity-80">
-        {url}
-      </Link>,
-    )
+    if (domainMatch) {
+      // Internal link - use Next.js Link
+      const href = url.slice(domainMatch[0].length - 1)
+      parts.push(
+        <Link key={`link-${match.index}`} href={href} className="underline hover:opacity-80">
+          {url}
+        </Link>,
+      )
+    } else {
+      // External link - use regular anchor tag
+      parts.push(
+        <a
+          key={`link-${match.index}`}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:opacity-80"
+        >
+          {url}
+        </a>,
+      )
+    }
 
-    lastIndex = match.index + url.length
+    // Add the trailing punctuation as plain text
+    if (trailingPunctuation) {
+      parts.push(trailingPunctuation)
+    }
+
+    lastIndex = match.index + match[0].length
     match = urlRegex.exec(text)
   }
 

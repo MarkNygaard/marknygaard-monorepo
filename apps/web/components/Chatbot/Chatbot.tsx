@@ -1,5 +1,6 @@
 "use client"
 import { useMutation } from "@tanstack/react-query"
+import { cn } from "@workspace/common/cn"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/input"
 import { Loader2, SendIcon } from "lucide-react"
@@ -194,7 +195,13 @@ export function Chatbot() {
               className={`flex ${isUser ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[80%] whitespace-pre-wrap rounded-2xl px-4 py-2 text-sm shadow-sm ${isUser ? "rounded-br-md bg-primary text-primary-foreground" : "rounded-bl-md bg-muted dark:bg-zinc-800"}`}
+                className={cn(
+                  "max-w-[80%] whitespace-pre-wrap break-words rounded-2xl px-4 py-2 text-sm shadow-sm",
+                  {
+                    "rounded-br-md bg-primary text-primary-foreground": isUser,
+                    "rounded-bl-md bg-muted dark:bg-zinc-800": !isUser,
+                  },
+                )}
               >
                 {renderMessageWithLinks(item.content)}
               </div>

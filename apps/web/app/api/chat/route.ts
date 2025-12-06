@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const endpoint = process.env.NEXT_PUBLIC_N8N_CHAT_TEST_ENDPOINT || ""
+    const endpoint = process.env.NEXT_PUBLIC_N8N_CHAT_ENDPOINT || ""
     const apiKey = process.env.N8N_API_KEY || ""
 
     const response = await fetch(endpoint, {

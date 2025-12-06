@@ -24,13 +24,13 @@
     "@focus-reactive/sanity-plugin-inline-svg-input": "^1.2.0",
     "@sanity/embeddings-index-ui": "^3.0.0",
     "@sanity/icons": "^3.7.4",
-    "@sanity/vision": "^4.17.0",
+    "@sanity/vision": "^4.20.3",
     "@workspace/common": "workspace:*",
     "add": "^2.0.6",
     "lucide-react": "^0.554.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "sanity": "^4.17.0",
+    "sanity": "^4.20.3",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {

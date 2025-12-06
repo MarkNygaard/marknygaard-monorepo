@@ -14,8 +14,16 @@ import { MessageCircle, X } from "lucide-react"
 import { useState } from "react"
 import { Chatbot } from "./Chatbot"
 
-export function ChatbotDrawer() {
+interface ChatbotDrawerProps {
+  enabled?: boolean
+}
+
+export function ChatbotDrawer({ enabled = true }: ChatbotDrawerProps) {
   const [open, setOpen] = useState(false)
+
+  if (!enabled) {
+    return null
+  }
 
   return (
     <Drawer open={open} onOpenChange={setOpen} direction="right">

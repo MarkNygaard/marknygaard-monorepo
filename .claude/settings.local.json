@@ -9,7 +9,11 @@
       "Bash(npx biome:*)",
       "WebFetch",
       "Edit",
-      "Write"
+      "Write",
+      "mcp__archon",
+      "Bash(pnpm build:*)",
+      "Bash(cat:*)",
+      "Bash(\"app/api/auth/[...all]/route.ts\")"
     ],
     "deny": [],
     "ask": []

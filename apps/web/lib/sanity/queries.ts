@@ -268,6 +268,10 @@ export const LAYOUT_QUERY = defineQuery(`
         ${socialLinkFragment}
       },
       copyrightText
+    },
+    "chatbotSettings": *[_type == "chatbotSettings"][0] {
+      _id,
+      enabled
     }
   }
 `)

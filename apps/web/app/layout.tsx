@@ -39,7 +39,7 @@ export default async function RootLayout({
             <div className="mx-auto max-w-5xl">{children}</div>
           </main>
           <Footer {...layoutData.footer} />
-          <ChatbotDrawer />
+          <ChatbotDrawer enabled={layoutData.chatbotSettings?.enabled === "enabled"} />
           {(await draftMode()).isEnabled && (
             <>
               <VisualEditing />

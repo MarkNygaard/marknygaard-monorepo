@@ -1,0 +1,25 @@
+{
+  "name": "@workspace/supabase",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "biome check --write .",
+    "check:unsafe": "biome check --write --unsafe ."
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.48.4"
+  },
+  "devDependencies": {
+    "@workspace/biome-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  },
+  "exports": {
+    "./client": "./src/client.ts",
+    "./types": "./src/types.ts",
+    "./queries": "./src/queries.ts"
+  }
+}

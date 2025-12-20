@@ -14,7 +14,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { MenuIcon } from "lucide-react"
 import NextLink from "next/link"
 import { useState } from "react"
-import type { LAYOUT_QUERYResult } from "@/types/sanity"
+import type { LAYOUT_QUERY_RESULT } from "@/types/sanity"
 
 function NavItem({ href, text, onClose }: { href: string; text: string; onClose: () => void }) {
   return (
@@ -29,7 +29,7 @@ function NavItem({ href, text, onClose }: { href: string; text: string; onClose:
 }
 
 type MobileNavigationMenuProps = Partial<
-  Pick<NonNullable<LAYOUT_QUERYResult["header"]>, "logo" | "links">
+  Pick<NonNullable<LAYOUT_QUERY_RESULT["header"]>, "logo" | "links">
 >
 
 export default function MobileNavigationMenu({ links }: MobileNavigationMenuProps) {

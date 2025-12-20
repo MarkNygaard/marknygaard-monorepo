@@ -4,9 +4,9 @@ import { cn } from "@workspace/common/cn"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import type { ReactNode } from "react"
-import type { LAYOUT_QUERYResult } from "@/types/sanity"
+import type { LAYOUT_QUERY_RESULT } from "@/types/sanity"
 
-type LinkFromLayout = NonNullable<LAYOUT_QUERYResult["header"]>["links"][number]
+type LinkFromLayout = NonNullable<LAYOUT_QUERY_RESULT["header"]>["links"][number]
 
 interface BaseLinkProps {
   data: LinkFromLayout

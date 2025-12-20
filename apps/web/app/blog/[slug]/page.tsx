@@ -50,7 +50,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
         </div>
       </div>
       <div className="flex">
-        <div className="w-full md:w-9/12 md:pr-3">
+        <div className="w-full space-y-4 md:w-9/12 md:pr-3">
           {post?.pageBuilder?.map((section) => (
             <Section key={section._key} section={section} />
           ))}

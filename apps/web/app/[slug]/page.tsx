@@ -5,6 +5,8 @@ import { sanityFetch } from "@/lib/sanity/live"
 import { PAGE_QUERY } from "@/lib/sanity/queries"
 import { formatMetaDataFromSanity } from "@/lib/seo/seo"
 
+export const dynamic = "force-static"
+
 export async function generateMetadata({ params }: PageProps<"/[slug]">): Promise<Metadata> {
   const { slug } = await params
 

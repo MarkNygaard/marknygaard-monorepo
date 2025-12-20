@@ -1,5 +1,5 @@
 import { getImageDimensions } from "@sanity/asset-utils"
-import type { FitMode, SanityAsset } from "@sanity/image-url/lib/types/types"
+import type { FitMode, SanityAsset } from "@sanity/image-url"
 import { cn } from "@workspace/common/cn"
 import { stegaClean } from "next-sanity"
 import { urlFor } from "@/lib/sanity/image"

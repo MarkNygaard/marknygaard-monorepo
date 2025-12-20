@@ -1,4 +1,4 @@
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+import type { SanityImageSource } from "@sanity/image-url"
 import type { Metadata } from "next"
 import { getEnvironment } from "@/lib/getEnvironment"
 import { sanityFetch } from "@/lib/sanity/live"

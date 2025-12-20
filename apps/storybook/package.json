@@ -14,17 +14,17 @@
   },
   "dependencies": {
     "@workspace/ui": "workspace:*",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^10.1.10",
+    "@storybook/nextjs": "^10.1.10",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@workspace/biome-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "@storybook/addon-docs": "^10.0.8",
-    "@storybook/nextjs": "^10.0.8",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "globals": "^16.0.0",
-    "storybook": "^10.0.8"
+    "globals": "^16.5.0",
+    "storybook": "^10.1.10"
   }
 }

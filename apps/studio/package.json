@@ -24,17 +24,17 @@
     "@focus-reactive/sanity-plugin-inline-svg-input": "^1.2.0",
     "@sanity/embeddings-index-ui": "^3.0.0",
     "@sanity/icons": "^3.7.4",
-    "@sanity/vision": "^4.20.3",
+    "@sanity/vision": "^5.0.1",
     "@workspace/common": "workspace:*",
     "add": "^2.0.6",
-    "lucide-react": "^0.554.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "sanity": "^4.20.3",
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "sanity": "^5.0.1",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "@workspace/biome-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "typescript": "^5.9.3"

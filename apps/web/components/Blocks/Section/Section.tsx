@@ -1,9 +1,9 @@
 import { cn } from "@workspace/common/cn"
 import { RichText } from "@/components/Elements/RichText"
-import type { POST_QUERYResult } from "@/types/sanity"
+import type { POST_QUERY_RESULT } from "@/types/sanity"
 import SectionClient from "./SectionClient"
 
-type SectionBlock = NonNullable<NonNullable<POST_QUERYResult>["pageBuilder"]>[number]
+type SectionBlock = NonNullable<NonNullable<POST_QUERY_RESULT>["pageBuilder"]>[number]
 
 interface SectionProps {
   section: SectionBlock

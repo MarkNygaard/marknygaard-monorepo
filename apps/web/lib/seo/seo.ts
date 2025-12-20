@@ -1,8 +1,8 @@
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
+import type { SanityImageSource } from "@sanity/image-url"
 import type { Metadata } from "next"
 import { getEnvironment } from "@/lib/getEnvironment"
 import { sanityFetch } from "@/lib/sanity/live"
-import type { GLOBAL_SEO_QUERYResult, PAGE_QUERYResult } from "@/types/sanity"
+import type { GLOBAL_SEO_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/types/sanity"
 
 import { urlFor } from "../sanity/image"
 import { GLOBAL_SEO_QUERY } from "../sanity/queries"
@@ -10,7 +10,7 @@ import { GLOBAL_SEO_QUERY } from "../sanity/queries"
 const { site } = getEnvironment()
 
 // Fetch global SEO data with caching
-export async function getGlobalSeoData(): Promise<GLOBAL_SEO_QUERYResult> {
+export async function getGlobalSeoData(): Promise<GLOBAL_SEO_QUERY_RESULT> {
   try {
     const { data: globalSeoData } = await sanityFetch({
       query: GLOBAL_SEO_QUERY,
@@ -28,7 +28,7 @@ function resolveImageUrl(image: SanityImageSource | null | undefined): string | 
   return urlFor(image).width(1200).height(630).auto("format").url()
 }
 
-export type SeoQueryData = NonNullable<PAGE_QUERYResult>["seo"]
+export type SeoQueryData = NonNullable<PAGE_QUERY_RESULT>["seo"]
 
 // Helper function to format metadata from Sanity data
 export async function formatMetaDataFromSanity({

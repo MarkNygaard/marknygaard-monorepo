@@ -1,10 +1,10 @@
 import { cn } from "@workspace/common/cn"
 import { Search } from "@/components/Elements/Search"
 import { ThemeToggle } from "@/components/Elements/ThemeToggle"
-import type { LAYOUT_QUERYResult } from "@/types/sanity"
+import type { LAYOUT_QUERY_RESULT } from "@/types/sanity"
 import MobileNavigationMenu from "./MobileNavigationMenu"
 
-type MobileNavigationProps = Partial<Pick<NonNullable<LAYOUT_QUERYResult["header"]>, "links">>
+type MobileNavigationProps = Partial<Pick<NonNullable<LAYOUT_QUERY_RESULT["header"]>, "links">>
 
 export default function MobileNavigation({ links }: MobileNavigationProps) {
   return (

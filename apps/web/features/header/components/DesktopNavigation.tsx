@@ -1,11 +1,11 @@
 import Link from "next/link"
 import { Search } from "@/components/Elements/Search"
 import { ThemeToggle } from "@/components/Elements/ThemeToggle"
-import type { LAYOUT_QUERYResult } from "@/types/sanity"
+import type { LAYOUT_QUERY_RESULT } from "@/types/sanity"
 import { NavItemDesktop } from "./NavItemDesktop"
 
 type DesktopNavigationProps = Partial<
-  Pick<NonNullable<LAYOUT_QUERYResult["header"]>, "logo" | "links">
+  Pick<NonNullable<LAYOUT_QUERY_RESULT["header"]>, "logo" | "links">
 >
 
 export default function DesktopNavigation({ logo, links }: DesktopNavigationProps) {

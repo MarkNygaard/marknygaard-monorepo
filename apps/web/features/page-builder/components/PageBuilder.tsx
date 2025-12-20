@@ -2,14 +2,14 @@ import { draftMode } from "next/headers"
 import { BLOCK_COMPONENTS } from "@/components/Blocks"
 import { BlogOverviewBlock } from "@/components/Blocks/BlogOverviewBlock"
 import type { PageBuilderBlock } from "@/features/page-builder/types/pagebuilder"
-import type { ALL_POSTS_QUERYResult } from "@/types/sanity"
+import type { ALL_POSTS_QUERY_RESULT } from "@/types/sanity"
 import { PageBuilderDraftMode } from "./PageBuilderDraftMode"
 
 interface PageBuilderProps {
   blocks: PageBuilderBlock[]
   documentId: string
   documentType: string
-  posts?: ALL_POSTS_QUERYResult
+  posts?: ALL_POSTS_QUERY_RESULT
 }
 
 /**
@@ -34,7 +34,7 @@ function UnknownBlockError({ blockType, blockKey }: { blockType: string; blockKe
 /**
  * Render a single block component for server-side rendering
  */
-function renderBlock(block: PageBuilderBlock, index: number, posts?: ALL_POSTS_QUERYResult) {
+function renderBlock(block: PageBuilderBlock, index: number, posts?: ALL_POSTS_QUERY_RESULT) {
   // Handle BlogOverviewBlock separately to avoid client bundle issues
   if (block._type === "blogOverviewBlock") {
     return (

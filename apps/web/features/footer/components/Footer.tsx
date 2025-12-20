@@ -1,8 +1,8 @@
-import type { LAYOUT_QUERYResult } from "@/types/sanity"
+import type { LAYOUT_QUERY_RESULT } from "@/types/sanity"
 import FooterEmojiAnimation from "./FooterEmojiAnimation"
 
 type FooterProps = Partial<
-  Pick<NonNullable<LAYOUT_QUERYResult["footer"]>, "links" | "copyrightText">
+  Pick<NonNullable<LAYOUT_QUERY_RESULT["footer"]>, "links" | "copyrightText">
 >
 
 export function Footer({ links, copyrightText }: FooterProps) {

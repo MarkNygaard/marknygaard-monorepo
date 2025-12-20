@@ -13,7 +13,10 @@
       "mcp__archon",
       "Bash(pnpm build:*)",
       "Bash(cat:*)",
-      "Bash(\"app/api/auth/[...all]/route.ts\")"
+      "Bash(\"app/api/auth/[...all]/route.ts\")",
+      "Bash(pnpm -F web build:*)",
+      "Bash(pnpm why:*)",
+      "Bash(pnpm list:*)"
     ],
     "deny": [],
     "ask": []

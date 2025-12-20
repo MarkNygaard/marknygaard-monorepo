@@ -1,6 +1,6 @@
-import type { HOMEPAGE_QUERYResult, PAGE_QUERYResult } from "@/types/sanity"
+import type { HOMEPAGE_QUERY_RESULT, PAGE_QUERY_RESULT } from "@/types/sanity"
 
-type Pages = NonNullable<HOMEPAGE_QUERYResult> | NonNullable<PAGE_QUERYResult>
+type Pages = NonNullable<HOMEPAGE_QUERY_RESULT> | NonNullable<PAGE_QUERY_RESULT>
 
 // Use the PageBuilder type directly from Sanity schema
 export type PageBuilderBlockTypes = NonNullable<Pages["pageBuilder"]>[number]["_type"]

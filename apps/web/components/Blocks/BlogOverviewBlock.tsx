@@ -1,11 +1,11 @@
 import { format } from "date-fns"
 import NextLink from "next/link"
-import type { ALL_POSTS_QUERYResult } from "@/types/sanity"
+import type { ALL_POSTS_QUERY_RESULT } from "@/types/sanity"
 import CardSpotlight from "../Elements/CardSpotlight"
 import { SanityImage } from "../SanityImage"
 
 interface BlogOverviewBlockProps {
-  posts?: ALL_POSTS_QUERYResult
+  posts?: ALL_POSTS_QUERY_RESULT
   index?: number
 }
 

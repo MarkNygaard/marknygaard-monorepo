@@ -1,9 +1,10 @@
-import type { SanityAsset } from "@sanity/image-url/lib/types/types"
+import type { SanityAsset } from "@sanity/image-url"
 import { cn } from "@workspace/common/cn"
 import { Typography } from "@workspace/ui/typography"
 import type { PortableTextComponentProps, PortableTextProps } from "next-sanity"
 import { PortableText } from "next-sanity"
 import type { Language } from "prism-react-renderer"
+import type { ReactNode } from "react"
 import { SanityImage } from "@/components/SanityImage/SanityImage"
 import SyntaxHighlight from "./SyntaxHighlight"
 

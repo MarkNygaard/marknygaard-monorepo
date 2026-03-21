@@ -36,7 +36,7 @@ export default function SyntaxHighlight({
   showLineNumbers?: boolean
   highlightLines?: number[]
 }) {
-  const linesCount = useMemo(() => code.split(/\r\n|\r|\n/).length, [code])
+  const linesCount = useMemo(() => (code ?? "").split(/\r\n|\r|\n/).length, [code])
 
   const currentTheme = usePrismTheme()
   const [hydratedStyle, setHydratedStyle] = useState<React.CSSProperties | null>(null)
@@ -48,7 +48,11 @@ export default function SyntaxHighlight({
   }, [currentTheme])
 
   return (
-    <Highlight theme={currentTheme || { plain: {}, styles: [] }} code={code} language={language}>
+    <Highlight
+      theme={currentTheme || { plain: {}, styles: [] }}
+      code={code ?? ""}
+      language={language ?? "text"}
+    >
       {({ className, tokens, getLineProps, getTokenProps }) => (
         <pre
           className={cn(

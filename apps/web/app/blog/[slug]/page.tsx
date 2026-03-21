@@ -34,6 +34,8 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
     params: { slug: `blog/${slug}` },
   })
 
+  if (!post) return notFound()
+
   return (
     <article>
       <div className="pb-4 sm:grid sm:grid-cols-3 sm:grid-rows-1 sm:gap-2">

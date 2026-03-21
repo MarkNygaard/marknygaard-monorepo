@@ -12,6 +12,8 @@
  * ---------------------------------------------------------------------------------
  */
 
+export declare const internalGroqTypeReferenceTo: unique symbol
+
 // Source: schema.json
 export type PostReference = {
   _ref: string
@@ -381,6 +383,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette
   lqip?: string
   blurHash?: string
+  thumbHash?: string
   hasAlpha?: boolean
   isOpaque?: boolean
 }
@@ -396,14 +399,14 @@ export type SanityFileAsset = {
   title?: string
   description?: string
   altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
+  sha1hash: string
+  extension: string
+  mimeType: string
+  size: number
+  assetId: string
   uploadId?: string
-  path?: string
-  url?: string
+  path: string
+  url: string
   source?: SanityAssetSourceData
 }
 
@@ -425,14 +428,14 @@ export type SanityImageAsset = {
   title?: string
   description?: string
   altText?: string
-  sha1hash?: string
-  extension?: string
-  mimeType?: string
-  size?: number
-  assetId?: string
+  sha1hash: string
+  extension: string
+  mimeType: string
+  size: number
+  assetId: string
   uploadId?: string
-  path?: string
-  url?: string
+  path: string
+  url: string
   metadata?: SanityImageMetadata
   source?: SanityAssetSourceData
 }
@@ -483,9 +486,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint
 
-export declare const internalGroqTypeReferenceTo: unique symbol
-
-// Source: ..\web\lib\sanity\queries.ts
+// Source: ../web/lib/sanity/queries.ts
 // Variable: HOMEPAGE_QUERY
 // Query: *[_type == "homePage"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  width,  fadeIn,  fadeInDelay,    },    _type == "blogOverviewBlock" => {        _type,  _key,  title    },    _type == "textImageBlock" => {        _type,  _key,  title,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  image {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  imagePosition,  blockTitle,    },    _type == "featuredPostsBlock" => {        _type,  _key,  title,  posts[]-> {    _id,    title,    slug {      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt  },  fadeIn,  fadeInDelay,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type HOMEPAGE_QUERY_RESULT = {
@@ -511,7 +512,7 @@ export type HOMEPAGE_QUERY_RESULT = {
           coverImage: {
             asset: {
               _id: string
-              url: string | null
+              url: string
               altText: string | null
               metadata: {
                 lqip: string | null
@@ -533,7 +534,7 @@ export type HOMEPAGE_QUERY_RESULT = {
             picture: {
               asset: {
                 _id: string
-                url: string | null
+                url: string
                 altText: string | null
                 metadata: {
                   lqip: string | null
@@ -608,7 +609,7 @@ export type HOMEPAGE_QUERY_RESULT = {
           | {
               asset: {
                 _id: string
-                url: string | null
+                url: string
                 altText: string | null
                 metadata: {
                   lqip: string | null
@@ -688,7 +689,7 @@ export type HOMEPAGE_QUERY_RESULT = {
           | {
               asset: {
                 _id: string
-                url: string | null
+                url: string
                 altText: string | null
                 metadata: {
                   lqip: string | null
@@ -712,7 +713,7 @@ export type HOMEPAGE_QUERY_RESULT = {
         image: {
           asset: {
             _id: string
-            url: string | null
+            url: string
             altText: string | null
             metadata: {
               lqip: string | null
@@ -738,7 +739,7 @@ export type HOMEPAGE_QUERY_RESULT = {
     seoImage: {
       asset: {
         _id: string
-        url: string | null
+        url: string
         altText: string | null
         metadata: {
           dimensions: {
@@ -762,7 +763,7 @@ export type HOMEPAGE_QUERY_RESULT = {
   _updatedAt: string
 } | null
 
-// Source: ..\web\lib\sanity\queries.ts
+// Source: ../web/lib/sanity/queries.ts
 // Variable: PAGE_QUERY
 // Query: *[_type == "page" && slug.current == $slug][0] {    _id,    _type,    title,    slug {      _type,      current    },      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  width,  fadeIn,  fadeInDelay,    },    _type == "blogOverviewBlock" => {        _type,  _key,  title    },    _type == "textImageBlock" => {        _type,  _key,  title,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  image {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  imagePosition,  blockTitle,    },    _type == "featuredPostsBlock" => {        _type,  _key,  title,  posts[]-> {    _id,    title,    slug {      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt  },  fadeIn,  fadeInDelay,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt,    "posts": select(      count(pageBuilder[_type == "blogOverviewBlock"]) > 0 => *[_type == "post"] | order(publishedAt desc) {          _id,  title,  slug {    current  },  coverImage {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  excerpt,  author-> {    _id,    name,    picture {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    }  },  publishedAt      }    )  }
 export type PAGE_QUERY_RESULT = {
@@ -792,7 +793,7 @@ export type PAGE_QUERY_RESULT = {
           coverImage: {
             asset: {
               _id: string
-              url: string | null
+              url: string
               altText: string | null
               metadata: {
                 lqip: string | null
@@ -814,7 +815,7 @@ export type PAGE_QUERY_RESULT = {
             picture: {
               asset: {
                 _id: string
-                url: string | null
+                url: string
                 altText: string | null
                 metadata: {
                   lqip: string | null
@@ -889,7 +890,7 @@ export type PAGE_QUERY_RESULT = {
           | {
               asset: {
                 _id: string
-                url: string | null
+                url: string
                 altText: string | null
                 metadata: {
                   lqip: string | null
@@ -969,7 +970,7 @@ export type PAGE_QUERY_RESULT = {
           | {
               asset: {
                 _id: string
-                url: string | null
+                url: string
                 altText: string | null
                 metadata: {
                   lqip: string | null
@@ -993,7 +994,7 @@ export type PAGE_QUERY_RESULT = {
         image: {
           asset: {
             _id: string
-            url: string | null
+            url: string
             altText: string | null
             metadata: {
               lqip: string | null
@@ -1019,7 +1020,7 @@ export type PAGE_QUERY_RESULT = {
     seoImage: {
       asset: {
         _id: string
-        url: string | null
+        url: string
         altText: string | null
         metadata: {
           dimensions: {
@@ -1050,7 +1051,7 @@ export type PAGE_QUERY_RESULT = {
     coverImage: {
       asset: {
         _id: string
-        url: string | null
+        url: string
         altText: string | null
         metadata: {
           lqip: string | null
@@ -1072,7 +1073,7 @@ export type PAGE_QUERY_RESULT = {
       picture: {
         asset: {
           _id: string
-          url: string | null
+          url: string
           altText: string | null
           metadata: {
             lqip: string | null
@@ -1092,7 +1093,7 @@ export type PAGE_QUERY_RESULT = {
   }>
 } | null
 
-// Source: ..\web\lib\sanity\queries.ts
+// Source: ../web/lib/sanity/queries.ts
 // Variable: LAYOUT_QUERY
 // Query: {    "header": *[_type == "header"][0] {      _id,      logo,      links[] {          _type,  _key,  name,  linkType,  "openInNewTab": coalesce(openInNewTab, false),  internalLink-> {    _id,    _type,    title,    slug {      _type,      current    }  },  "externalLink": coalesce(externalLink, "")      }    },    "footer": *[_type == "footer"][0] {      _id,      links[] {          _key,  svgIcon,  externalLink      },      copyrightText    },    "chatbotSettings": *[_type == "chatbotSettings"][0] {      _id,      enabled    }  }
 export type LAYOUT_QUERY_RESULT = {
@@ -1143,7 +1144,7 @@ export type LAYOUT_QUERY_RESULT = {
   } | null
 }
 
-// Source: ..\web\lib\sanity\queries.ts
+// Source: ../web/lib/sanity/queries.ts
 // Variable: POST_QUERY
 // Query: *[_type == "post" && slug.current == $slug][0] {    _id,    _type,    title,    slug {      _type,      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt,      pageBuilder[]{    _type == "sectionBlock" => {        _type,  _key,  name,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  sections[]{    _type,    _key,    name,    content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },    sections[]{      _type,      _key,      name,      content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },      sections[]{        _type,        _key,        name,        content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } }      }    }  }    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type POST_QUERY_RESULT = {
@@ -1157,7 +1158,7 @@ export type POST_QUERY_RESULT = {
   coverImage: {
     asset: {
       _id: string
-      url: string | null
+      url: string
       altText: string | null
       metadata: {
         lqip: string | null
@@ -1179,7 +1180,7 @@ export type POST_QUERY_RESULT = {
     picture: {
       asset: {
         _id: string
-        url: string | null
+        url: string
         altText: string | null
         metadata: {
           lqip: string | null
@@ -1251,7 +1252,7 @@ export type POST_QUERY_RESULT = {
       | {
           asset: {
             _id: string
-            url: string | null
+            url: string
             altText: string | null
             metadata: {
               lqip: string | null
@@ -1327,7 +1328,7 @@ export type POST_QUERY_RESULT = {
         | {
             asset: {
               _id: string
-              url: string | null
+              url: string
               altText: string | null
               metadata: {
                 lqip: string | null
@@ -1403,7 +1404,7 @@ export type POST_QUERY_RESULT = {
           | {
               asset: {
                 _id: string
-                url: string | null
+                url: string
                 altText: string | null
                 metadata: {
                   lqip: string | null
@@ -1479,7 +1480,7 @@ export type POST_QUERY_RESULT = {
             | {
                 asset: {
                   _id: string
-                  url: string | null
+                  url: string
                   altText: string | null
                   metadata: {
                     lqip: string | null
@@ -1511,7 +1512,7 @@ export type POST_QUERY_RESULT = {
     seoImage: {
       asset: {
         _id: string
-        url: string | null
+        url: string
         altText: string | null
         metadata: {
           dimensions: {
@@ -1535,7 +1536,7 @@ export type POST_QUERY_RESULT = {
   _updatedAt: string
 } | null
 
-// Source: ..\web\lib\sanity\queries.ts
+// Source: ../web/lib/sanity/queries.ts
 // Variable: ALL_POSTS_QUERY
 // Query: *[_type == "post"] | order(publishedAt desc) {    _id,    title,    slug {      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt  }
 export type ALL_POSTS_QUERY_RESULT = Array<{
@@ -1547,7 +1548,7 @@ export type ALL_POSTS_QUERY_RESULT = Array<{
   coverImage: {
     asset: {
       _id: string
-      url: string | null
+      url: string
       altText: string | null
       metadata: {
         lqip: string | null
@@ -1569,7 +1570,7 @@ export type ALL_POSTS_QUERY_RESULT = Array<{
     picture: {
       asset: {
         _id: string
-        url: string | null
+        url: string
         altText: string | null
         metadata: {
           lqip: string | null
@@ -1588,7 +1589,7 @@ export type ALL_POSTS_QUERY_RESULT = Array<{
   publishedAt: string
 }>
 
-// Source: ..\web\lib\sanity\queries.ts
+// Source: ../web/lib/sanity/queries.ts
 // Variable: GLOBAL_SEO_QUERY
 // Query: *[  _type == "globalSeo"][0] {  _id,  title,  domain,  code,  seoIndexing,  seoSuffix}
 export type GLOBAL_SEO_QUERY_RESULT = {

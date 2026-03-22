@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google"
 import "@workspace/ui/globals.css"
 
+import { Analytics } from "@vercel/analytics/next"
 import { cn } from "@workspace/common/cn"
 import { draftMode } from "next/headers"
 import { VisualEditing } from "next-sanity/visual-editing"
@@ -48,6 +49,7 @@ export default async function RootLayout({
           )}
         </Providers>
         <SanityLive />
+        <Analytics />
       </body>
     </html>
   )

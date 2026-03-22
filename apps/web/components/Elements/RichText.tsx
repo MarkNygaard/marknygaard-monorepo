@@ -34,6 +34,15 @@ export function RichText({ value, className }: PortableRichTextProps) {
           marks: {
             strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
             em: ({ children }) => <em className="italic">{children}</em>,
+            link: ({ children, value }) => (
+              <a
+                href={value?.href}
+                className="underline"
+                {...(value?.blank ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
+                {children}
+              </a>
+            ),
           },
           block: {
             normal: ({ children }) => <p className="mb-4 font-light last:mb-0">{children}</p>,

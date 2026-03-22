@@ -1,10 +1,10 @@
 import type { SanityAsset } from "@sanity/image-url"
 import { cn } from "@workspace/common/cn"
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@workspace/ui/dialog"
 import { Typography } from "@workspace/ui/typography"
 import type { PortableTextComponentProps, PortableTextProps } from "next-sanity"
 import { PortableText } from "next-sanity"
 import type { Language } from "prism-react-renderer"
-import type { ReactNode } from "react"
 import { SanityImage } from "@/components/SanityImage/SanityImage"
 import SyntaxHighlight from "./SyntaxHighlight"
 
@@ -91,13 +91,32 @@ export function RichText({ value, className }: PortableRichTextProps) {
               if (!value?.asset) return null
 
               return (
-                <div className="my-6">
-                  <SanityImage
-                    image={value}
-                    alt={value.alt || ""}
-                    className="h-auto w-full rounded-lg"
-                  />
-                </div>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="my-6 cursor-pointer">
+                      <SanityImage
+                        image={value}
+                        alt={value.alt || ""}
+                        className="h-auto w-full rounded-lg"
+                      />
+                    </div>
+                  </DialogTrigger>
+                  <DialogContent
+                    className="w-fit border-none bg-transparent p-0 shadow-none sm:max-w-fit"
+                    style={{ maxWidth: "90vw" }}
+                    showCloseButton={false}
+                  >
+                    <DialogClose>
+                      <SanityImage
+                        image={value}
+                        alt={value.alt || ""}
+                        className="h-auto rounded-lg"
+                        style={{ maxHeight: "85vh", maxWidth: "90vw" }}
+                        sizes="90vw"
+                      />
+                    </DialogClose>
+                  </DialogContent>
+                </Dialog>
               )
             },
             code: ({ value }: PortableTextComponentProps<SanityCodeValue>) => {

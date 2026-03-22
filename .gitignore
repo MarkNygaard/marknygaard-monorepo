@@ -39,3 +39,6 @@ npm-debug.log*
 # Claude
 .claude/settings.json
 .claude/setting.local.json
+
+#Next files
+next-env.d.ts

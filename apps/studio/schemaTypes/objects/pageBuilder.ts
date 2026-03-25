@@ -8,7 +8,13 @@ export const pageBuilderBlockTypes = pageBuilderBlocks.map(({ name }) => ({
 
 const generalBlockTypes = pageBuilderBlocks
   .filter(({ name }) =>
-    ["richTextBlock", "blogOverviewBlock", "textImageBlock", "featuredPostsBlock"].includes(name),
+    [
+      "richTextBlock",
+      "blogOverviewBlock",
+      "textImageBlock",
+      "featuredPostsBlock",
+      "galleryBlock",
+    ].includes(name),
   )
   .map(({ name }) => ({
     type: name,

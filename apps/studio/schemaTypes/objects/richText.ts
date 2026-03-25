@@ -1,4 +1,4 @@
-import { CodeBlockIcon, ImageIcon } from "@sanity/icons"
+import { CodeBlockIcon, ImageIcon, ImagesIcon } from "@sanity/icons"
 import { defineArrayMember, defineField, defineType } from "sanity"
 
 const richTextMembers = [
@@ -90,6 +90,50 @@ const richTextMembers = [
         title: "Caption Text",
       }),
     ],
+  }),
+  defineArrayMember({
+    name: "gallery",
+    type: "object",
+    title: "Gallery",
+    icon: ImagesIcon,
+    fields: [
+      defineField({
+        name: "images",
+        type: "array",
+        title: "Images",
+        description: "Add images to the gallery carousel",
+        of: [
+          defineArrayMember({
+            type: "image",
+            options: {
+              hotspot: true,
+            },
+            fields: [
+              defineField({
+                name: "alt",
+                type: "string",
+                title: "Alt Text",
+                description: "Describe the image for accessibility",
+              }),
+            ],
+          }),
+        ],
+        validation: (Rule) => Rule.required().min(2).error("A gallery needs at least 2 images"),
+      }),
+    ],
+    preview: {
+      select: {
+        images: "images",
+      },
+      prepare({ images }) {
+        const count = images?.length || 0
+        return {
+          title: "Gallery",
+          subtitle: `${count} image${count === 1 ? "" : "s"}`,
+          media: ImagesIcon,
+        }
+      },
+    },
   }),
   defineArrayMember({
     name: "code",

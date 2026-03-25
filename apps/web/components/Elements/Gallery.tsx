@@ -92,7 +92,7 @@ export function Gallery({ images }: GalleryProps) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="border-none bg-transparent p-0 shadow-none focus:outline-none sm:max-w-[90vw]"
+          className="h-10/12 border-none bg-transparent p-0 shadow-none focus:outline-none sm:max-w-[90vw]"
           style={{ maxWidth: "80vw" }}
           showCloseButton={false}
         >
@@ -109,14 +109,8 @@ export function Gallery({ images }: GalleryProps) {
             )}
 
             {currentImage && (
-              <DialogClose className="focus:outline-none">
-                <SanityImage
-                  image={currentImage}
-                  alt={currentImage.alt || ""}
-                  className="h-auto w-auto max-w-full rounded-lg object-contain"
-                  style={{ maxHeight: "85vh" }}
-                  sizes="90vw"
-                />
+              <DialogClose className="h-10/12 focus:outline-none">
+                <SanityImage image={currentImage} alt={currentImage.alt || ""} fill sizes="90vw" />
               </DialogClose>
             )}
 

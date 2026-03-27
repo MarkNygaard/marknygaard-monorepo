@@ -16,7 +16,8 @@
       "Bash(\"app/api/auth/[...all]/route.ts\")",
       "Bash(pnpm -F web build:*)",
       "Bash(pnpm why:*)",
-      "Bash(pnpm list:*)"
+      "Bash(pnpm list:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

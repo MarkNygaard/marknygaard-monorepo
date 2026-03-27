@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@workspace/ui/carousel"
+import { Button } from "@workspace/ui/components/button"
 import { Dialog, DialogClose, DialogContent, DialogTitle } from "@workspace/ui/dialog"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
@@ -92,39 +93,43 @@ export function Gallery({ images }: GalleryProps) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="border-none bg-transparent p-0 shadow-none focus:outline-none sm:max-w-[90vw]"
+          className="border-none bg-transparent p-0 shadow-none focus:outline-none sm:max-w-none"
           showCloseButton={false}
         >
           <DialogTitle className="hidden">{currentImage?.alt}</DialogTitle>
-          <div className="relative flex h-full items-center justify-center">
-            {selectedIndex > 0 && (
-              <button
-                type="button"
-                onClick={goToPrevious}
-                className="absolute left-2 z-10 flex size-8 items-center justify-center rounded-full bg-background/80 text-foreground shadow-md transition-opacity hover:bg-background"
-              >
-                <ArrowLeft className="size-4" />
-                <span className="sr-only">Previous image</span>
-              </button>
-            )}
 
-            {currentImage && (
-              <DialogClose className="flex justify-center focus:outline-none">
-                <SanityImage image={currentImage} alt={currentImage.alt || ""} fill sizes="90vw" />
-              </DialogClose>
-            )}
+          {currentImage && (
+            <DialogClose className="flex justify-center focus:outline-none">
+              <SanityImage image={currentImage} alt={currentImage.alt || ""} sizes="90vw" />
+            </DialogClose>
+          )}
+          {selectedIndex > 0 && (
+            <Button
+              variant="ghost"
+              onClick={(e) => {
+                e.stopPropagation()
+                goToPrevious()
+              }}
+              className="fixed top-1/2 left-[2%] z-50 size-10 -translate-y-1/2 rounded-full bg-background/80 hover:bg-background"
+            >
+              <ArrowLeft className="size-5" />
+              <span className="sr-only">Previous image</span>
+            </Button>
+          )}
 
-            {selectedIndex < images.length - 1 && (
-              <button
-                type="button"
-                onClick={goToNext}
-                className="absolute right-2 z-max flex size-8 items-center justify-center rounded-full bg-background/80 text-foreground shadow-md transition-opacity hover:bg-background"
-              >
-                <ArrowRight className="size-4" />
-                <span className="sr-only">Next image</span>
-              </button>
-            )}
-          </div>
+          {selectedIndex < images.length - 1 && (
+            <Button
+              variant="ghost"
+              onClick={(e) => {
+                e.stopPropagation()
+                goToNext()
+              }}
+              className="fixed top-1/2 right-[2%] z-50 size-10 -translate-y-1/2 rounded-full bg-background/80 hover:bg-background"
+            >
+              <ArrowRight className="size-5" />
+              <span className="sr-only">Next image</span>
+            </Button>
+          )}
         </DialogContent>
       </Dialog>
     </div>

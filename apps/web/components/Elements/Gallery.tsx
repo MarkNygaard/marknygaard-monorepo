@@ -93,7 +93,7 @@ export function Gallery({ images }: GalleryProps) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="border-none bg-transparent p-0 shadow-none focus:outline-none sm:max-w-none"
+          className="border-none bg-transparent shadow-none focus:outline-none sm:max-w-[90vw]"
           showCloseButton={false}
         >
           <DialogTitle className="hidden">{currentImage?.alt}</DialogTitle>

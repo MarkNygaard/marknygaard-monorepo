@@ -1,7 +1,13 @@
 "use client"
 
 import type { SanityAsset } from "@sanity/image-url"
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@workspace/ui/dialog"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@workspace/ui/dialog"
 import { SanityImage } from "@/components/SanityImage/SanityImage"
 
 interface ImageLightboxProps {
@@ -19,18 +25,12 @@ export function ImageLightbox({ image, alt }: ImageLightboxProps) {
           </div>
         </DialogTrigger>
         <DialogContent
-          className="w-fit border-none bg-transparent p-0 shadow-none sm:max-w-fit"
-          style={{ maxWidth: "90vw" }}
+          className="border-none bg-transparent p-0 shadow-none sm:max-w-none"
           showCloseButton={false}
         >
-          <DialogClose className="focus:outline-none">
-            <SanityImage
-              image={image}
-              alt={alt}
-              className="h-auto w-auto max-w-full rounded-lg object-contain"
-              style={{ maxHeight: "85vh" }}
-              sizes="90vw"
-            />
+          <DialogTitle className="hidden">{alt}</DialogTitle>
+          <DialogClose className="flex justify-center focus:outline-none">
+            <SanityImage image={image} alt={alt} />
           </DialogClose>
         </DialogContent>
       </Dialog>

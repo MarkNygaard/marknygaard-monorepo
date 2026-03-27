@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@workspace/ui/carousel"
-import { Dialog, DialogClose, DialogContent } from "@workspace/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogTitle } from "@workspace/ui/dialog"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import { SanityImage } from "@/components/SanityImage/SanityImage"
@@ -92,11 +92,11 @@ export function Gallery({ images }: GalleryProps) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="h-10/12 border-none bg-transparent p-0 shadow-none focus:outline-none sm:max-w-[90vw]"
-          style={{ maxWidth: "80vw" }}
+          className="border-none bg-transparent p-0 shadow-none focus:outline-none sm:max-w-[90vw]"
           showCloseButton={false}
         >
-          <div className="relative flex items-center justify-center">
+          <DialogTitle className="hidden">{currentImage?.alt}</DialogTitle>
+          <div className="relative flex h-full items-center justify-center">
             {selectedIndex > 0 && (
               <button
                 type="button"
@@ -109,7 +109,7 @@ export function Gallery({ images }: GalleryProps) {
             )}
 
             {currentImage && (
-              <DialogClose className="h-10/12 focus:outline-none">
+              <DialogClose className="flex justify-center focus:outline-none">
                 <SanityImage image={currentImage} alt={currentImage.alt || ""} fill sizes="90vw" />
               </DialogClose>
             )}

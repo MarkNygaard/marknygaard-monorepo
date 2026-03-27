@@ -52,10 +52,22 @@ const ogFragment = /* groq */ `
   }
 `
 
+const galleryFragment = /* groq */ `
+  _key,
+  _type,
+  images[] {
+    _key,
+    ${imageFragment}
+  }
+`
+
 const richTextFragment = /* groq */ `
   ...,
   _type == "image" => {
     ${imageFragment}
+  },
+  _type == "gallery" => {
+    ${galleryFragment}
   },
   _type == "code" => {
     _key,
@@ -169,6 +181,17 @@ const postFragment = /* groq */ `
   publishedAt
 `
 
+const galleryBlock = /* groq */ `
+  _type,
+  _key,
+  images[] {
+    _key,
+    ${imageFragment}
+  },
+  fadeIn,
+  fadeInDelay,
+`
+
 const pageBuilderFragment = /* groq */ `
   pageBuilder[]{
     _type == "richTextBlock" => {
@@ -182,6 +205,9 @@ const pageBuilderFragment = /* groq */ `
     },
     _type == "featuredPostsBlock" => {
       ${featuredPostsBlock}
+    },
+    _type == "galleryBlock" => {
+      ${galleryBlock}
     }
   }
 `

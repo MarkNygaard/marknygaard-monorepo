@@ -15,6 +15,28 @@
 export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: schema.json
+export type SanityImageAssetReference = {
+  _ref: string
+  _type: "reference"
+  _weak?: boolean
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
+}
+
+export type GalleryBlock = {
+  _type: "galleryBlock"
+  images: Array<{
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: "image"
+    _key: string
+  }>
+  fadeIn?: boolean
+  fadeInDelay?: number
+}
+
 export type PostReference = {
   _ref: string
   _type: "reference"
@@ -32,13 +54,6 @@ export type FeaturedPostsBlock = {
   >
   fadeIn?: boolean
   fadeInDelay?: number
-}
-
-export type SanityImageAssetReference = {
-  _ref: string
-  _type: "reference"
-  _weak?: boolean
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset"
 }
 
 export type TextImageBlock = {
@@ -99,6 +114,9 @@ export type PageBuilder = Array<
   | ({
       _key: string
     } & FeaturedPostsBlock)
+  | ({
+      _key: string
+    } & GalleryBlock)
 >
 
 export type RichText = Array<
@@ -113,6 +131,7 @@ export type RichText = Array<
       listItem?: "number" | "bullet"
       markDefs?: Array<{
         href?: string
+        blank?: boolean
         _type: "link"
         _key: string
       }>
@@ -127,6 +146,19 @@ export type RichText = Array<
       crop?: SanityImageCrop
       caption?: string
       _type: "image"
+      _key: string
+    }
+  | {
+      images: Array<{
+        asset?: SanityImageAssetReference
+        media?: unknown
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        alt?: string
+        _type: "image"
+        _key: string
+      }>
+      _type: "gallery"
       _key: string
     }
   | {
@@ -448,9 +480,10 @@ export type Geopoint = {
 }
 
 export type AllSanitySchemaTypes =
+  | SanityImageAssetReference
+  | GalleryBlock
   | PostReference
   | FeaturedPostsBlock
-  | SanityImageAssetReference
   | TextImageBlock
   | BlogOverviewBlock
   | SectionBlock
@@ -488,7 +521,7 @@ export type AllSanitySchemaTypes =
 
 // Source: ../web/lib/sanity/queries.ts
 // Variable: HOMEPAGE_QUERY
-// Query: *[_type == "homePage"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  width,  fadeIn,  fadeInDelay,    },    _type == "blogOverviewBlock" => {        _type,  _key,  title    },    _type == "textImageBlock" => {        _type,  _key,  title,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  image {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  imagePosition,  blockTitle,    },    _type == "featuredPostsBlock" => {        _type,  _key,  title,  posts[]-> {    _id,    title,    slug {      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt  },  fadeIn,  fadeInDelay,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
+// Query: *[_type == "homePage"][0] {    _id,    _type,    title,      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "gallery" => {      _key,  _type,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  }  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  width,  fadeIn,  fadeInDelay,    },    _type == "blogOverviewBlock" => {        _type,  _key,  title    },    _type == "textImageBlock" => {        _type,  _key,  title,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "gallery" => {      _key,  _type,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  }  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  image {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  imagePosition,  blockTitle,    },    _type == "featuredPostsBlock" => {        _type,  _key,  title,  posts[]-> {    _id,    title,    slug {      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt  },  fadeIn,  fadeInDelay,    },    _type == "galleryBlock" => {        _type,  _key,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  fadeIn,  fadeInDelay,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type HOMEPAGE_QUERY_RESULT = {
   _id: string
   _type: "homePage"
@@ -556,6 +589,31 @@ export type HOMEPAGE_QUERY_RESULT = {
         fadeInDelay: number | null
       }
     | {
+        _type: "galleryBlock"
+        _key: string
+        images: Array<{
+          _key: string
+          asset: {
+            _id: string
+            url: string
+            altText: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number
+                height: number
+                aspectRatio: number
+              } | null
+            } | null
+          } | null
+          alt: string | ""
+          crop: SanityImageCrop | null
+          hotspot: SanityImageHotspot | null
+        }>
+        fadeIn: boolean | null
+        fadeInDelay: number | null
+      }
+    | {
         _type: "richTextBlock"
         _key: string
         content: Array<
@@ -570,6 +628,7 @@ export type HOMEPAGE_QUERY_RESULT = {
               listItem?: "bullet" | "number"
               markDefs: Array<{
                 href?: string
+                blank?: boolean
                 _type: "link"
                 _key: string
               }> | null
@@ -603,6 +662,30 @@ export type HOMEPAGE_QUERY_RESULT = {
               filename: string | null
               highlightedLines: Array<number> | null
               _type: "code"
+              _key: string
+              markDefs: null
+            }
+          | {
+              images: Array<{
+                _key: string
+                asset: {
+                  _id: string
+                  url: string
+                  altText: string | null
+                  metadata: {
+                    lqip: string | null
+                    dimensions: {
+                      width: number
+                      height: number
+                      aspectRatio: number
+                    } | null
+                  } | null
+                } | null
+                alt: string | ""
+                crop: SanityImageCrop | null
+                hotspot: SanityImageHotspot | null
+              }>
+              _type: "gallery"
               _key: string
               markDefs: null
             }
@@ -650,6 +733,7 @@ export type HOMEPAGE_QUERY_RESULT = {
               listItem?: "bullet" | "number"
               markDefs: Array<{
                 href?: string
+                blank?: boolean
                 _type: "link"
                 _key: string
               }> | null
@@ -683,6 +767,30 @@ export type HOMEPAGE_QUERY_RESULT = {
               filename: string | null
               highlightedLines: Array<number> | null
               _type: "code"
+              _key: string
+              markDefs: null
+            }
+          | {
+              images: Array<{
+                _key: string
+                asset: {
+                  _id: string
+                  url: string
+                  altText: string | null
+                  metadata: {
+                    lqip: string | null
+                    dimensions: {
+                      width: number
+                      height: number
+                      aspectRatio: number
+                    } | null
+                  } | null
+                } | null
+                alt: string | ""
+                crop: SanityImageCrop | null
+                hotspot: SanityImageHotspot | null
+              }>
+              _type: "gallery"
               _key: string
               markDefs: null
             }
@@ -765,7 +873,7 @@ export type HOMEPAGE_QUERY_RESULT = {
 
 // Source: ../web/lib/sanity/queries.ts
 // Variable: PAGE_QUERY
-// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    _type,    title,    slug {      _type,      current    },      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  width,  fadeIn,  fadeInDelay,    },    _type == "blogOverviewBlock" => {        _type,  _key,  title    },    _type == "textImageBlock" => {        _type,  _key,  title,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  image {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  imagePosition,  blockTitle,    },    _type == "featuredPostsBlock" => {        _type,  _key,  title,  posts[]-> {    _id,    title,    slug {      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt  },  fadeIn,  fadeInDelay,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt,    "posts": select(      count(pageBuilder[_type == "blogOverviewBlock"]) > 0 => *[_type == "post"] | order(publishedAt desc) {          _id,  title,  slug {    current  },  coverImage {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  excerpt,  author-> {    _id,    name,    picture {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    }  },  publishedAt      }    )  }
+// Query: *[_type == "page" && slug.current == $slug][0] {    _id,    _type,    title,    slug {      _type,      current    },      pageBuilder[]{    _type == "richTextBlock" => {        _type,  _key,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "gallery" => {      _key,  _type,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  }  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  width,  fadeIn,  fadeInDelay,    },    _type == "blogOverviewBlock" => {        _type,  _key,  title    },    _type == "textImageBlock" => {        _type,  _key,  title,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "gallery" => {      _key,  _type,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  }  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  image {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  imagePosition,  blockTitle,    },    _type == "featuredPostsBlock" => {        _type,  _key,  title,  posts[]-> {    _id,    title,    slug {      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt  },  fadeIn,  fadeInDelay,    },    _type == "galleryBlock" => {        _type,  _key,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  fadeIn,  fadeInDelay,    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt,    "posts": select(      count(pageBuilder[_type == "blogOverviewBlock"]) > 0 => *[_type == "post"] | order(publishedAt desc) {          _id,  title,  slug {    current  },  coverImage {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  excerpt,  author-> {    _id,    name,    picture {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    }  },  publishedAt      }    )  }
 export type PAGE_QUERY_RESULT = {
   _id: string
   _type: "page"
@@ -837,6 +945,31 @@ export type PAGE_QUERY_RESULT = {
         fadeInDelay: number | null
       }
     | {
+        _type: "galleryBlock"
+        _key: string
+        images: Array<{
+          _key: string
+          asset: {
+            _id: string
+            url: string
+            altText: string | null
+            metadata: {
+              lqip: string | null
+              dimensions: {
+                width: number
+                height: number
+                aspectRatio: number
+              } | null
+            } | null
+          } | null
+          alt: string | ""
+          crop: SanityImageCrop | null
+          hotspot: SanityImageHotspot | null
+        }>
+        fadeIn: boolean | null
+        fadeInDelay: number | null
+      }
+    | {
         _type: "richTextBlock"
         _key: string
         content: Array<
@@ -851,6 +984,7 @@ export type PAGE_QUERY_RESULT = {
               listItem?: "bullet" | "number"
               markDefs: Array<{
                 href?: string
+                blank?: boolean
                 _type: "link"
                 _key: string
               }> | null
@@ -884,6 +1018,30 @@ export type PAGE_QUERY_RESULT = {
               filename: string | null
               highlightedLines: Array<number> | null
               _type: "code"
+              _key: string
+              markDefs: null
+            }
+          | {
+              images: Array<{
+                _key: string
+                asset: {
+                  _id: string
+                  url: string
+                  altText: string | null
+                  metadata: {
+                    lqip: string | null
+                    dimensions: {
+                      width: number
+                      height: number
+                      aspectRatio: number
+                    } | null
+                  } | null
+                } | null
+                alt: string | ""
+                crop: SanityImageCrop | null
+                hotspot: SanityImageHotspot | null
+              }>
+              _type: "gallery"
               _key: string
               markDefs: null
             }
@@ -931,6 +1089,7 @@ export type PAGE_QUERY_RESULT = {
               listItem?: "bullet" | "number"
               markDefs: Array<{
                 href?: string
+                blank?: boolean
                 _type: "link"
                 _key: string
               }> | null
@@ -964,6 +1123,30 @@ export type PAGE_QUERY_RESULT = {
               filename: string | null
               highlightedLines: Array<number> | null
               _type: "code"
+              _key: string
+              markDefs: null
+            }
+          | {
+              images: Array<{
+                _key: string
+                asset: {
+                  _id: string
+                  url: string
+                  altText: string | null
+                  metadata: {
+                    lqip: string | null
+                    dimensions: {
+                      width: number
+                      height: number
+                      aspectRatio: number
+                    } | null
+                  } | null
+                } | null
+                alt: string | ""
+                crop: SanityImageCrop | null
+                hotspot: SanityImageHotspot | null
+              }>
+              _type: "gallery"
               _key: string
               markDefs: null
             }
@@ -1146,7 +1329,7 @@ export type LAYOUT_QUERY_RESULT = {
 
 // Source: ../web/lib/sanity/queries.ts
 // Variable: POST_QUERY
-// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    _type,    title,    slug {      _type,      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt,      pageBuilder[]{    _type == "sectionBlock" => {        _type,  _key,  name,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  sections[]{    _type,    _key,    name,    content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },    sections[]{      _type,      _key,      name,      content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },      sections[]{        _type,        _key,        name,        content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } }      }    }  }    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
+// Query: *[_type == "post" && slug.current == $slug][0] {    _id,    _type,    title,    slug {      _type,      current    },    coverImage {        asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot    },    excerpt,    author-> {      _id,      name,      picture {          asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot      }    },    publishedAt,      pageBuilder[]{    _type == "sectionBlock" => {        _type,  _key,  name,  content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "gallery" => {      _key,  _type,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  }  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },  sections[]{    _type,    _key,    name,    content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "gallery" => {      _key,  _type,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  }  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },    sections[]{      _type,      _key,      name,      content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "gallery" => {      _key,  _type,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  }  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } },      sections[]{        _type,        _key,        name,        content[]{   ...,  _type == "image" => {      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  },  _type == "gallery" => {      _key,  _type,  images[] {    _key,      asset-> {    _id,    url,    altText,    metadata {      lqip,      dimensions {        width,        height,        aspectRatio      }    }  },  "alt": coalesce(alt, ""),  crop,  hotspot  }  },  _type == "code" => {    _key,    _type,    code,    language,    filename,    highlightedLines  },  markDefs[] {    ...,  } }      }    }  }    }  },      seo {    _type,    seoTitle,    seoDescription,    seoImage {      asset-> {        _id,        url,        altText,        metadata {          dimensions {            width,            height          }        }      },      alt,      crop,      hotspot    },    seoIndexing,    seoListVisibility  },      og {    ogTitle,    ogDescription  },    _createdAt,    _updatedAt  }
 export type POST_QUERY_RESULT = {
   _id: string
   _type: "post"
@@ -1213,6 +1396,7 @@ export type POST_QUERY_RESULT = {
           listItem?: "bullet" | "number"
           markDefs: Array<{
             href?: string
+            blank?: boolean
             _type: "link"
             _key: string
           }> | null
@@ -1246,6 +1430,30 @@ export type POST_QUERY_RESULT = {
           filename: string | null
           highlightedLines: Array<number> | null
           _type: "code"
+          _key: string
+          markDefs: null
+        }
+      | {
+          images: Array<{
+            _key: string
+            asset: {
+              _id: string
+              url: string
+              altText: string | null
+              metadata: {
+                lqip: string | null
+                dimensions: {
+                  width: number
+                  height: number
+                  aspectRatio: number
+                } | null
+              } | null
+            } | null
+            alt: string | ""
+            crop: SanityImageCrop | null
+            hotspot: SanityImageHotspot | null
+          }>
+          _type: "gallery"
           _key: string
           markDefs: null
         }
@@ -1289,6 +1497,7 @@ export type POST_QUERY_RESULT = {
             listItem?: "bullet" | "number"
             markDefs: Array<{
               href?: string
+              blank?: boolean
               _type: "link"
               _key: string
             }> | null
@@ -1322,6 +1531,30 @@ export type POST_QUERY_RESULT = {
             filename: string | null
             highlightedLines: Array<number> | null
             _type: "code"
+            _key: string
+            markDefs: null
+          }
+        | {
+            images: Array<{
+              _key: string
+              asset: {
+                _id: string
+                url: string
+                altText: string | null
+                metadata: {
+                  lqip: string | null
+                  dimensions: {
+                    width: number
+                    height: number
+                    aspectRatio: number
+                  } | null
+                } | null
+              } | null
+              alt: string | ""
+              crop: SanityImageCrop | null
+              hotspot: SanityImageHotspot | null
+            }>
+            _type: "gallery"
             _key: string
             markDefs: null
           }
@@ -1365,6 +1598,7 @@ export type POST_QUERY_RESULT = {
               listItem?: "bullet" | "number"
               markDefs: Array<{
                 href?: string
+                blank?: boolean
                 _type: "link"
                 _key: string
               }> | null
@@ -1398,6 +1632,30 @@ export type POST_QUERY_RESULT = {
               filename: string | null
               highlightedLines: Array<number> | null
               _type: "code"
+              _key: string
+              markDefs: null
+            }
+          | {
+              images: Array<{
+                _key: string
+                asset: {
+                  _id: string
+                  url: string
+                  altText: string | null
+                  metadata: {
+                    lqip: string | null
+                    dimensions: {
+                      width: number
+                      height: number
+                      aspectRatio: number
+                    } | null
+                  } | null
+                } | null
+                alt: string | ""
+                crop: SanityImageCrop | null
+                hotspot: SanityImageHotspot | null
+              }>
+              _type: "gallery"
               _key: string
               markDefs: null
             }
@@ -1441,6 +1699,7 @@ export type POST_QUERY_RESULT = {
                 listItem?: "bullet" | "number"
                 markDefs: Array<{
                   href?: string
+                  blank?: boolean
                   _type: "link"
                   _key: string
                 }> | null
@@ -1474,6 +1733,30 @@ export type POST_QUERY_RESULT = {
                 filename: string | null
                 highlightedLines: Array<number> | null
                 _type: "code"
+                _key: string
+                markDefs: null
+              }
+            | {
+                images: Array<{
+                  _key: string
+                  asset: {
+                    _id: string
+                    url: string
+                    altText: string | null
+                    metadata: {
+                      lqip: string | null
+                      dimensions: {
+                        width: number
+                        height: number
+                        aspectRatio: number
+                      } | null
+                    } | null
+                  } | null
+                  alt: string | ""
+                  crop: SanityImageCrop | null
+                  hotspot: SanityImageHotspot | null
+                }>
+                _type: "gallery"
                 _key: string
                 markDefs: null
               }
@@ -1605,10 +1888,10 @@ export type GLOBAL_SEO_QUERY_RESULT = {
 import "@sanity/client"
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "homePage"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  width,\n  fadeIn,\n  fadeInDelay,\n\n    },\n    _type == "blogOverviewBlock" => {\n      \n  _type,\n  _key,\n  title\n\n    },\n    _type == "textImageBlock" => {\n      \n  _type,\n  _key,\n  title,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  image {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  imagePosition,\n  blockTitle,\n\n    },\n    _type == "featuredPostsBlock" => {\n      \n  _type,\n  _key,\n  title,\n  posts[]-> {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  },\n  fadeIn,\n  fadeInDelay,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': HOMEPAGE_QUERY_RESULT
-    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    },\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  width,\n  fadeIn,\n  fadeInDelay,\n\n    },\n    _type == "blogOverviewBlock" => {\n      \n  _type,\n  _key,\n  title\n\n    },\n    _type == "textImageBlock" => {\n      \n  _type,\n  _key,\n  title,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  image {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  imagePosition,\n  blockTitle,\n\n    },\n    _type == "featuredPostsBlock" => {\n      \n  _type,\n  _key,\n  title,\n  posts[]-> {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  },\n  fadeIn,\n  fadeInDelay,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt,\n    "posts": select(\n      count(pageBuilder[_type == "blogOverviewBlock"]) > 0 => *[_type == "post"] | order(publishedAt desc) {\n        \n  _id,\n  title,\n  slug {\n    current\n  },\n  coverImage {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  excerpt,\n  author-> {\n    _id,\n    name,\n    picture {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    }\n  },\n  publishedAt\n\n      }\n    )\n  }\n': PAGE_QUERY_RESULT
+    '\n  *[_type == "homePage"][0] {\n    _id,\n    _type,\n    title,\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "gallery" => {\n    \n  _key,\n  _type,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  }\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  width,\n  fadeIn,\n  fadeInDelay,\n\n    },\n    _type == "blogOverviewBlock" => {\n      \n  _type,\n  _key,\n  title\n\n    },\n    _type == "textImageBlock" => {\n      \n  _type,\n  _key,\n  title,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "gallery" => {\n    \n  _key,\n  _type,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  }\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  image {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  imagePosition,\n  blockTitle,\n\n    },\n    _type == "featuredPostsBlock" => {\n      \n  _type,\n  _key,\n  title,\n  posts[]-> {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  },\n  fadeIn,\n  fadeInDelay,\n\n    },\n    _type == "galleryBlock" => {\n      \n  _type,\n  _key,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  fadeIn,\n  fadeInDelay,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': HOMEPAGE_QUERY_RESULT
+    '\n  *[_type == "page" && slug.current == $slug][0] {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    },\n    \n  pageBuilder[]{\n    _type == "richTextBlock" => {\n      \n  _type,\n  _key,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "gallery" => {\n    \n  _key,\n  _type,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  }\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  width,\n  fadeIn,\n  fadeInDelay,\n\n    },\n    _type == "blogOverviewBlock" => {\n      \n  _type,\n  _key,\n  title\n\n    },\n    _type == "textImageBlock" => {\n      \n  _type,\n  _key,\n  title,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "gallery" => {\n    \n  _key,\n  _type,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  }\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  image {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  imagePosition,\n  blockTitle,\n\n    },\n    _type == "featuredPostsBlock" => {\n      \n  _type,\n  _key,\n  title,\n  posts[]-> {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  },\n  fadeIn,\n  fadeInDelay,\n\n    },\n    _type == "galleryBlock" => {\n      \n  _type,\n  _key,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  fadeIn,\n  fadeInDelay,\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt,\n    "posts": select(\n      count(pageBuilder[_type == "blogOverviewBlock"]) > 0 => *[_type == "post"] | order(publishedAt desc) {\n        \n  _id,\n  title,\n  slug {\n    current\n  },\n  coverImage {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  excerpt,\n  author-> {\n    _id,\n    name,\n    picture {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    }\n  },\n  publishedAt\n\n      }\n    )\n  }\n': PAGE_QUERY_RESULT
     '\n  {\n    "header": *[_type == "header"][0] {\n      _id,\n      logo,\n      links[] {\n        \n  _type,\n  _key,\n  name,\n  linkType,\n  "openInNewTab": coalesce(openInNewTab, false),\n  internalLink-> {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    }\n  },\n  "externalLink": coalesce(externalLink, "")\n\n      }\n    },\n    "footer": *[_type == "footer"][0] {\n      _id,\n      links[] {\n        \n  _key,\n  svgIcon,\n  externalLink\n\n      },\n      copyrightText\n    },\n    "chatbotSettings": *[_type == "chatbotSettings"][0] {\n      _id,\n      enabled\n    }\n  }\n': LAYOUT_QUERY_RESULT
-    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt,\n    \n  pageBuilder[]{\n    _type == "sectionBlock" => {\n      \n  _type,\n  _key,\n  name,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  sections[]{\n    _type,\n    _key,\n    name,\n    content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n    sections[]{\n      _type,\n      _key,\n      name,\n      content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n      sections[]{\n        _type,\n        _key,\n        name,\n        content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n }\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': POST_QUERY_RESULT
+    '\n  *[_type == "post" && slug.current == $slug][0] {\n    _id,\n    _type,\n    title,\n    slug {\n      _type,\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt,\n    \n  pageBuilder[]{\n    _type == "sectionBlock" => {\n      \n  _type,\n  _key,\n  name,\n  content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "gallery" => {\n    \n  _key,\n  _type,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  }\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n  sections[]{\n    _type,\n    _key,\n    name,\n    content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "gallery" => {\n    \n  _key,\n  _type,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  }\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n    sections[]{\n      _type,\n      _key,\n      name,\n      content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "gallery" => {\n    \n  _key,\n  _type,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  }\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n },\n      sections[]{\n        _type,\n        _key,\n        name,\n        content[]{ \n  ...,\n  _type == "image" => {\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  },\n  _type == "gallery" => {\n    \n  _key,\n  _type,\n  images[] {\n    _key,\n    \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n  }\n\n  },\n  _type == "code" => {\n    _key,\n    _type,\n    code,\n    language,\n    filename,\n    highlightedLines\n  },\n  markDefs[] {\n    ...,\n  }\n }\n      }\n    }\n  }\n\n    }\n  }\n,\n    \n  seo {\n    _type,\n    seoTitle,\n    seoDescription,\n    seoImage {\n      asset-> {\n        _id,\n        url,\n        altText,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt,\n      crop,\n      hotspot\n    },\n    seoIndexing,\n    seoListVisibility\n  }\n,\n    \n  og {\n    ogTitle,\n    ogDescription\n  }\n,\n    _createdAt,\n    _updatedAt\n  }\n': POST_QUERY_RESULT
     '\n  *[_type == "post"] | order(publishedAt desc) {\n    _id,\n    title,\n    slug {\n      current\n    },\n    coverImage {\n      \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n    },\n    excerpt,\n    author-> {\n      _id,\n      name,\n      picture {\n        \n  asset-> {\n    _id,\n    url,\n    altText,\n    metadata {\n      lqip,\n      dimensions {\n        width,\n        height,\n        aspectRatio\n      }\n    }\n  },\n  "alt": coalesce(alt, ""),\n  crop,\n  hotspot\n\n      }\n    },\n    publishedAt\n  }\n': ALL_POSTS_QUERY_RESULT
     '*[\n  _type == "globalSeo"\n][0] {\n  _id,\n  title,\n  domain,\n  code,\n  seoIndexing,\n  seoSuffix\n}': GLOBAL_SEO_QUERY_RESULT
   }

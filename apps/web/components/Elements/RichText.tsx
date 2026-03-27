@@ -1,15 +1,19 @@
 import type { SanityAsset } from "@sanity/image-url"
 import { cn } from "@workspace/common/cn"
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@workspace/ui/dialog"
 import { Typography } from "@workspace/ui/typography"
 import type { PortableTextComponentProps, PortableTextProps } from "next-sanity"
 import { PortableText } from "next-sanity"
 import type { Language } from "prism-react-renderer"
-import { SanityImage } from "@/components/SanityImage/SanityImage"
+import { Gallery } from "./Gallery"
+import { ImageLightbox } from "./ImageLightbox"
 import SyntaxHighlight from "./SyntaxHighlight"
 
 interface SanityImageValue extends SanityAsset {
   alt?: string
+}
+
+interface SanityGalleryValue {
+  images: (SanityImageValue & { _key: string })[]
 }
 
 interface SanityCodeValue {
@@ -98,35 +102,11 @@ export function RichText({ value, className }: PortableRichTextProps) {
           types: {
             image: ({ value }: PortableTextComponentProps<SanityImageValue>) => {
               if (!value?.asset) return null
-
-              return (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <div className="my-6 cursor-pointer">
-                      <SanityImage
-                        image={value}
-                        alt={value.alt || ""}
-                        className="h-auto w-full rounded-lg"
-                      />
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent
-                    className="w-fit border-none bg-transparent p-0 shadow-none sm:max-w-fit"
-                    style={{ maxWidth: "90vw" }}
-                    showCloseButton={false}
-                  >
-                    <DialogClose>
-                      <SanityImage
-                        image={value}
-                        alt={value.alt || ""}
-                        className="h-auto rounded-lg"
-                        style={{ maxHeight: "85vh", maxWidth: "90vw" }}
-                        sizes="90vw"
-                      />
-                    </DialogClose>
-                  </DialogContent>
-                </Dialog>
-              )
+              return <ImageLightbox image={value} alt={value.alt || ""} />
+            },
+            gallery: ({ value }: PortableTextComponentProps<SanityGalleryValue>) => {
+              if (!value?.images || value.images.length === 0) return null
+              return <Gallery images={value.images} />
             },
             code: ({ value }: PortableTextComponentProps<SanityCodeValue>) => {
               if (!value?.code) return null

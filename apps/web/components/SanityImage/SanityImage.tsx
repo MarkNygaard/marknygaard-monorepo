@@ -68,6 +68,20 @@ const getAspectRatioValue = (ratio: AspectRatio): string => {
   }
 }
 
+function getCroppedDimensions(
+  originalDimensions: { width: number; height: number; aspectRatio: number },
+  crop?: { left?: number; right?: number; top?: number; bottom?: number },
+) {
+  if (!crop) return originalDimensions
+  const croppedWidth = originalDimensions.width * (1 - (crop.left || 0) - (crop.right || 0))
+  const croppedHeight = originalDimensions.height * (1 - (crop.top || 0) - (crop.bottom || 0))
+  return {
+    width: Math.round(croppedWidth),
+    height: Math.round(croppedHeight),
+    aspectRatio: croppedWidth / croppedHeight,
+  }
+}
+
 export function SanityImage({
   image,
   width,
@@ -86,8 +100,9 @@ export function SanityImage({
   aspectRatio,
   ...props
 }: SanityImageProps) {
-  // Get original image dimensions
-  const dimensions = getImageDimensions(image)
+  if (!image) return null
+  // Get original image dimensions and adjust for crop if present
+  const dimensions = getCroppedDimensions(getImageDimensions(image), image.crop)
   const cleanAspectRatio = stegaClean(aspectRatio)
 
   // Calculate dimensions based on aspect ratio if provided
@@ -97,8 +112,8 @@ export function SanityImage({
     ratio: AspectRatio,
   ) => {
     const ratioValue = getAspectRatioValue(ratio)
-    const [widthPart = 1, heightPart = 1] = ratioValue.split("/").map(Number)
-    const targetRatio = widthPart / heightPart
+    const [w, h] = ratioValue.split("/").map(Number)
+    const targetRatio = w! / h!
 
     // Calculate dimensions that fit within both width and height constraints
     const widthBasedHeight = maxWidth / targetRatio
@@ -122,8 +137,8 @@ export function SanityImage({
   // Helper to calculate height from width and aspect ratio
   const calculateHeightFromWidth = (targetWidth: number, ratio: AspectRatio) => {
     const ratioValue = getAspectRatioValue(ratio)
-    const [widthPart = 1, heightPart = 1] = ratioValue.split("/").map(Number)
-    return Math.round(targetWidth * (heightPart / widthPart))
+    const [w, h] = ratioValue.split("/").map(Number)
+    return Math.round(targetWidth * (h! / w!))
   }
 
   // Use provided dimensions or fall back to original or calculate from aspect ratio
@@ -252,7 +267,7 @@ export function SanityImage({
         }
 
   return (
-    // biome-ignore lint: @next/next/no-img-element
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={fallbackSrc}
       srcSet={srcSet}
@@ -287,7 +302,7 @@ export function getSanityImageData(
     return null
   }
 
-  const dimensions = getImageDimensions(image)
+  const dimensions = getCroppedDimensions(getImageDimensions(image), image.crop)
   const {
     width = dimensions.width,
     height = dimensions.height,

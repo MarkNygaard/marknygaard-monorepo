@@ -12,6 +12,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
+    "typegen": "pnpm -F studio typegen",
     "format": "turbo format",
     "check": "turbo check",
     "check:unsafe": "turbo check:unsafe",

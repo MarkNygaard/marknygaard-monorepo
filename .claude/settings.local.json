@@ -17,7 +17,11 @@
       "Bash(pnpm -F web build:*)",
       "Bash(pnpm why:*)",
       "Bash(pnpm list:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(pnpm --filter web add @ticket0-ai/widget)",
+      "Bash(pnpm --filter studio typegen)",
+      "Bash(pnpm --filter web typecheck)",
+      "Bash(git checkout *)"
     ],
     "deny": [],
     "ask": []

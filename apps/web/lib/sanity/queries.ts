@@ -297,7 +297,8 @@ export const LAYOUT_QUERY = defineQuery(`
     },
     "chatbotSettings": *[_type == "chatbotSettings"][0] {
       _id,
-      enabled
+      enabled,
+      workspaceId
     }
   }
 `)

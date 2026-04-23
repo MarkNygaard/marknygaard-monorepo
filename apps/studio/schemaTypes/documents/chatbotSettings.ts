@@ -21,6 +21,21 @@ export const chatbotSettings = defineType({
       },
       initialValue: "enabled",
     }),
+    defineField({
+      name: "workspaceId",
+      title: "Ticket0 Workspace ID",
+      description:
+        "Workspace ID from your Ticket0 dashboard (e.g. ws_xxxxxxxx). The widget will not render until this is set.",
+      type: "string",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const enabled = (context.document as { enabled?: string } | undefined)?.enabled
+          if (enabled === "enabled" && !value) {
+            return "Workspace ID is required when the chatbot is enabled"
+          }
+          return true
+        }),
+    }),
   ],
   preview: {
     prepare() {

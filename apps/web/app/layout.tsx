@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { cn } from "@workspace/common/cn"
 import { draftMode } from "next/headers"
 import { VisualEditing } from "next-sanity/visual-editing"
-import { ChatbotDrawer } from "@/components/Chatbot/ChatbotDrawer"
+import { Ticket0ChatWidget } from "@/components/Chatbot/Ticket0ChatWidget"
 import { DisableDraftMode } from "@/components/DisableDraftMode"
 import { ThemeColorUpdater } from "@/components/Elements/ThemeColorUpdater"
 import { Providers } from "@/components/providers"
@@ -40,7 +40,10 @@ export default async function RootLayout({
             <div className="mx-auto max-w-5xl">{children}</div>
           </main>
           <Footer {...layoutData.footer} />
-          <ChatbotDrawer enabled={layoutData.chatbotSettings?.enabled === "enabled"} />
+          {layoutData.chatbotSettings?.enabled === "enabled" &&
+            layoutData.chatbotSettings?.workspaceId && (
+              <Ticket0ChatWidget workspaceId={layoutData.chatbotSettings.workspaceId} />
+            )}
           {(await draftMode()).isEnabled && (
             <>
               <VisualEditing />

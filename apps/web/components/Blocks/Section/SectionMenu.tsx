@@ -1,9 +1,9 @@
 "use client"
 
 import { cn } from "@workspace/common/cn"
-import { useActiveSectionContext } from "context/ActiveSectionContext"
 import Link from "next/link"
 import ProgressBar from "@/components/Elements/ProgressBar"
+import { useActiveSectionContext } from "@/context/ActiveSectionContext"
 import type { POST_QUERY_RESULT } from "@/types/sanity"
 
 type SectionBlock = NonNullable<NonNullable<POST_QUERY_RESULT>["pageBuilder"]>[number]

@@ -1,7 +1,7 @@
 "use client"
 
-import useSectionInView from "hooks/useSectionInView"
 import type { ReactNode } from "react"
+import useSectionInView from "@/hooks/useSectionInView"
 
 interface SectionClientProps {
   id?: string

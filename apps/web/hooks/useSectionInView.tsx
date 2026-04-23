@@ -1,8 +1,8 @@
 "use client"
 
-import { useActiveSectionContext } from "context/ActiveSectionContext"
 import { useEffect } from "react"
 import { useInView } from "react-intersection-observer"
+import { useActiveSectionContext } from "@/context/ActiveSectionContext"
 
 export default function useSectionInView({ sectionId }: { sectionId: string }) {
   const { ref, inView } = useInView({
